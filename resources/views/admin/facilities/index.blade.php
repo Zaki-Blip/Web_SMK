@@ -15,7 +15,7 @@
         </a>
     </div>
 
-    <div class="tk-card p-3 p-md-4 mb-3">
+    <div class="tk-card p-3 mb-3">
         <x-admin.search-input :value="$search" placeholder="Cari nama atau keterangan fasilitas…" label="Cari fasilitas" />
     </div>
 
@@ -71,3 +71,4 @@
         message="Fasilitas dan gambarnya akan dihapus permanen."
     />
 @endsection
+

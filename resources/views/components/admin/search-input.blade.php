@@ -10,7 +10,7 @@
 @endphp
 
 <form method="get" class="d-flex flex-wrap gap-2" role="search">
-    <div class="flex-grow-1" style="min-width: 12rem;">
+    <div class="flex-grow-1" style="flex: 1 1 12rem; min-width: 0;">
         <label class="visually-hidden" for="{{ $id }}">{{ $label }}</label>
         <input type="search" class="form-control" id="{{ $id }}" name="{{ $name }}"
                value="{{ $value }}" placeholder="{{ $placeholder }}">

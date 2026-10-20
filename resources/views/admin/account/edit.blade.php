@@ -4,9 +4,9 @@
 @section('heading', 'Akun Saya')
 
 @section('content')
-    <div class="row g-4">
+    <div class="row g-3">
         <div class="col-lg-7">
-            <div class="tk-card p-4">
+            <div class="tk-card p-3">
                 <h2 class="h5 mb-1">Data akun</h2>
                 <p class="text-muted-soft">Ubah nama, email, atau kata sandi akun admin Anda.</p>
 
@@ -42,7 +42,7 @@
         </div>
 
         <div class="col-lg-5">
-            <div class="tk-card p-4">
+            <div class="tk-card p-3">
                 <h2 class="h5 mb-3">Informasi</h2>
                 <ul class="list-unstyled mb-0">
                     <li class="mb-2">Role: <span class="tk-badge">{{ $user->role }}</span></li>
@@ -55,3 +55,4 @@
         </div>
     </div>
 @endsection
+

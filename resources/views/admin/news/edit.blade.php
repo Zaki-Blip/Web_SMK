@@ -17,3 +17,4 @@
 
     @include('admin.news.form', ['news' => $news])
 @endsection
+

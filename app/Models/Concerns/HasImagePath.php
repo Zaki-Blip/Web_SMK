@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 trait HasImagePath
 {
     /**
-     * URL gambar pada disk public, atau null bila belum ada gambar.
+     * URL gambar pada disk unggahan, atau null bila belum ada gambar.
      */
     public function imageUrl(): ?string
     {
@@ -18,6 +18,6 @@ trait HasImagePath
             return null;
         }
 
-        return Storage::disk('public')->url($this->image_path);
+        return Storage::disk(config('filesystems.uploads_disk', 'public'))->url($this->image_path);
     }
 }

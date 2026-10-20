@@ -17,6 +17,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Disk Unggahan Gambar
+    |--------------------------------------------------------------------------
+    |
+    | Disk yang dipakai logo, program, fasilitas, galeri, dan berita.
+    | Nilai yang didukung: "public" (penyimpanan lokal) atau "s3"
+    | (S3/Cloudflare R2). Disk "s3" memerlukan paket adapter S3.
+    |
+    */
+
+    'uploads_disk' => env('UPLOADS_DISK', 'public'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Filesystem Disks
     |--------------------------------------------------------------------------
     |

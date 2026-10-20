@@ -72,11 +72,27 @@ a:focus {
 }
 
 .section {
-    padding-block: 3rem;
+    padding-block: 2.5rem;
 }
 
 .section-tight {
-    padding-block: 2rem;
+    padding-block: 1.5rem;
+}
+
+/* Kepala halaman dalam (Profil, Program, Fasilitas, dst.) */
+.tk-page-head {
+    background-color: var(--tk-sky);
+    border-bottom: 1px solid var(--tk-border);
+    padding-block: 1.5rem 1.25rem;
+}
+
+.tk-page-head h1 {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    margin-bottom: .25rem;
+}
+
+.tk-page-head p {
+    margin-bottom: 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -181,30 +197,90 @@ a:focus {
     font-size: 1.25rem;
 }
 
+/* Logo sekolah dari pengaturan situs (bukan ikon). */
+.brand-logo-img {
+    object-fit: contain;
+    background-color: #fff;
+    padding: 2px;
+}
+
 /* --------------------------------------------------------------------------
    Hero
    -------------------------------------------------------------------------- */
 
 .tk-hero {
-    background: linear-gradient(180deg, var(--tk-sky) 0%, var(--tk-bg) 100%);
-    padding-block: 3.5rem;
+    background-color: var(--tk-sky);
+    border-bottom: 1px solid var(--tk-border);
+    padding-block: 2.5rem;
 }
 
 .tk-hero h1 {
-    font-size: clamp(1.85rem, 4vw, 2.75rem);
+    font-size: clamp(1.75rem, 3.4vw, 2.35rem);
     line-height: 1.2;
 }
 
 .tk-hero-media {
     border-radius: var(--tk-radius-lg);
     background-color: #fff;
+    border: 1px solid var(--tk-border);
     box-shadow: var(--tk-shadow);
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 10;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--tk-text-muted);
     overflow: hidden;
+}
+
+/* Ringkasan data penting di bawah tombol hero */
+.tk-hero-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.25rem;
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 1rem 0 0;
+    border-top: 1px solid rgba(23, 59, 103, .12);
+    font-size: .875rem;
+    color: var(--tk-text-muted);
+}
+
+.tk-hero-facts .bi {
+    color: var(--tk-navy);
+    margin-right: .25rem;
+}
+
+/* Judul bagian dengan tautan "lihat semua" di kanan */
+.tk-section-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: .5rem 1rem;
+}
+
+.tk-section-heading__link {
+    font-weight: 600;
+    font-size: .9375rem;
+    white-space: nowrap;
+}
+
+.tk-section-heading--compact {
+    margin-bottom: 0;
+}
+
+.tk-section-heading p:last-child {
+    max-width: 62ch;
+}
+
+/* Teks panjang (isi berita, sejarah) agar nyaman dibaca */
+.tk-prose {
+    max-width: 68ch;
+    line-height: 1.75;
+}
+
+.tk-prose > :last-child {
+    margin-bottom: 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -283,13 +359,13 @@ a:focus {
     border: 1px dashed var(--tk-border);
     border-radius: var(--tk-radius-lg);
     background-color: #fff;
-    padding: 2.5rem 1.5rem;
+    padding: 1.75rem 1.25rem;
     text-align: center;
     color: var(--tk-text-muted);
 }
 
 .tk-empty-state .bi {
-    font-size: 2rem;
+    font-size: 1.75rem;
     color: var(--tk-navy);
 }
 
@@ -300,7 +376,7 @@ a:focus {
 .tk-footer {
     background-color: var(--tk-navy);
     color: rgba(255, 255, 255, .85);
-    padding-block: 2.5rem 1.5rem;
+    padding-block: 2rem 1.25rem;
 }
 
 .tk-footer a {
@@ -342,19 +418,42 @@ a:focus {
     min-height: 100vh;
 }
 
+/* Kerangka: sidebar menetap saat konten digulir, konten memakai sisa lebar */
+.tk-admin-shell {
+    display: grid;
+    grid-template-columns: 15rem minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+.tk-admin-shell__sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background-color: var(--tk-navy);
+    scrollbar-width: thin;
+}
+
+.tk-admin-shell__main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
 .tk-admin-sidebar {
     background-color: var(--tk-navy);
     color: rgba(255, 255, 255, .85);
-    min-height: 100vh;
-    padding: 1rem;
+    padding: .875rem;
 }
 
 .tk-admin-sidebar a {
     color: rgba(255, 255, 255, .85);
     border-radius: var(--tk-radius-sm);
-    padding: .5rem .75rem;
+    padding: .45rem .65rem;
     display: block;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .tk-admin-sidebar a:hover,
@@ -364,10 +463,38 @@ a:focus {
     text-decoration: none;
 }
 
+/* Menu admin: mendatar dan dapat digulir di layar kecil, vertikal di desktop */
+.tk-admin-menu {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: .25rem;
+    margin: 0;
+    padding: 0 0 .25rem;
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.tk-admin-menu::-webkit-scrollbar {
+    display: none;
+}
+
+.tk-admin-menu li {
+    flex: 0 0 auto;
+}
+
 .tk-admin-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
     background-color: #fff;
     border-bottom: 1px solid var(--tk-border);
-    padding: .75rem 1rem;
+    padding: .5rem 1rem;
+}
+
+.tk-admin-main {
+    flex-grow: 1;
+    padding: 1rem;
 }
 
 .tk-stat-card {
@@ -375,7 +502,7 @@ a:focus {
     border: 1px solid var(--tk-border);
     border-radius: var(--tk-radius);
     box-shadow: var(--tk-shadow);
-    padding: 1.25rem;
+    padding: 1rem;
 }
 
 .tk-stat-card .stat-value {
@@ -410,6 +537,12 @@ a:focus {
 .tk-table-wrap th,
 .tk-table-wrap td {
     vertical-align: middle;
+    padding: .5rem .75rem;
+}
+
+/* Thumbnail ringkas agar baris tabel tidak terlalu tinggi */
+.tk-table-wrap .tk-thumb {
+    max-width: 96px;
 }
 
 .tk-empty-cell {
@@ -422,10 +555,10 @@ a:focus {
 .tk-admin-page-head {
     display: flex;
     flex-wrap: wrap;
-    gap: .75rem;
+    gap: .5rem 1rem;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin-bottom: .75rem;
 }
 
 .tk-stat-icon {
@@ -452,22 +585,187 @@ a:focus {
     background-color: var(--tk-sky);
 }
 
+/* Desktop: menu vertikal di sidebar, konten lebih lega */
+@media (min-width: 992px) {
+    .tk-admin-menu {
+        flex-direction: column;
+        overflow: visible;
+        padding-bottom: 0;
+    }
+
+    .tk-admin-menu a {
+        white-space: normal;
+    }
+
+    .tk-admin-main {
+        padding: 1.25rem 1.5rem 2rem;
+    }
+}
+
+/* Layar kecil: sidebar menjadi bilah menu mendatar di atas konten */
+@media (max-width: 991.98px) {
+    .tk-admin-shell {
+        grid-template-columns: minmax(0, 1fr);
+        align-content: start;
+    }
+
+    .tk-admin-shell__sidebar {
+        position: static;
+        height: auto;
+        overflow: visible;
+        min-width: 0;
+    }
+
+    .tk-admin-topbar {
+        position: static;
+    }
+
+    .tk-admin-sidebar {
+        padding: .75rem;
+    }
+}
+
+/* Kartu di dashboard tidak ikut memanjang mengikuti tinggi konten */
+.tk-admin-main .tk-card {
+    height: auto;
+}
+
+.tk-admin-main .tk-card:hover {
+    transform: none;
+    box-shadow: var(--tk-shadow);
+}
+
+/* --------------------------------------------------------------------------
+   Halaman masuk admin
+   -------------------------------------------------------------------------- */
+
+.tk-auth {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 100vh;
+    background-color: #fff;
+}
+
+.tk-auth__brand {
+    background-color: var(--tk-navy);
+    color: rgba(255, 255, 255, .82);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.tk-auth__brand .brand-logo {
+    background-color: rgba(255, 255, 255, .14);
+    color: #fff;
+}
+
+.tk-auth__brand-name {
+    color: #fff;
+    font-family: var(--tk-font-heading);
+    font-weight: 800;
+    font-size: 1.125rem;
+    line-height: 1.25;
+    margin: 0;
+}
+
+.tk-auth__brand-name span {
+    display: block;
+    font-family: var(--tk-font-body);
+    font-size: .8125rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, .7);
+}
+
+.tk-auth__rule {
+    width: 2.5rem;
+    height: 3px;
+    background-color: var(--tk-yellow);
+    border: 0;
+    opacity: 1;
+    margin: 0 0 .75rem;
+}
+
+.tk-auth__brand-text {
+    font-size: .9375rem;
+    margin: 0;
+    max-width: 36ch;
+}
+
+.tk-auth__brand a {
+    color: #fff;
+}
+
+.tk-auth__meta {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: .875rem;
+}
+
+.tk-auth__meta li + li {
+    margin-top: .4rem;
+}
+
+.tk-auth__form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.25rem;
+}
+
+.tk-auth__form-inner {
+    width: 100%;
+    max-width: 21rem;
+}
+
+@media (min-width: 992px) {
+    .tk-auth {
+        grid-template-columns: minmax(20rem, 40%) minmax(0, 1fr);
+    }
+
+    .tk-auth__brand {
+        padding: 2.5rem;
+        justify-content: space-between;
+    }
+
+    .tk-auth__form {
+        padding: 3rem 2rem;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .tk-auth {
+        align-content: start;
+    }
+
+    .tk-auth__brand {
+        padding: 1.25rem;
+        gap: 1rem;
+    }
+}
+
 /* --------------------------------------------------------------------------
    Responsif
    -------------------------------------------------------------------------- */
 
 @media (max-width: 767.98px) {
     .tk-hero {
-        padding-block: 2.25rem;
+        padding-block: 2rem;
         text-align: center;
     }
 
-    .section {
-        padding-block: 2.25rem;
+    .tk-page-head {
+        padding-block: 1.25rem 1rem;
     }
 
-    .tk-admin-sidebar {
-        min-height: auto;
+    .section {
+        padding-block: 2rem;
+    }
+
+    .tk-hero-facts {
+        justify-content: center;
+        text-align: left;
     }
 }
 

@@ -22,7 +22,7 @@
         </a>
     </div>
 
-    <div class="tk-card p-3 p-md-4 mb-3">
+    <div class="tk-card p-3 mb-3">
         <x-admin.search-input :value="$search" placeholder="Cari judul atau isi berita…" label="Cari berita" />
 
         <div class="d-flex flex-wrap gap-2 mt-3">
@@ -92,3 +92,4 @@
         message="Berita dan gambarnya akan dihapus permanen."
     />
 @endsection
+

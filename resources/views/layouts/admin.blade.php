@@ -21,20 +21,19 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="tk-admin-body">
-    <div class="container-fluid p-0">
-        <div class="row g-0">
-            <div class="col-lg-3 col-xl-2">
-                <x-admin.sidebar />
-            </div>
+    {{-- Sidebar menetap saat konten digulir; konten di kanan memakai sisa lebar --}}
+    <div class="tk-admin-shell">
+        <div class="tk-admin-shell__sidebar">
+            <x-admin.sidebar :school-name="$schoolName" />
+        </div>
 
-            <div class="col-lg-9 col-xl-10">
-                <x-admin.topbar />
+        <div class="tk-admin-shell__main">
+            <x-admin.topbar />
 
-                <main class="p-3 p-md-4">
-                    <x-flash-message :container="false" />
-                    @yield('content')
-                </main>
-            </div>
+            <main class="tk-admin-main">
+                <x-flash-message :container="false" />
+                @yield('content')
+            </main>
         </div>
     </div>
 

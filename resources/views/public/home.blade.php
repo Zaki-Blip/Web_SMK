@@ -2,6 +2,21 @@
 
 @php
     $schoolName = $site?->school_name ?: config('school.fallback.school_name');
+
+    // Ringkasan data kontak yang sudah benar-benar diisi (tidak menampilkan placeholder).
+    $facts = [];
+
+    if (filled($site?->address)) {
+        $facts[] = ['bi-geo-alt', \Illuminate\Support\Str::limit($site->address, 64)];
+    }
+
+    if (filled($site?->opening_hours)) {
+        $facts[] = ['bi-clock', $site->opening_hours];
+    }
+
+    if (filled($site?->phone)) {
+        $facts[] = ['bi-telephone', $site->phone];
+    }
 @endphp
 
 @section('title', $site?->meta_title ?: $schoolName.' — Taman Kanak-Kanak di Jakarta Timur')
@@ -13,21 +28,29 @@
         <div class="container">
             <div class="row align-items-center g-4">
                 <div class="col-lg-6">
-                    <p class="tk-badge mb-3">Taman Kanak-Kanak</p>
-                    <h1 class="mb-3">{{ $schoolName }}</h1>
-                    <p class="lead text-muted-soft mb-4">
+                    <p class="tk-badge mb-2">Taman Kanak-Kanak</p>
+                    <h1 class="mb-2">{{ $schoolName }}</h1>
+                    <p class="text-muted-soft mb-3">
                         {{ $profile->description ? \Illuminate\Support\Str::limit($profile->description, 220) : 'Selamat datang di halaman informasi sekolah. Halaman ini memuat profil sekolah, program pembelajaran, fasilitas, galeri kegiatan, berita, dan informasi PPDB.' }}
                     </p>
                     <div class="d-flex flex-wrap gap-2">
                         <a class="btn btn-tk-primary" href="{{ route('profile.index') }}">Profil Sekolah</a>
-                        <a class="btn btn-tk-outline" href="{{ route('admission.index') }}">Informasi PPDB</a>
+                        <a class="btn btn-tk-accent" href="{{ route('admission.index') }}">Informasi PPDB</a>
                     </div>
+
+                    @if ($facts)
+                        <ul class="tk-hero-facts">
+                            @foreach ($facts as [$icon, $text])
+                                <li><i class="bi {{ $icon }}" aria-hidden="true"></i>{{ $text }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col-lg-5 offset-lg-1">
                     <div class="tk-hero-media">
                         <span class="text-center px-3">
-                            <i class="bi bi-image d-block mb-2" style="font-size: 2.5rem;" aria-hidden="true"></i>
+                            <i class="bi bi-image d-block mb-2" style="font-size: 2.25rem;" aria-hidden="true"></i>
                             Foto sekolah belum tersedia
                         </span>
                     </div>
@@ -42,13 +65,13 @@
             <x-section-heading
                 eyebrow="Profil Singkat"
                 title="Tentang sekolah"
-                :description="$profile->vision ?: null"
+                :link="route('profile.index')"
+                link-label="Profil lengkap"
             />
 
             @if (filled($profile->description))
-                <div class="tk-card p-4">
-                    <p class="mb-0">{!! nl2br(e($profile->description)) !!}</p>
-                    <p class="mt-3 mb-0"><a href="{{ route('profile.index') }}">Selengkapnya tentang sekolah</a></p>
+                <div class="tk-card p-3 p-md-4">
+                    <div class="tk-prose">{!! nl2br(e($profile->description)) !!}</div>
                 </div>
             @else
                 <x-empty-state
@@ -66,7 +89,7 @@
             <x-section-heading
                 eyebrow="Program"
                 title="Program pembelajaran"
-                description="Program yang ditampilkan hanya yang berstatus dipublikasikan oleh sekolah."
+                :link="route('program.index')"
             />
 
             @if ($programs->isNotEmpty())
@@ -77,7 +100,6 @@
                         </div>
                     @endforeach
                 </div>
-                <p class="mt-3 mb-0"><a href="{{ route('program.index') }}">Lihat semua program</a></p>
             @else
                 <x-empty-state
                     icon="bi-journal-bookmark"
@@ -94,7 +116,7 @@
             <x-section-heading
                 eyebrow="Fasilitas"
                 title="Fasilitas sekolah"
-                description="Informasi fasilitas hanya ditampilkan setelah dipublikasikan oleh pihak sekolah."
+                :link="route('facility.index')"
             />
 
             @if ($facilities->isNotEmpty())
@@ -105,7 +127,6 @@
                         </div>
                     @endforeach
                 </div>
-                <p class="mt-3 mb-0"><a href="{{ route('facility.index') }}">Lihat semua fasilitas</a></p>
             @else
                 <x-empty-state
                     icon="bi-building"
@@ -122,12 +143,12 @@
             <x-section-heading
                 eyebrow="Galeri"
                 title="Galeri kegiatan"
-                description="Foto kegiatan hanya ditampilkan setelah ada persetujuan publikasi."
+                :link="route('gallery.index')"
+                link-label="Semua foto"
             />
 
             @if ($galleryItems->isNotEmpty())
                 <x-public.gallery-grid :items="$galleryItems" />
-                <p class="mt-3 mb-0"><a href="{{ route('gallery.index') }}">Lihat semua foto</a></p>
             @else
                 <x-empty-state
                     icon="bi-images"
@@ -144,7 +165,8 @@
             <x-section-heading
                 eyebrow="Berita"
                 title="Berita terbaru"
-                description="Kabar dan kegiatan terbaru dari sekolah."
+                :link="route('news.index')"
+                link-label="Semua berita"
             />
 
             @if ($newsItems->isNotEmpty())
@@ -155,7 +177,6 @@
                         </div>
                     @endforeach
                 </div>
-                <p class="mt-3 mb-0"><a href="{{ route('news.index') }}">Lihat semua berita</a></p>
             @else
                 <x-empty-state
                     icon="bi-newspaper"
@@ -167,12 +188,12 @@
     </section>
 
     {{-- Ajakan PPDB --}}
-    <section class="section bg-white border-top">
+    <section class="section section-tight bg-white border-top">
         <div class="container">
-            <div class="p-4 p-md-5 rounded-4" style="background-color: var(--tk-sky);">
+            <div class="p-3 p-md-4 rounded-4 border" style="background-color: var(--tk-sky);">
                 <div class="row align-items-center g-3">
                     <div class="col-lg-8">
-                        <h2 class="h3 mb-2">Informasi Penerimaan Peserta Didik Baru</h2>
+                        <h2 class="h4 mb-1">Informasi Penerimaan Peserta Didik Baru</h2>
                         <p class="text-muted-soft mb-0">
                             Lihat periode, persyaratan, dan alur pendaftaran pada halaman PPDB.
                         </p>
@@ -191,14 +212,15 @@
             <x-section-heading
                 eyebrow="Kontak"
                 title="Hubungi sekolah"
-                description="Alamat, kanal komunikasi resmi, dan lokasi sekolah."
+                :link="route('contact.index')"
+                link-label="Halaman kontak"
             />
 
-            <div class="row g-4">
+            <div class="row g-3">
                 <div class="col-md-6">
-                    <div class="tk-card p-4">
-                        <h3 class="h6 mb-3">Alamat</h3>
-                        <address class="mb-3">{{ $site?->address ?: config('school.fallback.address') }}</address>
+                    <div class="tk-card p-3 h-100">
+                        <h3 class="h6 mb-2">Alamat</h3>
+                        <address class="mb-2">{{ $site?->address ?: config('school.fallback.address') }}</address>
                         @if ($site?->maps_url)
                             <a href="{{ $site->maps_url }}" target="_blank" rel="noopener noreferrer">Buka di Google Maps</a>
                         @else
@@ -210,12 +232,12 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="tk-card p-4">
-                        <h3 class="h6 mb-3">Kontak resmi</h3>
-                        <ul class="list-unstyled mb-3">
-                            <li class="mb-2">Telepon: {{ $site?->phone ?: 'Belum dikonfirmasi' }}</li>
-                            <li class="mb-2">Email: {{ $site?->email ?: 'Belum dikonfirmasi' }}</li>
-                            <li class="mb-2">Jam operasional: {{ $site?->opening_hours ?: 'Belum dikonfirmasi' }}</li>
+                    <div class="tk-card p-3 h-100">
+                        <h3 class="h6 mb-2">Kontak resmi</h3>
+                        <ul class="list-unstyled mb-3 small">
+                            <li class="mb-1">Telepon: {{ $site?->phone ?: 'Belum dikonfirmasi' }}</li>
+                            <li class="mb-1">Email: {{ $site?->email ?: 'Belum dikonfirmasi' }}</li>
+                            <li class="mb-1">Jam operasional: {{ $site?->opening_hours ?: 'Belum dikonfirmasi' }}</li>
                         </ul>
                         <x-public.admission-cta :whatsapp-url="$site?->whatsappUrl()" />
                     </div>

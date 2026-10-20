@@ -4,9 +4,9 @@
 @section('meta_description', 'Program pembelajaran yang dipublikasikan '.($site?->school_name ?: config('school.fallback.school_name')).'.')
 
 @section('content')
-    <section class="tk-hero py-4">
+    <section class="tk-page-head">
         <div class="container">
-            <x-section-heading level="h1" title="Program" description="Program pembelajaran yang dipublikasikan sekolah." />
+            <x-section-heading level="h1" title="Program" description="Program pembelajaran yang dipublikasikan sekolah." :compact="true" />
         </div>
     </section>
 
@@ -21,7 +21,7 @@
                     @endforeach
                 </div>
 
-                <div class="mt-4">
+                <div class="mt-3">
                     {{ $programs->links() }}
                 </div>
             @else

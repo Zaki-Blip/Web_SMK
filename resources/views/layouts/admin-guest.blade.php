@@ -1,4 +1,6 @@
 @php
+    // Halaman login diakses tanpa controller yang mengirim $site; ambil dari database dengan aman.
+    $site = $site ?? rescue(fn () => \App\Models\SiteSetting::current(), null, false);
     $schoolName = $site?->school_name ?: config('school.fallback.school_name');
 @endphp
 <!DOCTYPE html>
@@ -18,19 +20,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="tk-admin-body d-flex flex-column min-vh-100">
-    <main class="flex-grow-1 d-flex align-items-center py-5">
-        <div class="container" style="max-width: 480px;">
-            <x-flash-message :container="false" />
-            @yield('content')
-        </div>
-    </main>
-
-    <footer class="text-center py-3">
-        <p class="text-muted-soft mb-0 small">
-            &copy; {{ now()->year }} {{ $schoolName }} — panel admin
-        </p>
-    </footer>
+<body class="tk-admin-body">
+    @yield('content')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>

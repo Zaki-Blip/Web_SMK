@@ -42,4 +42,24 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    /**
+     * Akun dengan role admin (satu-satunya role pada versi ini).
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => User::ROLE_ADMIN,
+        ]);
+    }
+
+    /**
+     * Akun yang tidak punya akses dashboard.
+     */
+    public function nonAdmin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'pengguna',
+        ]);
+    }
 }

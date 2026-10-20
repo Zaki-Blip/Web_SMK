@@ -9,28 +9,29 @@
 @section('meta_description', 'Alamat, kontak, dan lokasi '.$schoolName.'.')
 
 @section('content')
-    <section class="tk-hero py-4">
+    <section class="tk-page-head">
         <div class="container">
             <x-section-heading
                 level="h1"
                 title="Kontak"
                 description="Alamat dan kanal komunikasi resmi sekolah."
+                :compact="true"
             />
         </div>
     </section>
 
     <section class="section">
         <div class="container">
-            <div class="row g-4">
+            <div class="row g-3">
                 <div class="col-lg-6">
-                    <div class="tk-card p-4 mb-4">
-                        <h2 class="h5 mb-3">Alamat</h2>
+                    <div class="tk-card p-3 mb-3">
+                        <h2 class="h5 mb-2">Alamat</h2>
                         <address class="mb-0">{{ $site?->address ?: config('school.fallback.address') }}</address>
                     </div>
 
-                    <div class="tk-card p-4">
-                        <h2 class="h5 mb-3">Kontak resmi</h2>
-                        <dl class="row mb-3">
+                    <div class="tk-card p-3">
+                        <h2 class="h5 mb-2">Kontak resmi</h2>
+                        <dl class="row mb-3 small">
                             <dt class="col-sm-5">Telepon</dt>
                             <dd class="col-sm-7">{{ $site?->phone ?: 'Belum dikonfirmasi' }}</dd>
 
@@ -49,21 +50,21 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="tk-card p-4 h-100">
-                        <h2 class="h5 mb-3">Lokasi</h2>
+                    <div class="tk-card p-3 h-100">
+                        <h2 class="h5 mb-2">Lokasi</h2>
 
                         @if ($site?->maps_url)
-                            <p class="text-muted-soft">
+                            <p class="text-muted-soft small">
                                 Peta dibuka pada tab baru agar halaman tetap ringan.
                             </p>
                             <a class="btn btn-tk-primary" href="{{ $site->maps_url }}" target="_blank" rel="noopener noreferrer">
                                 <i class="bi bi-geo-alt me-1" aria-hidden="true"></i>Buka lokasi di Google Maps
                             </a>
                         @else
-                            <div class="tk-placeholder mb-3">
+                            <div class="tk-placeholder mb-2">
                                 <i class="bi bi-map" aria-hidden="true"></i>
                             </div>
-                            <p class="text-muted-soft mb-0">
+                            <p class="text-muted-soft small mb-0">
                                 Tautan Google Maps akan tampil setelah URL peta dikonfirmasi oleh pihak sekolah.
                             </p>
                         @endif

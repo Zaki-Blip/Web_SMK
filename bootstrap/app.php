@@ -13,6 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Render (dan hosting lain) menerminasi HTTPS di proxy, lalu meneruskan
+        // permintaan sebagai HTTP. Percaya header X-Forwarded-* agar URL HTTPS benar.
+        $middleware->trustProxies(at: '*');
+
         $middleware->alias([
             'admin' => EnsureAdmin::class,
         ]);

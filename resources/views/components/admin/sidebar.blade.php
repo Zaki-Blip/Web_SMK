@@ -1,4 +1,8 @@
+@props(['schoolName' => null])
+
 @php
+    $schoolName = $schoolName ?: config('school.fallback.school_name');
+
     // Menu dashboard; ditambah bertahap sesuai modul yang sudah selesai (bagian 6).
     $items = [
         ['label' => 'Dashboard', 'route' => 'admin.dashboard', 'icon' => 'bi-speedometer2'],
@@ -19,15 +23,15 @@
         <span>
             Admin
             <small class="d-block fw-normal opacity-75" style="font-size: .75rem;">
-                {{ $site?->school_name ?: config('school.fallback.school_name') }}
+                {{ $schoolName }}
             </small>
         </span>
     </a>
 
-    <ul class="list-unstyled d-flex flex-wrap flex-lg-column gap-1 mb-0">
+    <ul class="tk-admin-menu">
         @foreach ($items as $item)
             @php $isActive = request()->routeIs($item['pattern'] ?? $item['route']); @endphp
-            <li class="flex-grow-1">
+            <li>
                 <a class="{{ $isActive ? 'active' : '' }}"
                    href="{{ route($item['route']) }}"
                    @if ($isActive) aria-current="page" @endif>

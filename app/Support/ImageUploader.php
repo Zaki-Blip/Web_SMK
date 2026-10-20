@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use GdImage;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -30,7 +31,7 @@ class ImageUploader
     public const WIDTH_LOGO = 400;
 
     /**
-     * Simpan gambar dan kembalikan path relatif pada disk `public`.
+     * Simpan gambar dan kembalikan path relatif pada disk unggahan.
      */
     public function store(UploadedFile $file, string $folder, int $maxWidth): string
     {
@@ -39,7 +40,7 @@ class ImageUploader
         $extension = $this->extensionFor($file);
         $path = trim($folder, '/').'/'.Str::random(40).'.'.$extension;
 
-        Storage::disk('public')->put($path, $this->resizeToLimit($file, $maxWidth, $extension));
+        $this->disk()->put($path, $this->resizeToLimit($file, $maxWidth, $extension));
 
         return $path;
     }
@@ -49,9 +50,17 @@ class ImageUploader
      */
     public function delete(?string $path): void
     {
-        if (filled($path) && Storage::disk('public')->exists($path)) {
-            Storage::disk('public')->delete($path);
+        if (filled($path) && $this->disk()->exists($path)) {
+            $this->disk()->delete($path);
         }
+    }
+
+    /**
+     * Disk unggahan aktif: "public" (lokal) atau "s3" (S3/Cloudflare R2).
+     */
+    private function disk(): Filesystem
+    {
+        return Storage::disk(config('filesystems.uploads_disk', 'public'));
     }
 
     /**

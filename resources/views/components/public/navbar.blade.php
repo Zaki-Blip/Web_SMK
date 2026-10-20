@@ -1,8 +1,12 @@
-@props(['schoolName' => null])
+@props(['schoolName' => null, 'site' => null])
 
 @php
     $schoolName = $schoolName ?: config('school.fallback.school_name');
     $subtitle = config('school.fallback.subtitle');
+
+    $logoUrl = $site?->logo_path
+        ? \Illuminate\Support\Facades\Storage::disk(config('filesystems.uploads_disk', 'public'))->url($site->logo_path)
+        : null;
 
     $menu = [
         ['label' => 'Beranda', 'route' => 'home'],
@@ -19,7 +23,11 @@
     <nav class="navbar navbar-expand-lg py-2" aria-label="Navigasi utama">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
-                <span class="brand-logo" aria-hidden="true"><i class="bi bi-mortarboard-fill"></i></span>
+                @if ($logoUrl)
+                    <img src="{{ $logoUrl }}" alt="" class="brand-logo brand-logo-img" width="40" height="40">
+                @else
+                    <span class="brand-logo" aria-hidden="true"><i class="bi bi-mortarboard-fill"></i></span>
+                @endif
                 <span>
                     {{ $schoolName }}
                     <span class="brand-sub">{{ $subtitle }}</span>

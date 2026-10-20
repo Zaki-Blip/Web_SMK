@@ -4,9 +4,9 @@
 @section('meta_description', 'Galeri foto kegiatan '.($site?->school_name ?: config('school.fallback.school_name')).'.')
 
 @section('content')
-    <section class="tk-hero py-4">
+    <section class="tk-page-head">
         <div class="container">
-            <x-section-heading level="h1" title="Galeri" description="Foto kegiatan sekolah yang dipublikasikan." />
+            <x-section-heading level="h1" title="Galeri" description="Foto kegiatan sekolah yang dipublikasikan." :compact="true" />
         </div>
     </section>
 
@@ -15,7 +15,7 @@
             @if ($items->isNotEmpty())
                 <x-public.gallery-grid :items="$items" />
 
-                <div class="mt-4">
+                <div class="mt-3">
                     {{ $items->links() }}
                 </div>
             @else

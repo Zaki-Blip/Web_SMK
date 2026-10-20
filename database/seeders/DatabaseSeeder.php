@@ -10,7 +10,7 @@ use Illuminate\Database\Seeder;
 /**
  * Seeder produksi: hanya membuat record tunggal yang kosong/netral.
  * Tidak membuat konten contoh dan tidak membuat akun.
- * Admin dibuat lewat perintah: php artisan app:create-admin (Fase 4).
+ * Admin dibuat lewat perintah: php artisan app:create-admin (kata sandi dari input atau env ADMIN_PASSWORD).
  */
 class DatabaseSeeder extends Seeder
 {

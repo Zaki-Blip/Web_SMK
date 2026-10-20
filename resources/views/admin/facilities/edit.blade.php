@@ -17,3 +17,4 @@
 
     @include('admin.facilities.form', ['facility' => $facility])
 @endsection
+

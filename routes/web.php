@@ -65,21 +65,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/', DashboardController::class)->name('dashboard');
 
-        Route::get('/akun', [AccountController::class, 'edit'])->name('account.edit');
-        Route::put('/akun', [AccountController::class, 'update'])->name('account.update');
+        Route::get('/account', [AccountController::class, 'edit'])->name('account.edit');
+        Route::put('/account', [AccountController::class, 'update'])->name('account.update');
 
-        Route::get('/profil', [SchoolProfileController::class, 'edit'])->name('profile.edit');
-        Route::put('/profil', [SchoolProfileController::class, 'update'])->name('profile.update');
+        Route::get('/profile', [SchoolProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile', [SchoolProfileController::class, 'update'])->name('profile.update');
 
         Route::resource('programs', ProgramController::class)->except('show');
         Route::resource('facilities', FacilityController::class)->except('show');
         Route::resource('gallery', GalleryController::class)->except('show');
         Route::resource('news', NewsController::class)->except('show');
 
-        Route::get('/ppdb', [AdmissionController::class, 'edit'])->name('admission.edit');
-        Route::put('/ppdb', [AdmissionController::class, 'update'])->name('admission.update');
+        Route::get('/admission', [AdmissionController::class, 'edit'])->name('admission.edit');
+        Route::put('/admission', [AdmissionController::class, 'update'])->name('admission.update');
 
-        Route::get('/pengaturan', [SiteSettingController::class, 'edit'])->name('settings.edit');
-        Route::put('/pengaturan', [SiteSettingController::class, 'update'])->name('settings.update');
+        Route::get('/settings', [SiteSettingController::class, 'edit'])->name('settings.edit');
+        Route::put('/settings', [SiteSettingController::class, 'update'])->name('settings.update');
     });
 });

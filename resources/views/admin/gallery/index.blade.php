@@ -17,7 +17,7 @@
         </a>
     </div>
 
-    <div class="tk-card p-3 p-md-4 mb-3">
+    <div class="tk-card p-3 mb-3">
         <x-admin.search-input :value="$search" placeholder="Cari judul, keterangan, atau kategori…" label="Cari foto" />
     </div>
 
@@ -73,3 +73,4 @@
         message="File gambar akan dihapus permanen dari penyimpanan."
     />
 @endsection
+

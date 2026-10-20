@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
@@ -49,9 +50,15 @@ class PublicRoutesTest extends TestCase
 
     public function test_halaman_admin_memakai_noindex(): void
     {
-        $this->get('/admin')
+        $this->actingAs(User::factory()->admin()->create())
+            ->get('/admin')
             ->assertOk()
             ->assertSee('noindex', false);
+    }
+
+    public function test_dashboard_admin_butuh_login(): void
+    {
+        $this->get('/admin')->assertRedirect(route('admin.login'));
     }
 
     public function test_banner_versi_demo_tampil_saat_data_demo_aktif(): void

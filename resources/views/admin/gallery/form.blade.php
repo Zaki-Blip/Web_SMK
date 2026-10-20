@@ -9,9 +9,9 @@
         @method('PUT')
     @endif
 
-    <div class="row g-4">
+    <div class="row g-3">
         <div class="col-lg-7">
-            <div class="tk-card p-4">
+            <div class="tk-card p-3">
                 <h2 class="h5 mb-3">Metadata foto</h2>
 
                 <x-admin.form-field name="title" label="Judul foto" :value="$item->title" required maxlength="150" />
@@ -25,14 +25,14 @@
         </div>
 
         <div class="col-lg-5">
-            <div class="tk-card p-4 mb-4">
+            <div class="tk-card p-3 mb-3">
                 <h2 class="h5 mb-3">Berkas foto</h2>
 
                 <x-admin.image-uploader name="image" label="Foto" :current-url="$item->imageUrl()" :required="! $isEdit"
                                         help="JPG, PNG, atau WebP maksimal 2 MB. Lebar diperkecil otomatis ke 1600 px." />
             </div>
 
-            <div class="tk-card p-4">
+            <div class="tk-card p-3">
                 <h2 class="h5 mb-3">Publikasi</h2>
 
                 <x-admin.form-field name="sort_order" type="number" label="Urutan tampil" :value="$item->sort_order"
@@ -51,3 +51,4 @@
         </div>
     </div>
 </form>
+

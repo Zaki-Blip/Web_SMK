@@ -49,7 +49,7 @@
 <body class="d-flex flex-column min-vh-100">
     <x-demo-banner />
 
-    <x-public.navbar :schoolName="$schoolName" />
+    <x-public.navbar :schoolName="$schoolName" :site="$site" />
 
     <main id="konten" class="flex-grow-1">
         <x-flash-message />
