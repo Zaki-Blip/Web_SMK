@@ -52,7 +52,7 @@ class AuthController extends Controller
         $request->clearRateLimiter();
         $request->session()->regenerate();
 
-        return redirect()->intended(route('admin.dashboard'))
+        return redirect()->intended(route('admin.dasbor'))
             ->with('success', 'Selamat datang, '.$request->user()->name.'!');
     }
 

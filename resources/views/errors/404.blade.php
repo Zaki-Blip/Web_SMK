@@ -14,8 +14,8 @@
                 Silakan kembali ke beranda atau gunakan menu di atas.
             </p>
             <div class="d-flex flex-wrap gap-2 mt-4">
-                <a class="btn btn-tk-primary" href="{{ route('home') }}">Kembali ke beranda</a>
-                <a class="btn btn-tk-outline" href="{{ route('contact.index') }}">Hubungi sekolah</a>
+                <a class="btn btn-tk-primary" href="{{ route('beranda') }}">Kembali ke beranda</a>
+                <a class="btn btn-tk-outline" href="{{ route('kontak.index') }}">Hubungi sekolah</a>
             </div>
         </div>
     </section>

@@ -14,10 +14,12 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->string('image_path')->nullable();
+            $table->string('category')->nullable();
             $table->unsignedInteger('sort_order')->default(0);
             $table->boolean('is_published')->default(false);
             $table->timestamps();
 
+            $table->index('category');
             $table->index('is_published');
             $table->index('sort_order');
         });

@@ -1,7 +1,7 @@
 # Deployment Gratis: Render + MySQL + Cloudflare R2
 
 Panduan ini memasang website di **Render** (gratis), dengan **MySQL eksternal**
-(Aiven atau TiDB Cloud) dan **Cloudflare R2** untuk menyimpan gambar.
+(Aiven atau TiDB Cloud) dan **Cloudflare R2** untuk menyimpan gambar dan dokumen.
 Konfigurasi Docker sudah tersedia di repo (`Dockerfile`, `render.yaml`, `docker/`).
 
 > Status: konfigurasi siap, tetapi proses deploy memerlukan akun Render,
@@ -15,7 +15,7 @@ Pengunjung
    ▼
 Render (Docker: PHP 8.3 + Apache)  ──►  MySQL eksternal (Aiven/TiDB)
    │
-   └── gambar ──► Cloudflare R2 (bucket publik)
+   └── gambar & dokumen ──► Cloudflare R2 (bucket publik)
 ```
 
 - Render gratis: 750 jam/bulan, 512 MB RAM, service **tidur setelah 15 menit**
@@ -26,7 +26,7 @@ Render (Docker: PHP 8.3 + Apache)  ──►  MySQL eksternal (Aiven/TiDB)
 ## 1. Siapkan Cloudflare R2
 
 1. Buat akun Cloudflare → menu **R2** → **Create bucket**.
-   Nama bucket: `tk-angkasa8`, region `Automatic`.
+   Nama bucket: `smkn64`, region `Automatic`.
 2. Buka bucket → **Settings** → **Public access** → aktifkan
    **R2.dev subdomain**. Catat URL publiknya, mis.
    `https://pub-xxxxxxxx.r2.dev`.
@@ -43,13 +43,13 @@ Render (Docker: PHP 8.3 + Apache)  ──►  MySQL eksternal (Aiven/TiDB)
 
 1. Buat service **MySQL** versi gratis.
 2. Catat `host`, `port`, `user`, `password`, dan nama database.
-   Buat database `tk_angkasa8` bila belum ada.
+   Buat database `smkn64_db` bila belum ada.
 3. Unduh **CA certificate** (`ca.pem`) dari halaman service, simpan sebagai
    `docker/aiven-ca.pem` di repo. File ini akan ikut ke dalam image.
 
 ### Opsi B — TiDB Cloud Serverless (5 GB gratis)
 
-1. Buat cluster **Serverless** → buat database `tk_angkasa8`.
+1. Buat cluster **Serverless** → buat database `smkn64_db`.
 2. Catat host, port `4000`, user, dan password.
 3. Karena sertifikatnya dari CA publik, cukup set:
    `MYSQL_ATTR_SSL_CA=/etc/ssl/certs/ca-certificates.crt`
@@ -71,10 +71,10 @@ Render (Docker: PHP 8.3 + Apache)  ──►  MySQL eksternal (Aiven/TiDB)
 ## 4. Deploy di Render
 
 1. Masuk Render → **New** → **Blueprint** → pilih repo GitHub.
-   Render membaca `render.yaml` dan membuat web service `tk-angkasa8`.
+   Render membaca `render.yaml` dan membuat web service `smkn64`.
 2. Isi variabel yang diminta (`sync: false`):
    - `APP_KEY` — hasil langkah 3.
-   - `APP_URL` — `https://tk-angkasa8.onrender.com` (sesuaikan dengan nama
+   - `APP_URL` — `https://smkn64.onrender.com` (sesuaikan dengan nama
      service; bisa diubah setelah deploy pertama).
    - `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`.
    - `MYSQL_ATTR_SSL_CA` — path CA sesuai langkah 2.
@@ -93,7 +93,7 @@ komputer lokal dengan kredensial database produksi.
 ```powershell
 $env:DB_HOST = "host-dari-aiven-atau-tidb"
 $env:DB_PORT = "3306"          # TiDB: 4000
-$env:DB_DATABASE = "tk_angkasa8"
+$env:DB_DATABASE = "smkn64_db"
 $env:DB_USERNAME = "user"
 $env:DB_PASSWORD = "kata-sandi"
 $env:MYSQL_ATTR_SSL_CA = "C:\path\ca.pem"   # TiDB: biarkan kosong
@@ -114,12 +114,12 @@ ke bucket R2 pada folder `logo/`.
 
 ## 7. Verifikasi
 
-- [ ] Beranda, profil, program, fasilitas, galeri, berita, PPDB, kontak → 200.
+- [ ] Beranda, profil, jurusan, fasilitas, galeri, berita, SPMB, kontak → 200.
 - [ ] Login admin berhasil, dashboard tampil.
-- [ ] Unggah foto program → gambar tampil (berarti R2 benar).
+- [ ] Unggah foto jurusan → gambar tampil (berarti R2 benar).
 - [ ] Ganti logo → logo baru tampil.
 - [ ] `sitemap.xml` dan `robots.txt` dapat dibuka.
-- [ ] Tidak ada banner demo; tidak ada teks `[CONTOH]`.
+- [ ] Tidak ada banner demo; tidak ada teks data contoh.
 
 ## 8. Perawatan
 
@@ -149,3 +149,5 @@ ke bucket R2 pada folder `logo/`.
 - Tidak ada cron terjadwal; berita terjadwal tetap dihitung saat halaman dibuka.
 - Untuk situs resmi jangka panjang, hosting PHP+MySQL berbayar yang murah
   (mis. shared hosting sekolah) biasanya lebih stabil daripada tier gratis.
+
+

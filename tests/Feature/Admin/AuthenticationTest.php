@@ -38,7 +38,7 @@ class AuthenticationTest extends TestCase
         $this->post(route('admin.login.attempt'), [
             'email' => 'admin@contoh.test',
             'password' => 'rahasia123',
-        ])->assertRedirect(route('admin.dashboard'));
+        ])->assertRedirect(route('admin.dasbor'));
 
         $this->assertAuthenticatedAs($admin);
     }
@@ -103,7 +103,7 @@ class AuthenticationTest extends TestCase
     {
         $this->actingAs($this->admin())
             ->get(route('admin.login'))
-            ->assertRedirect(route('admin.dashboard'));
+            ->assertRedirect(route('admin.dasbor'));
     }
 
     public function test_percobaan_login_dibatasi_setelah_lima_kali(): void
@@ -132,13 +132,13 @@ class AuthenticationTest extends TestCase
     {
         $admin = $this->admin();
 
-        $this->actingAs($admin)->put(route('admin.account.update'), [
+        $this->actingAs($admin)->put(route('admin.akun.update'), [
             'name' => $admin->name,
             'email' => $admin->email,
             'current_password' => 'rahasia123',
             'password' => 'kata-sandi-baru-9',
             'password_confirmation' => 'kata-sandi-baru-9',
-        ])->assertRedirect(route('admin.account.edit'));
+        ])->assertRedirect(route('admin.akun.edit'));
 
         $this->assertTrue(Hash::check('kata-sandi-baru-9', $admin->fresh()->password));
     }
@@ -147,7 +147,7 @@ class AuthenticationTest extends TestCase
     {
         $admin = $this->admin();
 
-        $this->actingAs($admin)->put(route('admin.account.update'), [
+        $this->actingAs($admin)->put(route('admin.akun.update'), [
             'name' => $admin->name,
             'email' => $admin->email,
             'current_password' => 'bukan-kata-sandi-saya',

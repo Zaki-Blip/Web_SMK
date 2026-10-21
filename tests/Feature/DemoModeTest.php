@@ -2,17 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Models\Facility;
-use App\Models\GalleryItem;
-use App\Models\News;
-use App\Models\Program;
+use App\Models\Berita;
+use App\Models\Fasilitas;
+use App\Models\Galeri;
+use App\Models\Jurusan;
 use Database\Seeders\DemoSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-/**
- * Memastikan data demo ([CONTOH]) tampil dan seeder aman dijalankan berulang.
- */
 class DemoModeTest extends TestCase
 {
     use RefreshDatabase;
@@ -25,23 +22,22 @@ class DemoModeTest extends TestCase
 
         $this->get('/')
             ->assertOk()
-            ->assertSee('Versi demo', false)
-            ->assertSee('[CONTOH]');
+            ->assertSee('Versi demo', false);
 
-        $this->get('/program')->assertOk()->assertSee('[CONTOH]');
-        $this->get('/fasilitas')->assertOk()->assertSee('[CONTOH]');
-        $this->get('/galeri')->assertOk()->assertSee('[CONTOH]');
-        $this->get('/berita')->assertOk()->assertSee('[CONTOH]');
-        $this->get('/ppdb')->assertOk()->assertSee('[CONTOH]');
+        $this->get('/jurusan')->assertOk();
+        $this->get('/fasilitas')->assertOk();
+        $this->get('/galeri')->assertOk();
+        $this->get('/berita')->assertOk();
+        $this->get('/spmb')->assertOk();
     }
 
     public function test_berita_draf_tidak_tampil_di_data_demo(): void
     {
         $this->seed(DemoSeeder::class);
 
-        $this->get('/berita')->assertDontSee('Contoh Berita Draf');
+        $this->get('/berita')->assertDontSee('Berita Draf');
 
-        $this->get('/berita/contoh-berita-4')->assertNotFound();
+        $this->get('/berita/berita-draf')->assertNotFound();
     }
 
     public function test_seeder_demo_dapat_dijalankan_berulang_tanpa_duplikasi(): void
@@ -49,9 +45,9 @@ class DemoModeTest extends TestCase
         $this->seed(DemoSeeder::class);
         $this->seed(DemoSeeder::class);
 
-        $this->assertSame(4, Program::query()->count());
-        $this->assertSame(3, Facility::query()->count());
-        $this->assertSame(6, GalleryItem::query()->count());
-        $this->assertSame(4, News::query()->count());
+        $this->assertSame(2, Jurusan::query()->count());
+        $this->assertSame(8, Fasilitas::query()->count());
+        $this->assertSame(6, Galeri::query()->count());
+        $this->assertSame(9, Berita::query()->where('status', 'published')->count() + Berita::query()->where('status', 'draft')->count());
     }
 }

@@ -6,7 +6,8 @@ kesalahpahaman saat serah terima.
 ## Cakupan
 
 - Satu sekolah, satu bahasa (Indonesia). Tidak ada multi-bahasa atau multi-sekolah.
-- Fokus pada profil, program, fasilitas, galeri, berita, PPDB, dan kontak.
+- Fokus pada profil, jurusan, struktur organisasi, fasilitas, galeri, berita,
+  alur PKL, agenda, unduhan, SPMB, dan kontak.
 - Tidak ada sistem akademik, absensi, nilai, atau pembayaran online.
 
 ## Akun dan pengguna
@@ -28,9 +29,14 @@ kesalahpahaman saat serah terima.
 - Tidak ada formulir kontak (untuk menghindari spam dan konfigurasi email).
   Komunikasi diarahkan ke WhatsApp, telepon, atau email sekolah.
 - Tidak ada tempat sampah/restore: data yang dihapus hilang permanen.
-- Mengubah slug program/berita membuat URL lama menjadi 404 (tidak ada redirect).
+- Mengubah slug jurusan/berita membuat URL lama menjadi 404 (tidak ada redirect).
 - Galeri tidak memiliki album; kategori hanya berupa teks bebas.
 - Tidak ada pengurutan ulang dengan drag-and-drop; urutan diatur lewat angka.
+- Agenda tidak memiliki pengulangan otomatis, pendaftaran peserta, atau integrasi
+  kalender. Setiap kegiatan dicatat sebagai satu baris.
+- Unduhan tidak memiliki versi berkas, penghitung unduhan, atau pemindaian virus.
+  Berkas maksimal 10 MB dan hanya dapat diunduh setelah berstatus terbit.
+- Struktur organisasi berupa hierarki sederhana; belum ada bagan grafis interaktif.
 - Tidak ada penjadwalan otomatis berbasis cron untuk berita: status "terjadwal"
   dihitung saat halaman dibuka (`published_at <= sekarang`), jadi tidak perlu
   cron, tetapi juga tidak ada notifikasi saat berita terbit.
@@ -39,6 +45,8 @@ kesalahpahaman saat serah terima.
 
 - Hanya satu berkas per gambar (diperkecil ke maks. 1600 px); belum ada
   `srcset`/varian responsif atau konversi otomatis ke WebP.
+- Dokumen unduhan disimpan sebagai satu berkas tanpa versi; belum ada pemindaian
+  virus atau pembatasan unduhan per pengguna.
 - Tidak ada pemotongan (crop) di dashboard; rasio tampilan diatur CSS.
 - `storage:link` harus dijalankan manual di server (lihat README).
 - Izin publikasi foto anak sepenuhnya tanggung jawab sekolah.
@@ -56,16 +64,19 @@ kesalahpahaman saat serah terima.
 ## SEO
 
 - Sitemap dan robots dinamis sudah ada.
-- Belum ada gambar Open Graph khusus (`og:image`) maupun data terstruktur
-  (JSON-LD `School`/`Article`).
-- Tidak ada integrasi Google Search Console/Analytics (bisa ditambahkan nanti).
+- Open Graph dan Twitter Card sudah tersedia; gambar memakai gambar konten atau
+  logo situs, belum ada gambar khusus 1200 x 630 px.
+- JSON-LD tersedia untuk organisasi, situs, halaman, berita, jurusan, breadcrumb,
+  dan daftar item.
+- Belum ada integrasi Google Search Console/Analytics (bisa ditambahkan nanti).
 - Tidak ada jaminan peringkat di mesin pencari.
 
 ## Operasional
 
 - Backup masih manual (panduan tersedia di `docs/deployment-dan-backup.md`).
-- Cache, session, dan queue memakai database; belum memakai Redis.
-- Queue belum dipakai untuk pekerjaan latar (tidak ada job terjadwal).
+- Cache dan session memakai database; queue memakai `sync`; belum memakai Redis.
+- Queue belum dipakai untuk pekerjaan latar (tidak ada job terjadwal). Tabel
+  `jobs`, `job_batches`, dan `failed_jobs` tetap ada sebagai bawaan Laravel.
 - Belum ada halaman pemeliharaan otomatis (`php artisan down` tersedia bawaan Laravel).
 - Test berjalan di SQLite in-memory; perilaku MySQL di produksi diuji manual.
 
@@ -80,7 +91,9 @@ kesalahpahaman saat serah terima.
 ## Sebelum dianggap selesai
 
 1. Konfirmasi seluruh data pada [konfirmasi-sekolah.md](konfirmasi-sekolah.md).
-2. Ganti/hapus data `[CONTOH]` dan akun percobaan.
+2. Ganti/hapus data demo dan akun percobaan.
 3. Set `DEMO_MODE=false`, `APP_ENV=production`, `APP_DEBUG=false`.
 4. Pasang HTTPS, jalankan `storage:link`, dan uji backup/restore.
 5. Minta persetujuan tertulis sebelum situs diumumkan sebagai situs resmi.
+
+

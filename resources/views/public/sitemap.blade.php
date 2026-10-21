@@ -9,9 +9,17 @@
     @endforeach
     @foreach ($news as $item)
         <url>
-            <loc>{{ route('news.show', $item->slug) }}</loc>
+            <loc>{{ route('berita.show', $item->slug) }}</loc>
             <lastmod>{{ $item->updated_at?->toAtomString() }}</lastmod>
             <changefreq>monthly</changefreq>
+            <priority>0.6</priority>
+        </url>
+    @endforeach
+    @foreach ($agendas as $item)
+        <url>
+            <loc>{{ route('agenda.show', $item->slug) }}</loc>
+            <lastmod>{{ $item->updated_at?->toAtomString() }}</lastmod>
+            <changefreq>weekly</changefreq>
             <priority>0.6</priority>
         </url>
     @endforeach

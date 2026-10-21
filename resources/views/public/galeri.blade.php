@@ -1,0 +1,30 @@
+@extends('layouts.public')
+
+@section('title', 'Galeri — '.($site?->school_name ?: config('school.fallback.school_name')))
+@section('meta_description', 'Galeri foto kegiatan '.($site?->school_name ?: config('school.fallback.school_name')).'.')
+
+@section('content')
+    <section class="tk-page-head">
+        <div class="container">
+            <x-section-heading level="h1" title="Galeri" description="Foto kegiatan sekolah yang dipublikasikan." :compact="true" />
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            @if ($items->isNotEmpty())
+                <x-public.galeri-grid :items="$items" />
+
+                <div class="mt-3">
+                    {{ $items->links() }}
+                </div>
+            @else
+                <x-empty-state
+                    icon="bi-images"
+                    title="Belum ada foto pada galeri"
+                    message="Foto kegiatan akan tampil setelah pihak sekolah mengunggahnya melalui dasbor admin."
+                />
+            @endif
+        </div>
+    </section>
+@endsection

@@ -3,35 +3,44 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
-use App\Models\News;
+use App\Models\Agenda;
+use App\Models\Berita;
 use App\Models\SiteSetting;
 use Illuminate\Http\Response;
 
 class SitemapController extends Controller
 {
-    /**
-     * Sitemap XML dinamis: halaman publik statis + berita yang sudah published.
-     */
     public function __invoke(): Response
     {
         $site = SiteSetting::current();
 
         $staticRoutes = [
-            ['url' => route('home'), 'priority' => '1.0'],
-            ['url' => route('profile.index'), 'priority' => '0.8'],
-            ['url' => route('program.index'), 'priority' => '0.8'],
-            ['url' => route('facility.index'), 'priority' => '0.8'],
-            ['url' => route('gallery.index'), 'priority' => '0.7'],
-            ['url' => route('news.index'), 'priority' => '0.8'],
-            ['url' => route('admission.index'), 'priority' => '0.9'],
-            ['url' => route('contact.index'), 'priority' => '0.7'],
+            ['url' => route('beranda'), 'priority' => '1.0'],
+            ['url' => route('profil.index'), 'priority' => '0.8'],
+            ['url' => route('jurusan.index'), 'priority' => '0.8'],
+            ['url' => route('guru.index'), 'priority' => '0.7'],
+            ['url' => route('fasilitas.index'), 'priority' => '0.8'],
+            ['url' => route('industri.index'), 'priority' => '0.7'],
+            ['url' => route('prestasi.index'), 'priority' => '0.7'],
+            ['url' => route('ekstrakurikuler.index'), 'priority' => '0.7'],
+            ['url' => route('bkk.index'), 'priority' => '0.7'],
+            ['url' => route('galeri.index'), 'priority' => '0.7'],
+            ['url' => route('struktur.index'), 'priority' => '0.7'],
+            ['url' => route('alur-pkl.index'), 'priority' => '0.7'],
+            ['url' => route('agenda.index'), 'priority' => '0.8'],
+            ['url' => route('unduhan.index'), 'priority' => '0.7'],
+            ['url' => route('berita.index'), 'priority' => '0.8'],
+            ['url' => route('spmb.index'), 'priority' => '0.9'],
+            ['url' => route('kontak.index'), 'priority' => '0.7'],
         ];
 
-        $news = News::query()->published()->latestFirst()->get(['slug', 'updated_at']);
+        $news = Berita::query()->published()->latestFirst()->get(['slug', 'updated_at']);
+        $agendas = Agenda::query()->published()->ordered()->get(['slug', 'updated_at']);
 
         $xml = view('public.sitemap', [
             'staticRoutes' => $staticRoutes,
             'news' => $news,
+            'agendas' => $agendas,
             'siteName' => $site->school_name ?: config('school.fallback.school_name'),
         ])->render();
 

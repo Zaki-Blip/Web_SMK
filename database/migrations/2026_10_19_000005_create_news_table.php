@@ -15,11 +15,13 @@ return new class extends Migration
             $table->string('excerpt')->nullable();
             $table->text('body');
             $table->string('image_path')->nullable();
+            $table->string('category')->default('berita');
             $table->timestamp('published_at')->nullable();
             $table->string('status')->default('draft');
             $table->timestamps();
 
             $table->index('status');
+            $table->index('category');
             $table->index('published_at');
         });
     }

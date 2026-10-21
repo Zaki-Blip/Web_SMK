@@ -2,166 +2,499 @@
 
 namespace Database\Seeders;
 
-use App\Models\AdmissionSetting;
-use App\Models\Facility;
-use App\Models\GalleryItem;
-use App\Models\News;
-use App\Models\Program;
+use App\Models\Agenda;
+use App\Models\AlurPkl;
+use App\Models\Berita;
+use App\Models\Ekstrakurikuler;
+use App\Models\Faq;
+use App\Models\Fasilitas;
+use App\Models\Galeri;
+use App\Models\Guru;
+use App\Models\Jurusan;
+use App\Models\LowonganBkk;
+use App\Models\MitraIndustri;
+use App\Models\Prestasi;
 use App\Models\SchoolProfile;
 use App\Models\SiteSetting;
+use App\Models\Spmb;
+use App\Models\StrukturOrganisasi;
+use App\Models\Testimoni;
+use App\Models\Unduhan;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
-/**
- * Data DEMO. Hanya untuk presentasi lokal.
- *
- * Semua teks diawali [CONTOH] agar jelas bukan data sekolah yang sebenarnya,
- * dan tidak memuat klaim faktual (akreditasi, jumlah guru, fasilitas spesifik).
- *
- * Jalankan: php artisan db:seed --class=DemoSeeder
- * Aktifkan juga DEMO_MODE=true di .env agar banner "Versi demo" tampil.
- */
 class DemoSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->seedProfileAndSettings();
-        $this->seedPrograms();
-        $this->seedFacilities();
-        $this->seedGallery();
-        $this->seedNews();
-        $this->seedAdmission();
+        $this->seedProfilDanPengaturan();
+        $this->seedJurusan();
+        $this->seedGuru();
+        $this->seedMitra();
+        $this->seedPrestasi();
+        $this->seedEkstrakurikuler();
+        $this->seedLowongan();
+        $this->seedFasilitas();
+        $this->seedGaleri();
+        $this->seedBerita();
+        $this->seedTestimoni();
+        $this->seedFaq();
+        $this->seedStrukturOrganisasi();
+        $this->seedAlurPkl();
+        $this->seedAgenda();
+        $this->seedUnduhan();
+        $this->seedSpmb();
     }
 
-    private function seedProfileAndSettings(): void
+    private function seedProfilDanPengaturan(): void
     {
         SchoolProfile::current()->update([
-            'school_name' => '[CONTOH] TK Angkasa 8',
-            'history' => '[CONTOH] Teks ini adalah contoh pengisian sejarah sekolah. Ganti dengan cerita berdirinya sekolah yang sebenarnya.',
-            'vision' => '[CONTOH] Menjadi taman kanak-kanak yang ramah, aman, dan menyenangkan bagi anak.',
-            'mission' => "[CONTOH] Menyelenggarakan kegiatan belajar yang menyenangkan.\n[CONTOH] Melibatkan orang tua dalam proses belajar anak.\n[CONTOH] Menjaga lingkungan belajar yang aman dan bersih.",
-            'description' => '[CONTOH] Teks ini adalah contoh deskripsi singkat sekolah untuk keperluan demo tampilan.',
+            'school_name' => 'SMKN 64 Jakarta',
+            'nama_kepala_sekolah' => 'Dewi Puspitasari, M.Par.',
+            'sambutan_kepala_sekolah' => 'Selamat datang di SMKN 64 Jakarta. Kami berkomitmen mencetak lulusan yang kompeten, berkarakter, dan siap kerja.',
+            'sejarah' => 'SMKN 64 Jakarta berdiri sejak tahun 2019 sebagai sekolah kejuruan berbasis teknologi informasi dengan dua kompetensi unggulan, yaitu RPL dan DKV.',
+            'history' => 'SMKN 64 Jakarta berdiri sejak tahun 2019 sebagai sekolah kejuruan berbasis teknologi informasi.',
+            'visi' => 'Mewujudkan lulusan yang berkarakter mulia, berprestasi, berkualitas, dan berwawasan global.',
+            'vision' => 'Mewujudkan lulusan yang berkarakter mulia, berprestasi, berkualitas, dan berwawasan global.',
+            'misi' => "Menanamkan nilai iman, disiplin, tanggung jawab, dan karakter mulia.\nMengembangkan profesionalisme dengan penguasaan bahasa asing dan disiplin tinggi.\nMenjawab tuntutan perusahaan akan tenaga terampil yang memiliki standar profesionalisme tinggi.",
+            'mission' => "Menanamkan nilai iman, disiplin, tanggung jawab, dan karakter mulia.\nMengembangkan profesionalisme dengan penguasaan bahasa asing dan disiplin tinggi.",
+            'description' => 'SMKN 64 Jakarta adalah sekolah menengah kejuruan berbasis teknologi informasi dengan kompetensi keahlian RPL dan DKV.',
+            'akreditasi' => 'B',
+            'npsn' => '69992315',
+            'tahun_berdiri' => 2019,
+            'jumlah_siswa' => 600,
+            'jumlah_guru' => 40,
+            'jumlah_mitra' => 12,
         ]);
 
         SiteSetting::current()->update([
-            'school_name' => '[CONTOH] TK Angkasa 8',
-            'address' => '[CONTOH] Jl. Raya Pd. Gede No. 7, Halim Perdanakusuma, Kecamatan Makasar, Kota Jakarta Timur (contoh alamat)',
-            'phone' => '[CONTOH] 021-0000000',
-            'email' => '[CONTOH] info@contoh.sch.id',
-            'opening_hours' => '[CONTOH] Senin-Jumat, 07.00-14.00 WIB',
-            'whatsapp_number' => '6280000000000',
-            'maps_url' => 'https://maps.google.com/?q=contoh-lokasi-sekolah',
-            'meta_title' => '[CONTOH] Website Profil TK',
-            'meta_description' => '[CONTOH] Deskripsi meta untuk keperluan demo tampilan.',
+            'school_name' => 'SMKN 64 Jakarta',
+            'logo_path' => 'logo/smkn64.png',
+            'address' => 'Jl. Mpo Nori RT 09 RW 03, Bambu Apus, Cipayung, Jakarta Timur, DKI Jakarta 13890',
+            'phone' => '08978891895',
+            'email' => 'info@smkn64-jkt.sch.id',
+            'opening_hours' => 'Senin-Jumat, 07.00-16.00 WIB',
+            'whatsapp_number' => '628978891895',
+            'maps_url' => 'https://maps.google.com/?q=SMKN+64+Jakarta+Cipayung',
+            'meta_title' => 'SMKN 64 Jakarta — Sekolah Menengah Kejuruan',
+            'meta_description' => 'Website resmi SMKN 64 Jakarta. Informasi jurusan RPL dan DKV, fasilitas, berita, dan SPMB.',
+            'facebook_url' => 'https://www.facebook.com/smkn64jakarta',
+            'instagram_url' => 'https://www.instagram.com/smkn64jakarta',
+            'youtube_url' => 'https://www.youtube.com/@smkn64jakarta',
+            'tiktok_url' => 'https://www.tiktok.com/@smkn64jakarta',
         ]);
     }
 
-    private function seedPrograms(): void
+    private function seedJurusan(): void
     {
-        $programs = [
-            ['Kelompok Bermain (Contoh)', 'Contoh program untuk kelompok bermain.', 1],
-            ['Kelompok A (Contoh)', 'Contoh program untuk anak usia 4-5 tahun.', 2],
-            ['Kelompok B (Contoh)', 'Contoh program untuk anak usia 5-6 tahun.', 3],
-            ['Kegiatan Ekstrakurikuler (Contoh)', 'Contoh kegiatan tambahan di luar jam belajar.', 4],
+        $data = [
+            ['Rekayasa Perangkat Lunak', 'RPL', 'Jurusan yang berfokus pada pengembangan perangkat lunak.', ['Pemrograman', 'Basis Data', 'Pemrograman Web', 'Pemrograman Mobile', 'Desain UI/UX', 'Pengujian Perangkat Lunak'], 'Software developer, web developer, mobile developer'],
+            ['Desain Komunikasi Visual', 'DKV', 'Jurusan yang menggabungkan seni, komunikasi, dan teknologi.', ['Desain Grafis', 'Fotografi', 'Videografi', 'Branding', 'Ilustrasi', 'Motion Graphic'], 'Desainer grafis, ilustrator, videografer'],
         ];
 
-        foreach ($programs as $index => [$name, $short, $order]) {
-            Program::updateOrCreate(
-                ['slug' => 'contoh-program-'.($index + 1)],
+        foreach ($data as $i => [$nama, $singkatan, $ringkasan, $kompetensi, $prospek]) {
+            Jurusan::updateOrCreate(
+                ['slug' => Str::slug($nama)],
                 [
-                    'name' => '[CONTOH] '.$name,
-                    'short_description' => $short,
-                    'description' => '[CONTOH] Uraian program ini hanya contoh untuk keperluan demo. Kegiatan sebenarnya diisi oleh pihak sekolah.',
-                    'sort_order' => $order,
+                    'nama' => $nama,
+                    'singkatan' => $singkatan,
+                    'ringkasan' => $ringkasan,
+                    'deskripsi' => $ringkasan.' Kompetensi keahlian ini menekankan praktik dan kerja sama dengan industri.',
+                    'kompetensi' => $kompetensi,
+                    'prospek_karier' => $prospek,
+                    'lama_belajar' => '3 tahun',
+                    'urutan' => $i + 1,
+                    'is_active' => true,
+                ],
+            );
+        }
+    }
+
+    private function seedGuru(): void
+    {
+        $jurusans = Jurusan::query()->get();
+        $names = ['Andi Wijaya', 'Siti Rahmawati', 'Budi Hartono', 'Dewi Lestari', 'Eko Prasetyo', 'Fitri Handayani', 'Gilang Ramadhan', 'Hana Pertiwi', 'Irfan Maulana', 'Joko Susilo', 'Kartika Sari', 'Lina Marlina'];
+        foreach ($names as $i => $name) {
+            Guru::updateOrCreate(
+                ['nama' => $name],
+                [
+                    'jabatan' => $i === 0 ? 'Kepala Jurusan' : 'Guru',
+                    'tipe' => 'guru',
+                    'mata_pelajaran' => 'Mata pelajaran '.$i,
+                    'jurusan_id' => $jurusans->count() ? $jurusans[$i % $jurusans->count()]->id : null,
+                    'urutan' => $i + 1,
+                    'is_active' => true,
+                ],
+            );
+        }
+        // staf
+        foreach (['Rina Adm', 'Tono TU'] as $i => $name) {
+            Guru::updateOrCreate(
+                ['nama' => $name],
+                [
+                    'jabatan' => 'Staf TU',
+                    'tipe' => 'staf',
+                    'mata_pelajaran' => null,
+                    'urutan' => 100 + $i,
+                    'is_active' => true,
+                ],
+            );
+        }
+    }
+
+    private function seedMitra(): void
+    {
+        $mitras = ['PT Teknologi Nusantara', 'CV Media Kreatif', 'PT Keuangan Sejahtera', 'PT Solusi Kantor', 'PT Jaringan Cepat', 'PT Desain Visual', 'PT Aplikasi Muda', 'PT Karya Industri'];
+        foreach ($mitras as $i => $name) {
+            MitraIndustri::updateOrCreate(
+                ['nama' => $name],
+                [
+                    'bidang' => 'Teknologi',
+                    'website' => 'https://example.com',
+                    'urutan' => $i + 1,
+                    'is_active' => true,
+                ],
+            );
+        }
+    }
+
+    private function seedPrestasi(): void
+    {
+        for ($i = 1; $i <= 8; $i++) {
+            Prestasi::updateOrCreate(
+                ['judul' => 'Juara '.$i.' Lomba Kompetensi Siswa'],
+                [
+                    'tingkat' => ['sekolah', 'kota', 'provinsi', 'nasional', 'internasional'][$i % 5],
+                    'tahun' => (int) now()->year - ($i % 3),
+                    'peraih' => 'Tim SMKN 64',
+                    'deskripsi' => 'Prestasi siswa pada kompetisi tingkat '.['sekolah', 'kota', 'provinsi', 'nasional', 'internasional'][$i % 5].'.',
+                    'is_active' => true,
+                ],
+            );
+        }
+    }
+
+    private function seedEkstrakurikuler(): void
+    {
+        $items = ['Pramuka', 'Paskibra', 'Futsal', 'Seni Tari', 'Robotika', 'Jurnalistik'];
+        foreach ($items as $i => $name) {
+            Ekstrakurikuler::updateOrCreate(
+                ['slug' => Str::slug($name)],
+                [
+                    'nama' => $name,
+                    'deskripsi' => 'Kegiatan ekstrakurikuler '.$name.' untuk pengembangan minat dan bakat siswa.',
+                    'pembina' => 'Guru pembina',
+                    'jadwal' => 'Sabtu, 08.00-10.00 WIB',
+                    'urutan' => $i + 1,
+                    'is_active' => true,
+                ],
+            );
+        }
+    }
+
+    private function seedLowongan(): void
+    {
+        for ($i = 1; $i <= 5; $i++) {
+            LowonganBkk::updateOrCreate(
+                ['judul' => 'Lowongan '.$i],
+                [
+                    'perusahaan' => 'PT Contoh Industri '.$i,
+                    'lokasi' => 'Jakarta',
+                    'tipe' => $i === 5 ? 'magang' : 'penuh_waktu',
+                    'deskripsi' => 'Lowongan pekerjaan untuk lulusan SMK.',
+                    'persyaratan' => 'Lulusan SMK, mampu bekerja tim.',
+                    'tautan_daftar' => 'https://example.com/daftar',
+                    'batas_waktu' => $i === 4 ? Carbon::now()->subDays(5)->toDateString() : Carbon::now()->addMonth()->toDateString(),
                     'is_published' => true,
                 ],
             );
         }
     }
 
-    private function seedFacilities(): void
-    {
-        $facilities = [
-            ['Ruang Kelas (Contoh)', 'Contoh keterangan ruang kelas.'],
-            ['Area Bermain (Contoh)', 'Contoh keterangan area bermain.'],
-            ['Ruang Perpustakaan (Contoh)', 'Contoh keterangan ruang perpustakaan.'],
-        ];
-
-        foreach ($facilities as $index => [$name, $description]) {
-            Facility::updateOrCreate(
-                ['slug' => 'contoh-fasilitas-'.($index + 1)],
-                [
-                    'name' => '[CONTOH] '.$name,
-                    'description' => '[CONTOH] '.$description,
-                    'sort_order' => $index + 1,
-                    'is_published' => true,
-                ],
-            );
-        }
-    }
-
-    private function seedGallery(): void
+    private function seedFasilitas(): void
     {
         $items = [
-            ['Kegiatan Belajar (Contoh)', 'Kegiatan', 1],
-            ['Kegiatan Bermain (Contoh)', 'Kegiatan', 2],
-            ['Suasana Kelas (Contoh)', 'Kelas', 3],
-            ['Kegiatan Bersama Orang Tua (Contoh)', 'Kegiatan', 4],
-            ['Lingkungan Sekolah (Contoh)', 'Lingkungan', 5],
-            ['Kegiatan Seni (Contoh)', 'Kelas', 6],
+            ['Ruang Kelas', 'kelas'],
+            ['Laboratorium Komputer', 'laboratorium'],
+            ['Bengkel TKJ', 'bengkel'],
+            ['Studio Desain', 'bengkel'],
+            ['Perpustakaan', 'perpustakaan'],
+            ['Ruang UKS', 'lainnya'],
+            ['Lapangan Olahraga', 'lainnya'],
+            ['Aula', 'lainnya'],
         ];
-
-        foreach ($items as [$title, $category, $order]) {
-            GalleryItem::updateOrCreate(
-                ['title' => '[CONTOH] '.$title],
+        foreach ($items as $i => [$name, $kat]) {
+            Fasilitas::updateOrCreate(
+                ['slug' => Str::slug($name)],
                 [
-                    'caption' => '[CONTOH] Keterangan foto hanya untuk keperluan demo tampilan.',
-                    'category' => $category,
-                    'sort_order' => $order,
+                    'name' => $name,
+                    'description' => 'Fasilitas '.$name.' untuk mendukung pembelajaran.',
+                    'category' => $kat,
+                    'sort_order' => $i + 1,
                     'is_published' => true,
-                    // image_path sengaja kosong: tampilan memakai placeholder netral,
-                    // bukan foto anak tanpa persetujuan.
-                    'image_path' => null,
                 ],
             );
         }
     }
 
-    private function seedNews(): void
+    private function seedGaleri(): void
     {
-        $news = [
-            ['Contoh Berita Pertama', 3, News::STATUS_PUBLISHED],
-            ['Contoh Berita Kedua', 9, News::STATUS_PUBLISHED],
-            ['Contoh Berita Ketiga', 20, News::STATUS_PUBLISHED],
-            ['Contoh Berita Draf', null, News::STATUS_DRAFT],
+        for ($i = 1; $i <= 6; $i++) {
+            Galeri::updateOrCreate(
+                ['title' => 'Kegiatan '.$i],
+                [
+                    'caption' => 'Dokumentasi kegiatan sekolah.',
+                    'category' => 'Kegiatan',
+                    'sort_order' => $i,
+                    'is_published' => true,
+                ],
+            );
+        }
+    }
+
+    private function seedBerita(): void
+    {
+        for ($i = 1; $i <= 5; $i++) {
+            Berita::updateOrCreate(
+                ['slug' => 'berita-'.$i],
+                [
+                    'title' => 'Berita Sekolah '.$i,
+                    'excerpt' => 'Ringkasan berita sekolah.',
+                    'body' => "Isi berita sekolah nomor {$i}.\n\nParagraf kedua berita.",
+                    'kategori' => $i <= 2 ? 'pengumuman' : 'berita',
+                    'published_at' => Carbon::now()->subDays($i * 3),
+                    'status' => Berita::STATUS_PUBLISHED,
+                ],
+            );
+        }
+        // draft
+        Berita::updateOrCreate(
+            ['slug' => 'berita-draf'],
+            [
+                'title' => 'Berita Draf',
+                'excerpt' => 'Draf.',
+                'body' => 'Draf berita.',
+                'kategori' => 'berita',
+                'published_at' => null,
+                'status' => Berita::STATUS_DRAFT,
+            ],
+        );
+        // pengumuman tambahan
+        for ($i = 1; $i <= 3; $i++) {
+            Berita::updateOrCreate(
+                ['slug' => 'pengumuman-'.$i],
+                [
+                    'title' => 'Pengumuman '.$i,
+                    'excerpt' => 'Pengumuman sekolah.',
+                    'body' => 'Isi pengumuman '.$i.'.',
+                    'kategori' => 'pengumuman',
+                    'published_at' => Carbon::now()->subDays($i),
+                    'status' => Berita::STATUS_PUBLISHED,
+                ],
+            );
+        }
+    }
+
+    private function seedTestimoni(): void
+    {
+        $j = Jurusan::query()->first();
+        for ($i = 1; $i <= 4; $i++) {
+            Testimoni::updateOrCreate(
+                ['nama' => 'Alumni '.$i],
+                [
+                    'angkatan' => '202'.(2 + $i),
+                    'jurusan_id' => $j?->id,
+                    'pekerjaan_saat_ini' => 'Staf di perusahaan',
+                    'isi' => 'SMKN 64 Jakarta memberikan bekal yang sangat berguna untuk dunia kerja.',
+                    'is_active' => true,
+                ],
+            );
+        }
+    }
+
+    private function seedFaq(): void
+    {
+        $items = [
+            ['Bagaimana cara mendaftar?', 'Pendaftaran dilakukan melalui halaman SPMB.', 'spmb'],
+            ['Kapan SPMB dibuka?', 'Informasi jadwal tersedia di halaman SPMB.', 'spmb'],
+            ['Jurusan apa saja yang tersedia?', 'Lihat halaman Jurusan.', 'umum'],
+        ];
+        foreach ($items as $i => [$q, $a, $kat]) {
+            Faq::updateOrCreate(
+                ['pertanyaan' => $q],
+                [
+                    'jawaban' => $a,
+                    'kategori' => $kat,
+                    'urutan' => $i + 1,
+                    'is_active' => true,
+                ],
+            );
+        }
+        // Pastikan tersedia 8 FAQ.
+        for ($i = 4; $i <= 8; $i++) {
+            Faq::updateOrCreate(
+                ['pertanyaan' => 'Pertanyaan umum '.$i],
+                [
+                    'jawaban' => 'Jawaban contoh '.$i.'.',
+                    'kategori' => $i % 2 === 0 ? 'spmb' : 'umum',
+                    'urutan' => $i,
+                    'is_active' => true,
+                ],
+            );
+        }
+    }
+
+    private function seedStrukturOrganisasi(): void
+    {
+        $kepala = StrukturOrganisasi::updateOrCreate(
+            ['nama' => 'Dewi Puspitasari, M.Par.', 'jabatan' => 'Kepala Sekolah'],
+            ['parent_id' => null, 'urutan' => 1, 'is_active' => true],
+        );
+
+        $items = [
+            ['Andi Wijaya', 'Wakil Kepala Bidang Kurikulum', $kepala->id, 2],
+            ['Siti Rahmawati', 'Wakil Kepala Bidang Kesiswaan', $kepala->id, 3],
+            ['Budi Hartono', 'Kepala Tata Usaha', $kepala->id, 4],
+            ['Dewi Lestari', 'Kepala Program RPL', $kepala->id, 5],
+            ['Eko Prasetyo', 'Kepala Program DKV', $kepala->id, 6],
         ];
 
-        foreach ($news as $index => [$title, $daysAgo, $status]) {
-            News::updateOrCreate(
-                ['slug' => 'contoh-berita-'.($index + 1)],
+        foreach ($items as [$nama, $jabatan, $parentId, $urutan]) {
+            StrukturOrganisasi::updateOrCreate(
+                ['nama' => $nama, 'jabatan' => $jabatan],
+                ['parent_id' => $parentId, 'urutan' => $urutan, 'is_active' => true],
+            );
+        }
+    }
+
+    private function seedAlurPkl(): void
+    {
+        $items = [
+            ['Pendaftaran dan verifikasi tempat PKL', 'Siswa mendaftar ke sekolah dan memverifikasi perusahaan atau instansi yang akan menjadi tempat PKL.'],
+            ['Pembekalan dan administrasi', 'Siswa mengikuti pembekalan, melengkapi surat pengantar, dan menandatangani perjanjian kerja sama.'],
+            ['Pelaksanaan PKL', 'Siswa melaksanakan PKL sesuai jadwal, mengisi jurnal harian, dan mematuhi aturan tempat PKL.'],
+            ['Monitoring dan pembimbingan', 'Guru pembimbing melakukan monitoring serta berkoordinasi dengan pembimbing industri.'],
+            ['Penilaian dan laporan akhir', 'Siswa menyusun laporan akhir, mengikuti penilaian, dan menyerahkan dokumentasi PKL.'],
+        ];
+
+        foreach ($items as $i => [$judul, $deskripsi]) {
+            AlurPkl::updateOrCreate(
+                ['judul' => $judul],
+                ['deskripsi' => $deskripsi, 'urutan' => $i + 1, 'is_active' => true],
+            );
+        }
+    }
+
+    private function seedAgenda(): void
+    {
+        $items = [
+            ['rapat-orang-tua-siswa', 'Rapat Orang Tua Siswa', 'Koordinasi program sekolah dan informasi SPMB.', 7, 'Aula Sekolah'],
+            ['workshop-karier-alumni', 'Workshop Karier Alumni', 'Berbagi pengalaman dunia kerja bersama alumni.', 14, 'Ruang Multimedia'],
+            ['pekan-kreativitas-siswa', 'Pekan Kreativitas Siswa', 'Pameran karya dan kompetisi antar kelas.', 30, 'Lapangan Sekolah'],
+            ['kunjungan-industri', 'Kunjungan Industri', 'Kunjungan belajar ke mitra industri sekolah.', 45, 'Mitra Industri'],
+        ];
+
+        foreach ($items as [$slug, $judul, $deskripsi, $days, $lokasi]) {
+            $mulai = Carbon::now()->addDays($days)->setTime(9, 0);
+
+            Agenda::updateOrCreate(
+                ['slug' => $slug],
                 [
-                    'title' => '[CONTOH] '.$title,
-                    'excerpt' => '[CONTOH] Ringkasan berita ini hanya untuk keperluan demo tampilan.',
-                    'body' => "[CONTOH] Isi berita ini hanya contoh untuk keperluan demo.\n\n[CONTOH] Berita sebenarnya diisi oleh pihak sekolah melalui dashboard admin.",
-                    'published_at' => $daysAgo === null ? null : Carbon::now()->subDays($daysAgo),
-                    'status' => $status,
-                    'image_path' => null,
+                    'judul' => $judul,
+                    'deskripsi' => $deskripsi,
+                    'mulai' => $mulai,
+                    'selesai' => $mulai->copy()->addHours(2),
+                    'lokasi' => $lokasi,
+                    'is_published' => true,
                 ],
             );
         }
     }
 
-    private function seedAdmission(): void
+    private function seedUnduhan(): void
     {
-        AdmissionSetting::current()->update([
-            'title' => '[CONTOH] Penerimaan Peserta Didik Baru',
-            'description' => '[CONTOH] Teks ini contoh informasi PPDB untuk keperluan demo tampilan.',
-            'schedule' => "[CONTOH] Gelombang 1: Januari - Februari\n[CONTOH] Gelombang 2: Maret - April",
-            'requirements' => "[CONTOH] Fotokopi akta kelahiran\n[CONTOH] Fotokopi kartu keluarga\n[CONTOH] Pas foto ukuran 3x4",
-            'registration_steps' => "[CONTOH] Ambil formulir di sekolah\n[CONTOH] Lengkapi berkas persyaratan\n[CONTOH] Serahkan berkas dan tunggu konfirmasi",
-            'fee_information' => '[CONTOH] Informasi biaya hanya contoh, mohon dikonfirmasi ke pihak sekolah.',
-            'whatsapp_number' => '6280000000000',
-            'is_active' => true,
+        $pdf = $this->samplePdf();
+        $disk = Storage::disk(config('filesystems.uploads_disk', 'public'));
+        $disk->put('unduhan/panduan-pkl.pdf', $pdf);
+        $disk->put('unduhan/formulir-pkl.pdf', $pdf);
+
+        $items = [
+            ['Panduan PKL', 'Panduan pelaksanaan Praktik Kerja Lapangan bagi siswa.', 'unduhan/panduan-pkl.pdf'],
+            ['Formulir Pendaftaran PKL', 'Formulir pendaftaran tempat Praktik Kerja Lapangan.', 'unduhan/formulir-pkl.pdf'],
+        ];
+
+        foreach ($items as $i => [$judul, $deskripsi, $berkas]) {
+            Unduhan::updateOrCreate(
+                ['judul' => $judul],
+                [
+                    'deskripsi' => $deskripsi,
+                    'berkas' => $berkas,
+                    'ukuran' => strlen($pdf),
+                    'is_published' => true,
+                    'urutan' => $i + 1,
+                ],
+            );
+        }
+    }
+
+    /**
+     * PDF contoh sederhana untuk data demo unduhan.
+     */
+    private function samplePdf(): string
+    {
+        $stream = "BT /F1 18 Tf 72 720 Td (Panduan PKL SMKN 64 Jakarta) Tj ET\n";
+        $objects = [
+            '<< /Type /Catalog /Pages 2 0 R >>',
+            '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+            '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>',
+            '<< /Length '.strlen($stream)." >>\nstream\n".$stream.'endstream',
+            '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
+        ];
+
+        $pdf = "%PDF-1.4\n";
+        $offsets = [];
+
+        foreach ($objects as $index => $object) {
+            $offsets[] = strlen($pdf);
+            $pdf .= ($index + 1)." 0 obj\n".$object."\nendobj\n";
+        }
+
+        $xref = strlen($pdf);
+        $pdf .= 'xref'."\n".'0 '.(count($objects) + 1)."\n".'0000000000 65535 f '."\n";
+
+        foreach ($offsets as $offset) {
+            $pdf .= sprintf('%010d 00000 n ', $offset)."\n";
+        }
+
+        $pdf .= 'trailer'."\n".'<< /Size '.(count($objects) + 1).' /Root 1 0 R >>'."\n";
+        $pdf .= 'startxref'."\n".$xref."\n".'%%EOF'."\n";
+
+        return $pdf;
+    }
+
+    private function seedSpmb(): void
+    {
+        Spmb::current()->update([
+            'tahun_ajaran' => '2026/2027',
+            'jalur' => [
+                ['nama' => 'Zonasi', 'kuota' => 120, 'keterangan' => 'Sesuai zonasi domisili'],
+                ['nama' => 'Prestasi', 'kuota' => 60, 'keterangan' => 'Berdasarkan prestasi'],
+                ['nama' => 'Afirmasi', 'kuota' => 40, 'keterangan' => 'Untuk calon siswa afirmasi'],
+            ],
+            'syarat' => "Fotokopi ijazah SMP\nFotokopi kartu keluarga\nPas foto 3x4",
+            'alur' => ['Mengisi formulir online', 'Melengkapi berkas', 'Verifikasi', 'Pengumuman', 'Daftar ulang'],
+            'jadwal' => [
+                ['kegiatan' => 'Pendaftaran', 'mulai' => '2026-05-01', 'selesai' => '2026-05-31'],
+                ['kegiatan' => 'Verifikasi', 'mulai' => '2026-06-01', 'selesai' => '2026-06-10'],
+                ['kegiatan' => 'Pengumuman', 'mulai' => '2026-06-15', 'selesai' => '2026-06-15'],
+                ['kegiatan' => 'Daftar Ulang', 'mulai' => '2026-06-20', 'selesai' => '2026-06-30'],
+                ['kegiatan' => 'Mulai Belajar', 'mulai' => '2026-07-13', 'selesai' => '2026-07-13'],
+            ],
+            'tautan_pendaftaran' => 'https://example.com/spmb',
+            'kontak_panitia' => 'Panitia SPMB SMKN 64 Jakarta',
+            'is_open' => true,
         ]);
     }
 }

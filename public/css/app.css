@@ -1,46 +1,55 @@
 /* ==========================================================================
-   Design System — Website Profil TK Angkasa 8
+   Design System — Website Profil SMK Negeri 64 Jakarta
    Satu-satunya file CSS kustom proyek. Bootstrap 5.3 dimuat via CDN,
    variabel di bawah menimpa gaya bawaan Bootstrap.
+
+   Palet mengikuti logo resmi sekolah: hijau (perisai), merah (pita),
+   dan biru (bidang dalam perisai). Hijau dipakai sebagai warna utama,
+   merah sebagai aksen/ajakan bertindak, biru hanya sebagai penyeimbang.
    ========================================================================== */
 
 :root {
-    /* Palet warna (lihat PROJECT_SPEC.md bagian 4) */
-    --tk-navy: #173b67;
-    --tk-navy-dark: #10294a;
-    --tk-yellow: #f7c948;
-    --tk-yellow-dark: #e0b13a;
-    --tk-sky: #eaf4ff;
-    --tk-green: #ddf3e4;
-    --tk-bg: #f8fafc;
-    --tk-text: #1e293b;
-    --tk-text-muted: #64748b;
-    --tk-border: #e2e8f0;
+    /* Palet warna — diambil dari logo SMK Negeri 64 Jakarta */
+    --tk-primary: #00843f;
+    --tk-primary-dark: #00602d;
+    --tk-primary-deep: #004a23;
+    --tk-accent: #d91f26;
+    --tk-accent-dark: #b0161c;
+    --tk-green: #00ab4d;
+    --tk-green-dark: #00843f;
+    --tk-blue: #0f51a1;
+    --tk-sky: #eaf7ef;
+    --tk-bg: #f6faf7;
+    --tk-text: #182720;
+    --tk-text-muted: #5a6b61;
+    --tk-border: #dfe9e3;
 
     /* Tipografi */
-    --tk-font-heading: 'Nunito', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --tk-font-heading: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
     --tk-font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
     /* Bentuk dan bayangan */
     --tk-radius-sm: 8px;
     --tk-radius: 12px;
     --tk-radius-lg: 16px;
-    --tk-shadow: 0 1px 2px rgba(30, 41, 59, .06), 0 4px 12px rgba(30, 41, 59, .06);
-    --tk-shadow-hover: 0 2px 4px rgba(30, 41, 59, .08), 0 10px 24px rgba(30, 41, 59, .10);
+    --tk-shadow: 0 1px 2px rgba(24, 39, 32, .06), 0 4px 12px rgba(24, 39, 32, .06);
+    --tk-shadow-hover: 0 2px 4px rgba(24, 39, 32, .08), 0 10px 24px rgba(24, 39, 32, .10);
 
     /* Timpa variabel Bootstrap */
     --bs-body-bg: var(--tk-bg);
     --bs-body-color: var(--tk-text);
     --bs-body-font-family: var(--tk-font-body);
-    --bs-heading-color: var(--tk-navy);
+    --bs-heading-color: var(--tk-primary-dark);
     --bs-border-color: var(--tk-border);
-    --bs-primary: var(--tk-navy);
-    --bs-primary-rgb: 23, 59, 103;
-    --bs-link-color: var(--tk-navy);
-    --bs-link-hover-color: var(--tk-navy-dark);
+    --bs-primary: var(--tk-primary);
+    --bs-primary-rgb: 0, 132, 63;
+    --bs-link-color: var(--tk-primary);
+    --bs-link-color-rgb: 0, 132, 63;
+    --bs-link-hover-color: var(--tk-primary-dark);
+    --bs-link-hover-color-rgb: 0, 96, 45;
     --bs-border-radius: var(--tk-radius);
     --bs-border-radius-lg: var(--tk-radius-lg);
-    --bs-focus-ring-color: rgba(23, 59, 103, .25);
+    --bs-focus-ring-color: rgba(0, 132, 63, .25);
 }
 
 /* --------------------------------------------------------------------------
@@ -63,7 +72,7 @@ a:focus {
 
 /* Focus state yang jelas untuk pengguna keyboard (aksesibilitas) */
 :focus-visible {
-    outline: 3px solid var(--tk-yellow);
+    outline: 3px solid var(--tk-accent);
     outline-offset: 2px;
 }
 
@@ -104,60 +113,67 @@ a:focus {
     --bs-btn-padding-x: 1.25rem;
     --bs-btn-padding-y: .6rem;
     --bs-btn-font-weight: 600;
+    white-space: nowrap;
 }
 
 .btn-tk-primary {
     --bs-btn-color: #fff;
-    --bs-btn-bg: var(--tk-navy);
-    --bs-btn-border-color: var(--tk-navy);
+    --bs-btn-bg: var(--tk-primary);
+    --bs-btn-border-color: var(--tk-primary);
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: var(--tk-navy-dark);
-    --bs-btn-hover-border-color: var(--tk-navy-dark);
+    --bs-btn-hover-bg: var(--tk-primary-dark);
+    --bs-btn-hover-border-color: var(--tk-primary-dark);
     --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: var(--tk-navy-dark);
-    --bs-btn-active-border-color: var(--tk-navy-dark);
+    --bs-btn-active-bg: var(--tk-primary-dark);
+    --bs-btn-active-border-color: var(--tk-primary-dark);
     --bs-btn-disabled-color: #fff;
-    --bs-btn-disabled-bg: var(--tk-navy);
-    --bs-btn-disabled-border-color: var(--tk-navy);
+    --bs-btn-disabled-bg: var(--tk-primary);
+    --bs-btn-disabled-border-color: var(--tk-primary);
 }
 
 .btn-tk-accent {
-    --bs-btn-color: var(--tk-navy-dark);
-    --bs-btn-bg: var(--tk-yellow);
-    --bs-btn-border-color: var(--tk-yellow);
-    --bs-btn-hover-color: var(--tk-navy-dark);
-    --bs-btn-hover-bg: var(--tk-yellow-dark);
-    --bs-btn-hover-border-color: var(--tk-yellow-dark);
-    --bs-btn-active-color: var(--tk-navy-dark);
-    --bs-btn-active-bg: var(--tk-yellow-dark);
-    --bs-btn-active-border-color: var(--tk-yellow-dark);
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--tk-accent);
+    --bs-btn-border-color: var(--tk-accent);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--tk-accent-dark);
+    --bs-btn-hover-border-color: var(--tk-accent-dark);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--tk-accent-dark);
+    --bs-btn-active-border-color: var(--tk-accent-dark);
 }
 
 .btn-tk-outline {
-    --bs-btn-color: var(--tk-navy);
+    --bs-btn-color: var(--tk-primary);
     --bs-btn-bg: transparent;
-    --bs-btn-border-color: var(--tk-navy);
+    --bs-btn-border-color: var(--tk-primary);
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: var(--tk-navy);
-    --bs-btn-hover-border-color: var(--tk-navy);
+    --bs-btn-hover-bg: var(--tk-primary);
+    --bs-btn-hover-border-color: var(--tk-primary);
     --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: var(--tk-navy-dark);
-    --bs-btn-active-border-color: var(--tk-navy-dark);
+    --bs-btn-active-bg: var(--tk-primary-dark);
+    --bs-btn-active-border-color: var(--tk-primary-dark);
 }
 
 /* --------------------------------------------------------------------------
    Navbar
    -------------------------------------------------------------------------- */
 
+/* Pita merah-hijau tipis di bawah navbar, mengikuti pita pada logo sekolah. */
 .tk-navbar {
     background-color: #fff;
+    border-bottom: 3px solid var(--tk-primary);
+    background-image: linear-gradient(90deg, var(--tk-accent) 0 50%, var(--tk-primary) 50% 100%);
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    background-size: 100% 3px;
     box-shadow: 0 1px 0 var(--tk-border);
 }
 
 .tk-navbar .navbar-brand {
     font-family: var(--tk-font-heading);
     font-weight: 800;
-    color: var(--tk-navy);
+    color: var(--tk-primary-dark);
 }
 
 .tk-navbar .navbar-brand .brand-sub {
@@ -177,11 +193,11 @@ a:focus {
 }
 
 .tk-navbar .nav-link:hover {
-    color: var(--tk-navy);
+    color: var(--tk-primary-dark);
 }
 
 .tk-navbar .nav-link.active {
-    color: var(--tk-navy);
+    color: var(--tk-primary-dark);
     background-color: var(--tk-sky);
 }
 
@@ -193,7 +209,7 @@ a:focus {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--tk-navy);
+    color: var(--tk-primary-dark);
     font-size: 1.25rem;
 }
 
@@ -210,6 +226,9 @@ a:focus {
 
 .tk-hero {
     background-color: var(--tk-sky);
+    background-image:
+        radial-gradient(circle at 88% 16%, rgba(217, 31, 38, .10), transparent 42%),
+        radial-gradient(circle at 10% 88%, rgba(0, 132, 63, .12), transparent 45%);
     border-bottom: 1px solid var(--tk-border);
     padding-block: 2.5rem;
 }
@@ -240,13 +259,13 @@ a:focus {
     list-style: none;
     margin: 1.5rem 0 0;
     padding: 1rem 0 0;
-    border-top: 1px solid rgba(23, 59, 103, .12);
+    border-top: 1px solid rgba(0, 96, 45, .15);
     font-size: .875rem;
     color: var(--tk-text-muted);
 }
 
 .tk-hero-facts .bi {
-    color: var(--tk-navy);
+    color: var(--tk-primary-dark);
     margin-right: .25rem;
 }
 
@@ -292,7 +311,6 @@ a:focus {
     border: 1px solid var(--tk-border);
     border-radius: var(--tk-radius);
     box-shadow: var(--tk-shadow);
-    height: 100%;
     transition: box-shadow .2s ease, transform .2s ease;
 }
 
@@ -314,7 +332,7 @@ a:focus {
 /* Placeholder netral sebelum ada foto asli (tanpa foto stok anak) */
 .tk-placeholder {
     background-color: var(--tk-sky);
-    color: var(--tk-navy);
+    color: var(--tk-primary-dark);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -330,12 +348,12 @@ a:focus {
     font-size: .75rem;
     font-weight: 600;
     background-color: var(--tk-sky);
-    color: var(--tk-navy);
+    color: var(--tk-primary-dark);
 }
 
 .tk-badge-success {
-    background-color: var(--tk-green);
-    color: #14532d;
+    background-color: #d6f3e1;
+    color: var(--tk-primary-deep);
 }
 
 .tk-badge-muted {
@@ -366,7 +384,7 @@ a:focus {
 
 .tk-empty-state .bi {
     font-size: 1.75rem;
-    color: var(--tk-navy);
+    color: var(--tk-primary);
 }
 
 /* --------------------------------------------------------------------------
@@ -374,7 +392,8 @@ a:focus {
    -------------------------------------------------------------------------- */
 
 .tk-footer {
-    background-color: var(--tk-navy);
+    background-color: var(--tk-primary-dark);
+    border-top: 4px solid var(--tk-accent);
     color: rgba(255, 255, 255, .85);
     padding-block: 2rem 1.25rem;
 }
@@ -401,8 +420,8 @@ a:focus {
    -------------------------------------------------------------------------- */
 
 .tk-demo-banner {
-    background-color: var(--tk-yellow);
-    color: var(--tk-navy-dark);
+    background-color: var(--tk-accent);
+    color: #fff;
     text-align: center;
     font-size: .8125rem;
     font-weight: 600;
@@ -431,7 +450,7 @@ a:focus {
     height: 100vh;
     overflow-y: auto;
     overscroll-behavior: contain;
-    background-color: var(--tk-navy);
+    background-color: var(--tk-primary-dark);
     scrollbar-width: thin;
 }
 
@@ -442,7 +461,7 @@ a:focus {
 }
 
 .tk-admin-sidebar {
-    background-color: var(--tk-navy);
+    background-color: var(--tk-primary-dark);
     color: rgba(255, 255, 255, .85);
     padding: .875rem;
 }
@@ -509,7 +528,7 @@ a:focus {
     font-family: var(--tk-font-heading);
     font-size: 1.75rem;
     font-weight: 800;
-    color: var(--tk-navy);
+    color: var(--tk-primary-dark);
 }
 
 /* Tabel admin tetap usable di layar kecil: gulir horizontal */
@@ -569,7 +588,7 @@ a:focus {
     height: 2.75rem;
     border-radius: 999px;
     background-color: var(--tk-sky);
-    color: var(--tk-navy);
+    color: var(--tk-primary-dark);
     font-size: 1.25rem;
     flex: 0 0 auto;
 }
@@ -647,7 +666,7 @@ a:focus {
 }
 
 .tk-auth__brand {
-    background-color: var(--tk-navy);
+    background-color: var(--tk-primary-dark);
     color: rgba(255, 255, 255, .82);
     padding: 1.5rem;
     display: flex;
@@ -680,7 +699,7 @@ a:focus {
 .tk-auth__rule {
     width: 2.5rem;
     height: 3px;
-    background-color: var(--tk-yellow);
+    background-color: var(--tk-accent);
     border: 0;
     opacity: 1;
     margin: 0 0 .75rem;
@@ -746,6 +765,82 @@ a:focus {
 }
 
 /* --------------------------------------------------------------------------
+   Konten tambahan: testimoni, struktur, alur, agenda, unduhan
+   -------------------------------------------------------------------------- */
+
+.tk-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 auto;
+}
+
+.tk-avatar-placeholder {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.tk-org-node-child {
+    margin-top: .75rem;
+    padding-left: .75rem;
+    border-left: 2px solid var(--tk-border);
+}
+
+.tk-step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background-color: var(--tk-primary);
+    color: #fff;
+    font-weight: 700;
+}
+
+.tk-agenda-date {
+    width: 4.5rem;
+    flex: 0 0 auto;
+    padding: .5rem;
+    text-align: center;
+    border-radius: var(--tk-radius);
+    background-color: var(--tk-sky);
+}
+
+.tk-agenda-date-day {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--tk-primary-dark);
+}
+
+.tk-agenda-date-month {
+    display: block;
+    margin-top: .2rem;
+    font-size: .75rem;
+    text-transform: uppercase;
+    color: var(--tk-text-muted);
+}
+
+.tk-download-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    flex: 0 0 auto;
+    border-radius: var(--tk-radius);
+    background-color: var(--tk-sky);
+    color: var(--tk-primary-dark);
+    font-size: 1.4rem;
+}
+
+/* --------------------------------------------------------------------------
    Responsif
    -------------------------------------------------------------------------- */
 
@@ -777,3 +872,4 @@ a:focus {
         transform: none;
     }
 }
+

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Models\GalleryItem;
+use App\Models\Galeri;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -21,7 +21,7 @@ class GalleryManagementTest extends TestCase
 
     private function upload(array $overrides = []): TestResponse
     {
-        return $this->actingAs($this->admin())->post(route('admin.gallery.store'), array_merge([
+        return $this->actingAs($this->admin())->post(route('admin.galeri.store'), array_merge([
             'title' => 'Kegiatan Uji',
             'caption' => 'Keterangan kegiatan uji.',
             'category' => 'Kegiatan',
@@ -33,10 +33,10 @@ class GalleryManagementTest extends TestCase
 
     public function test_daftar_galeri_menampilkan_metadata(): void
     {
-        GalleryItem::factory()->create(['title' => 'Foto Kegiatan Pagi']);
+        Galeri::factory()->create(['title' => 'Foto Kegiatan Pagi']);
 
         $this->actingAs($this->admin())
-            ->get(route('admin.gallery.index'))
+            ->get(route('admin.galeri.index'))
             ->assertOk()
             ->assertSee('Foto Kegiatan Pagi');
     }
@@ -45,9 +45,9 @@ class GalleryManagementTest extends TestCase
     {
         Storage::fake('public');
 
-        $this->upload()->assertRedirect(route('admin.gallery.index'));
+        $this->upload()->assertRedirect(route('admin.galeri.index'));
 
-        $item = GalleryItem::query()->firstWhere('title', 'Kegiatan Uji');
+        $item = Galeri::query()->firstWhere('title', 'Kegiatan Uji');
 
         $this->assertNotNull($item);
         Storage::disk('public')->assertExists($item->image_path);
@@ -65,7 +65,7 @@ class GalleryManagementTest extends TestCase
 
         $this->upload(['image' => null])->assertSessionHasErrors('image');
 
-        $this->assertSame(0, GalleryItem::query()->count());
+        $this->assertSame(0, Galeri::query()->count());
     }
 
     public function test_format_tidak_sah_ditolak(): void
@@ -81,17 +81,17 @@ class GalleryManagementTest extends TestCase
         Storage::fake('public');
         $admin = $this->admin();
 
-        $this->upload()->assertRedirect(route('admin.gallery.index'));
-        $item = GalleryItem::query()->firstWhere('title', 'Kegiatan Uji');
+        $this->upload()->assertRedirect(route('admin.galeri.index'));
+        $item = Galeri::query()->firstWhere('title', 'Kegiatan Uji');
         $path = $item->image_path;
 
-        $this->actingAs($admin)->put(route('admin.gallery.update', $item), [
+        $this->actingAs($admin)->put(route('admin.galeri.update', $item), [
             'title' => 'Kegiatan Uji Diubah',
             'caption' => 'Keterangan baru.',
             'category' => 'Kelas',
             'sort_order' => 2,
             'is_published' => '0',
-        ])->assertRedirect(route('admin.gallery.index'));
+        ])->assertRedirect(route('admin.galeri.index'));
 
         $item->refresh();
 
@@ -107,31 +107,31 @@ class GalleryManagementTest extends TestCase
         Storage::fake('public');
         $admin = $this->admin();
 
-        $this->upload()->assertRedirect(route('admin.gallery.index'));
-        $item = GalleryItem::query()->firstWhere('title', 'Kegiatan Uji');
+        $this->upload()->assertRedirect(route('admin.galeri.index'));
+        $item = Galeri::query()->firstWhere('title', 'Kegiatan Uji');
         $path = $item->image_path;
 
-        $this->actingAs($admin)->delete(route('admin.gallery.destroy', $item))
-            ->assertRedirect(route('admin.gallery.index'));
+        $this->actingAs($admin)->delete(route('admin.galeri.destroy', $item))
+            ->assertRedirect(route('admin.galeri.index'));
 
-        $this->assertDatabaseMissing('gallery_items', ['id' => $item->getKey()]);
+        $this->assertDatabaseMissing('galeri', ['id' => $item->getKey()]);
         Storage::disk('public')->assertMissing($path);
     }
 
     public function test_foto_unpublished_tidak_tampil_di_galeri_publik(): void
     {
-        GalleryItem::factory()->unpublished()->create(['title' => 'Foto Tersembunyi']);
+        Galeri::factory()->unpublished()->create(['title' => 'Foto Tersembunyi']);
 
         $this->get('/galeri')->assertOk()->assertDontSee('Foto Tersembunyi');
     }
 
     public function test_pencarian_galeri_berdasarkan_kategori(): void
     {
-        GalleryItem::factory()->create(['title' => 'Foto Satu', 'category' => 'Lingkungan']);
-        GalleryItem::factory()->create(['title' => 'Foto Dua', 'category' => 'Kelas']);
+        Galeri::factory()->create(['title' => 'Foto Satu', 'category' => 'Lingkungan']);
+        Galeri::factory()->create(['title' => 'Foto Dua', 'category' => 'Kelas']);
 
         $this->actingAs($this->admin())
-            ->get(route('admin.gallery.index', ['q' => 'Lingkungan']))
+            ->get(route('admin.galeri.index', ['q' => 'Lingkungan']))
             ->assertOk()
             ->assertSee('Foto Satu')
             ->assertDontSee('Foto Dua');

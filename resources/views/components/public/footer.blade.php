@@ -33,24 +33,33 @@
                         <span>Jam operasional: {{ $openingHours ?: 'Belum dikonfirmasi' }}</span>
                     </li>
                 </ul>
+
+                @if (($site?->socialLinks() ?? []) !== [])
+                    <h2 class="h6 mt-3 mb-2">Media sosial</h2>
+                    <x-public.social-links :site="$site" />
+                @endif
             </div>
 
             <div class="col-md-3 col-6">
                 <h2 class="h6 mb-3">Informasi</h2>
                 <ul class="list-unstyled mb-0">
-                    <li class="mb-2"><a href="{{ route('profile.index') }}">Profil Sekolah</a></li>
-                    <li class="mb-2"><a href="{{ route('program.index') }}">Program</a></li>
-                    <li class="mb-2"><a href="{{ route('facility.index') }}">Fasilitas</a></li>
-                    <li class="mb-2"><a href="{{ route('gallery.index') }}">Galeri</a></li>
+                    <li class="mb-2"><a href="{{ route('profil.index') }}">Profil Sekolah</a></li>
+                    <li class="mb-2"><a href="{{ route('jurusan.index') }}">Jurusan</a></li>
+                    <li class="mb-2"><a href="{{ route('struktur.index') }}">Struktur Organisasi</a></li>
+                    <li class="mb-2"><a href="{{ route('fasilitas.index') }}">Fasilitas</a></li>
+                    <li class="mb-2"><a href="{{ route('galeri.index') }}">Galeri</a></li>
+                    <li class="mb-2"><a href="{{ route('agenda.index') }}">Agenda</a></li>
                 </ul>
             </div>
 
             <div class="col-md-2 col-6">
                 <h2 class="h6 mb-3">Layanan</h2>
                 <ul class="list-unstyled mb-0">
-                    <li class="mb-2"><a href="{{ route('news.index') }}">Berita</a></li>
-                    <li class="mb-2"><a href="{{ route('admission.index') }}">PPDB</a></li>
-                    <li class="mb-2"><a href="{{ route('contact.index') }}">Kontak</a></li>
+                    <li class="mb-2"><a href="{{ route('berita.index') }}">Berita</a></li>
+                    <li class="mb-2"><a href="{{ route('alur-pkl.index') }}">Alur PKL</a></li>
+                    <li class="mb-2"><a href="{{ route('unduhan.index') }}">Unduhan</a></li>
+                    <li class="mb-2"><a href="{{ route('spmb.index') }}">SPMB</a></li>
+                    <li class="mb-2"><a href="{{ route('kontak.index') }}">Kontak</a></li>
                     @if ($mapsUrl)
                         <li class="mb-2">
                             <a href="{{ $mapsUrl }}" target="_blank" rel="noopener noreferrer">Lokasi (Google Maps)</a>
@@ -67,8 +76,7 @@
                             <a href="{{ $whatsappUrl }}" target="_blank" rel="noopener noreferrer">WhatsApp</a>
                         </li>
                     @endif
-                    {{-- Fase 4: arahkan ke /admin/login setelah modul autentikasi selesai --}}
-                    <li class="mb-2"><a href="{{ route('admin.dashboard') }}">Masuk Admin</a></li>
+                    <li class="mb-2"><a href="{{ route('admin.dasbor') }}">Masuk Admin</a></li>
                 </ul>
             </div>
         </div>
@@ -81,3 +89,4 @@
         </div>
     </div>
 </footer>
+

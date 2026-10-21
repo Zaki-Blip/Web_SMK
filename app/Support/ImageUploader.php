@@ -24,7 +24,7 @@ class ImageUploader
     /** Lebar maksimal untuk galeri, berita, dan hero. */
     public const WIDTH_LARGE = 1600;
 
-    /** Lebar maksimal untuk kartu program/fasilitas. */
+    /** Lebar maksimal untuk kartu jurusan/fasilitas. */
     public const WIDTH_CARD = 800;
 
     /** Lebar maksimal untuk logo sekolah. */

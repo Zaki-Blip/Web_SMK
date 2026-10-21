@@ -8,24 +8,28 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('programs', function (Blueprint $table) {
+        Schema::create('jurusans', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nama');
+            $table->string('singkatan')->nullable();
             $table->string('slug')->unique();
-            $table->string('short_description')->nullable();
-            $table->text('description')->nullable();
-            $table->string('image_path')->nullable();
-            $table->unsignedInteger('sort_order')->default(0);
-            $table->boolean('is_published')->default(false);
+            $table->string('ringkasan', 255)->nullable();
+            $table->text('deskripsi')->nullable();
+            $table->json('kompetensi')->nullable();
+            $table->text('prospek_karier')->nullable();
+            $table->string('lama_belajar')->default('3 tahun');
+            $table->string('gambar')->nullable();
+            $table->unsignedInteger('urutan')->default(0);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
 
-            $table->index('is_published');
-            $table->index('sort_order');
+            $table->index('is_active');
+            $table->index('urutan');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('programs');
+        Schema::dropIfExists('jurusans');
     }
 };

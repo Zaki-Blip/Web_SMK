@@ -7,14 +7,14 @@
     <p class="mb-0 fw-semibold d-none d-lg-block">@yield('heading', 'Dashboard')</p>
 
     <div class="d-flex flex-nowrap align-items-center gap-2 ms-auto">
-        <a class="btn btn-sm btn-tk-outline" href="{{ route('home') }}" target="_blank" rel="noopener"
+        <a class="btn btn-sm btn-tk-outline" href="{{ route('beranda') }}" target="_blank" rel="noopener"
            title="Lihat situs" aria-label="Lihat situs">
             <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
             <span class="d-none d-md-inline ms-1">Lihat situs</span>
         </a>
 
         @if ($user)
-            <a class="btn btn-sm btn-tk-outline text-truncate" href="{{ route('admin.account.edit') }}"
+            <a class="btn btn-sm btn-tk-outline text-truncate" href="{{ route('admin.akun.edit') }}"
                title="Akun: {{ $user->name }}" aria-label="Akun: {{ $user->name }}" style="max-width: 14rem;">
                 <i class="bi bi-person-circle" aria-hidden="true"></i>
                 <span class="d-none d-md-inline ms-1">{{ $user->name }}</span>

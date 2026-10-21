@@ -1,28 +1,55 @@
 # Daftar Route
 
 Semua route didefinisikan di `routes/web.php` dan memiliki nama (named route).
-Jalankan `php artisan route:list --except-vendor` untuk melihat daftar terkini
-(total 47 route).
+Jalankan `php artisan route:list --except-vendor` untuk melihat daftar terkini.
+
+Nama route, model, controller, tabel, dan folder view memakai bahasa Indonesia
+bentuk tunggal. URL lama hanya dipertahankan sebagai redirect permanen.
 
 ## Halaman publik
 
 | Method | URL | Nama route | Keterangan |
 |---|---|---|---|
-| GET | `/` | `home` | Beranda |
-| GET | `/profil` | `profile.index` | Profil sekolah |
-| GET | `/program` | `program.index` | Daftar program (paginasi 9) |
-| GET | `/fasilitas` | `facility.index` | Daftar fasilitas (paginasi 9) |
-| GET | `/galeri` | `gallery.index` | Galeri (paginasi 12) |
-| GET | `/berita` | `news.index` | Daftar berita (paginasi 6) |
-| GET | `/berita/{slug}` | `news.show` | Detail berita |
-| GET | `/ppdb` | `admission.index` | Informasi PPDB |
-| GET | `/kontak` | `contact.index` | Kontak & lokasi |
+| GET | `/` | `beranda` | Beranda |
+| GET | `/profil` | `profil.index` | Profil sekolah |
+| GET | `/jurusan` | `jurusan.index` | Daftar kompetensi keahlian |
+| GET | `/jurusan/{slug}` | `jurusan.show` | Detail jurusan |
+| GET | `/guru` | `guru.index` | Guru dan staf |
+| GET | `/fasilitas` | `fasilitas.index` | Fasilitas sekolah |
+| GET | `/industri` | `industri.index` | Mitra industri |
+| GET | `/prestasi` | `prestasi.index` | Prestasi |
+| GET | `/ekstrakurikuler` | `ekstrakurikuler.index` | Daftar ekstrakurikuler |
+| GET | `/ekstrakurikuler/{slug}` | `ekstrakurikuler.show` | Detail ekstrakurikuler |
+| GET | `/bkk` | `bkk.index` | Lowongan BKK |
+| GET | `/bkk/{id}` | `bkk.show` | Detail lowongan BKK |
+| GET | `/berita` | `berita.index` | Daftar berita; filter opsional `?kategori=...` |
+| GET | `/berita/{slug}` | `berita.show` | Detail berita |
+| GET | `/galeri` | `galeri.index` | Galeri |
+| GET | `/struktur-organisasi` | `struktur.index` | Struktur organisasi |
+| GET | `/alur-pkl` | `alur-pkl.index` | Alur PKL |
+| GET | `/agenda` | `agenda.index` | Daftar agenda |
+| GET | `/agenda/{slug}` | `agenda.show` | Detail agenda |
+| GET | `/unduhan` | `unduhan.index` | Daftar berkas unduhan |
+| GET | `/unduhan/{id}/unduh` | `unduhan.download` | Unduh berkas yang sudah terbit |
+| GET | `/spmb` | `spmb.index` | Informasi SPMB |
+| GET | `/kontak` | `kontak.index` | Kontak dan lokasi |
 | GET | `/sitemap.xml` | `sitemap` | Sitemap dinamis |
 | GET | `/robots.txt` | `robots` | Robots dinamis (`Disallow: /admin`) |
 
-Halaman publik hanya menampilkan data yang dipublikasikan. Berita draft atau
-terjadwal menghasilkan **404**. Program/fasilitas/galeri yang belum dipublikasikan
-tidak muncul di daftar maupun beranda.
+Halaman publik hanya menampilkan data yang dipublikasikan. Berita draf atau
+terjadwal menghasilkan **404**; agenda draf juga menghasilkan **404**, dan berkas
+unduhan draf tidak dapat diunduh. Jurusan, fasilitas, galeri, dan konten lain yang
+belum dipublikasikan tidak muncul di daftar maupun beranda.
+
+## Redirect URL lama
+
+| Method | URL lama | Tujuan | Nama route |
+|---|---|---|---|
+| GET | `/ppdb` | `/spmb` (301) | `redirect.ppdb` |
+| GET | `/program` | `/jurusan` (301) | `redirect.program` |
+| GET | `/program/{slug}` | `/jurusan/{slug}` (301) | `redirect.program.show` |
+
+Tidak ada route alias dengan nama lama. URL admin lama juga tidak tersedia.
 
 ## Autentikasi admin
 
@@ -32,11 +59,10 @@ tidak muncul di daftar maupun beranda.
 | POST | `/admin/login` | `admin.login.attempt` | `guest` + throttle 5/menit |
 | POST | `/admin/logout` | `admin.logout` | `auth`, `admin` |
 
-Login yang sudah berhasil diarahkan ke `/admin`. Pengguna yang sudah login dan
-membuka `/admin/login` akan dialihkan ke dashboard. Logout hanya menerima POST
-(disertai CSRF), bukan tautan GET.
+Login yang berhasil diarahkan ke `/admin`. Pengguna yang sudah login dan membuka
+`/admin/login` akan dialihkan ke dasbor. Logout hanya menerima POST dengan CSRF.
 
-## Dashboard admin
+## Dasbor admin
 
 Semua route di bawah ini memakai middleware `auth` + `admin`. Pengguna tanpa role
 `admin` mendapat **403**.
@@ -45,31 +71,53 @@ Semua route di bawah ini memakai middleware `auth` + `admin`. Pengguna tanpa rol
 
 | Method | URL | Nama route | Keterangan |
 |---|---|---|---|
-| GET | `/admin` | `admin.dashboard` | Statistik + berita terbaru |
-| GET | `/admin/account` | `admin.account.edit` | Form akun sendiri |
-| PUT | `/admin/account` | `admin.account.update` | Ubah nama/email/kata sandi |
-| GET | `/admin/profile` | `admin.profile.edit` | Profil sekolah |
-| PUT | `/admin/profile` | `admin.profile.update` | Simpan profil sekolah |
-| GET | `/admin/admission` | `admin.admission.edit` | Informasi PPDB |
-| PUT | `/admin/admission` | `admin.admission.update` | Simpan informasi PPDB |
-| GET | `/admin/settings` | `admin.settings.edit` | Pengaturan situs |
-| PUT | `/admin/settings` | `admin.settings.update` | Simpan pengaturan situs |
+| GET | `/admin` | `admin.dasbor` | Statistik dan berita terbaru |
+| GET | `/admin/akun` | `admin.akun.edit` | Form akun sendiri |
+| PUT | `/admin/akun` | `admin.akun.update` | Ubah nama, email, kata sandi |
+| GET | `/admin/profil` | `admin.profil.edit` | Profil sekolah |
+| PUT | `/admin/profil` | `admin.profil.update` | Simpan profil sekolah |
+| GET | `/admin/spmb` | `admin.spmb.edit` | Informasi SPMB |
+| PUT | `/admin/spmb` | `admin.spmb.update` | Simpan informasi SPMB |
+| GET | `/admin/pengaturan` | `admin.pengaturan.edit` | Pengaturan situs |
+| PUT | `/admin/pengaturan` | `admin.pengaturan.update` | Simpan pengaturan situs |
 
-### Program, fasilitas, galeri, berita
+### Modul konten
 
-Pola resource yang sama untuk keempat modul:
+Setiap modul memakai resource controller kecuali method `show` (detail publik
+ditangani controller publik). Pola route:
 
 | Method | URL | Nama route |
 |---|---|---|
-| GET | `/admin/programs` | `admin.programs.index` |
-| GET | `/admin/programs/create` | `admin.programs.create` |
-| POST | `/admin/programs` | `admin.programs.store` |
-| GET | `/admin/programs/{program}/edit` | `admin.programs.edit` |
-| PUT/PATCH | `/admin/programs/{program}` | `admin.programs.update` |
-| DELETE | `/admin/programs/{program}` | `admin.programs.destroy` |
+| GET | `/admin/{modul}` | `admin.{modul}.index` |
+| GET | `/admin/{modul}/create` | `admin.{modul}.create` |
+| POST | `/admin/{modul}` | `admin.{modul}.store` |
+| GET | `/admin/{modul}/{id}/edit` | `admin.{modul}.edit` |
+| PUT/PATCH | `/admin/{modul}/{id}` | `admin.{modul}.update` |
+| DELETE | `/admin/{modul}/{id}` | `admin.{modul}.destroy` |
 
-Ganti `programs` dengan `facilities`, `gallery`, atau `news` untuk modul lain.
-Route `show` tidak dipakai (detail publik memakai `news.show`).
+Modul yang tersedia:
+
+| Modul | URL dasar | Nama route |
+|---|---|---|
+| Jurusan | `/admin/jurusan` | `admin.jurusan.*` |
+| Guru dan staf | `/admin/guru` | `admin.guru.*` |
+| Mitra industri | `/admin/mitra-industri` | `admin.mitra-industri.*` |
+| Prestasi | `/admin/prestasi` | `admin.prestasi.*` |
+| Ekstrakurikuler | `/admin/ekstrakurikuler` | `admin.ekstrakurikuler.*` |
+| Lowongan BKK | `/admin/lowongan-bkk` | `admin.lowongan-bkk.*` |
+| Testimoni | `/admin/testimoni` | `admin.testimoni.*` |
+| FAQ | `/admin/faq` | `admin.faq.*` |
+| Struktur organisasi | `/admin/struktur-organisasi` | `admin.struktur-organisasi.*` |
+| Alur PKL | `/admin/alur-pkl` | `admin.alur-pkl.*` |
+| Agenda | `/admin/agenda` | `admin.agenda.*` |
+| Unduhan | `/admin/unduhan` | `admin.unduhan.*` |
+| Fasilitas | `/admin/fasilitas` | `admin.fasilitas.*` |
+| Galeri | `/admin/galeri` | `admin.galeri.*` |
+| Berita | `/admin/berita` | `admin.berita.*` |
+
+> Route admin agenda memakai `{agenda}` yang di-resolve berdasarkan `slug`.
+> Route admin struktur organisasi memakai parameter `{struktur}`, dan alur PKL
+> memakai `{alur}`. Route unduh publik memakai `{unduhan}` berdasarkan `id`.
 
 ## Konvensi
 
@@ -77,3 +125,4 @@ Route `show` tidak dipakai (detail publik memakai `news.show`).
 - Semua form ubah data memakai `PUT`; hapus data memakai `DELETE` + modal konfirmasi.
 - Pencarian daftar memakai query string `?q=...` (form GET, tanpa CSRF).
 - Paginasi memakai query string `?page=N`.
+- Semua input divalidasi di server; tidak ada input pengguna yang dirender sebagai HTML mentah.

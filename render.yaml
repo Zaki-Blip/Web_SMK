@@ -2,7 +2,7 @@
 # Rahasia (sync: false) diisi lewat dashboard Render saat pertama kali deploy.
 services:
   - type: web
-    name: tk-angkasa8
+    name: smkn64
     runtime: docker
     plan: free
     dockerfilePath: ./Dockerfile
@@ -10,7 +10,7 @@ services:
     autoDeploy: true
     envVars:
       - key: APP_NAME
-        value: "TK Angkasa 8"
+        value: "SMKN 64 Jakarta"
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
@@ -68,3 +68,4 @@ services:
         value: sync
       - key: LOG_CHANNEL
         value: stderr
+

@@ -6,7 +6,7 @@ dikonfirmasi (lihat [konfirmasi-sekolah.md](konfirmasi-sekolah.md)).
 
 ## 1. Sebelum online — daftar periksa
 
-- [ ] Data `[CONTOH]` sudah dihapus/diganti dengan data sekolah yang sebenarnya.
+- [ ] Data demo sudah dihapus/diganti dengan data sekolah yang sebenarnya.
 - [ ] `DEMO_MODE=false` sehingga banner demo tidak tampil.
 - [ ] `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL=https://domain-sekolah`.
 - [ ] Akun admin percobaan dihapus, akun resmi dibuat dengan kata sandi kuat.
@@ -19,7 +19,7 @@ dikonfirmasi (lihat [konfirmasi-sekolah.md](konfirmasi-sekolah.md)).
 ## 2. Konfigurasi `.env` produksi
 
 ```dotenv
-APP_NAME="TK Angkasa 8"
+APP_NAME="SMKN 64 Jakarta"
 APP_ENV=production
 APP_KEY=base64:...            # hasil php artisan key:generate
 APP_DEBUG=false
@@ -36,7 +36,8 @@ DB_PASSWORD=kata-sandi-kuat
 
 SESSION_DRIVER=database
 CACHE_STORE=database
-QUEUE_CONNECTION=database
+# Tidak ada job antrean; sync menghindari kebutuhan worker.
+QUEUE_CONNECTION=sync
 
 LOG_CHANNEL=stack
 LOG_LEVEL=warning
@@ -84,7 +85,7 @@ Catatan:
 server {
     listen 443 ssl;
     server_name domain-sekolah.sch.id;
-    root /var/www/tk-angkasa8/public;
+    root /var/www/smkn64/public;
 
     index index.php;
     client_max_body_size 4M;
@@ -128,8 +129,8 @@ lalu `php artisan optimize` kembali.
 
 | Data | Lokasi |
 |---|---|
-| Database | seluruh tabel `tk_angkasa8_db` |
-| Gambar unggahan | `storage/app/public/` |
+| Database | seluruh tabel `smkn64_db` |
+| Berkas unggahan (gambar & dokumen) | `storage/app/public/` |
 | Konfigurasi | `.env` (simpan di tempat aman, jangan di folder publik) |
 
 ### Backup database
@@ -137,16 +138,16 @@ lalu `php artisan optimize` kembali.
 **Windows / Laragon** (jalankan di folder proyek):
 
 ```powershell
-& "C:\laragon\bin\mysql\mysql-8.0.30-winx64\bin\mysqldump.exe" -u root tk_angkasa8_db > "backup\tk_angkasa8_$(Get-Date -Format yyyy-MM-dd).sql"
+& "C:\laragon\bin\mysql\mysql-8.0.30-winx64\bin\mysqldump.exe" -u root smkn64_db > "backup\smkn64_db_$(Get-Date -Format yyyy-MM-dd).sql"
 ```
 
 **Linux server:**
 
 ```bash
-mysqldump -u USER -p tk_angkasa8_db > backup/tk_angkasa8_$(date +%F).sql
+mysqldump -u USER -p smkn64_db > backup/smkn64_db_$(date +%F).sql
 ```
 
-### Backup gambar
+### Backup berkas unggahan
 
 Kompres folder `storage/app/public`:
 
@@ -161,7 +162,7 @@ tar -czf backup/uploads_$(date +%F).tar.gz storage/app/public
 ### Jadwal yang disarankan
 
 - Database: setiap hari (otomatis lewat cron/Task Scheduler bila memungkinkan).
-- Gambar: setiap minggu, atau setiap kali ada unggahan penting.
+- Berkas unggahan (gambar dan dokumen): setiap minggu, atau setiap kali ada unggahan penting.
 - Simpan salinan di **luar server** (komputer sekolah, Google Drive, atau layanan
   backup lain). Backup yang hanya ada di server yang sama tidak melindungi dari
   kerusakan server.
@@ -169,7 +170,7 @@ tar -czf backup/uploads_$(date +%F).tar.gz storage/app/public
 ### Mengembalikan (restore)
 
 ```bash
-mysql -u USER -p tk_angkasa8_db < backup/tk_angkasa8_2026-10-20.sql
+mysql -u USER -p smkn64_db < backup/smkn64_db_2026-10-20.sql
 ```
 
 Lalu ekstrak kembali `uploads_...zip` ke `storage/app/public/`, jalankan
@@ -195,3 +196,4 @@ Uji restore minimal sekali sebelum situs dipakai publik.
 | Perubahan tidak muncul | `php artisan optimize:clear` lalu `php artisan optimize` |
 | Tidak bisa login | akun ada? (`php artisan app:create-admin`), kata sandi benar? |
 | Error database | kredensial `.env`, server MySQL berjalan, database sudah dibuat |
+

@@ -7,6 +7,10 @@
     $site = $site ?? rescue(fn () => \App\Models\SiteSetting::current(), null, false);
     $schoolName = $site?->school_name ?: config('school.fallback.school_name');
     $address = $site?->address ?: config('school.fallback.address');
+
+    $logoUrl = $site?->logo_path
+        ? \Illuminate\Support\Facades\Storage::disk(config('filesystems.uploads_disk', 'public'))->url($site->logo_path)
+        : null;
 @endphp
 
 @section('content')
@@ -14,7 +18,11 @@
         {{-- Panel identitas sekolah: memberi konteks bahwa ini panel resmi sekolah --}}
         <aside class="tk-auth__brand">
             <div class="d-flex align-items-center gap-2">
-                <span class="brand-logo" aria-hidden="true"><i class="bi bi-mortarboard-fill"></i></span>
+                @if ($logoUrl)
+                    <img src="{{ $logoUrl }}" alt="" class="brand-logo brand-logo-img" width="40" height="40">
+                @else
+                    <span class="brand-logo" aria-hidden="true"><i class="bi bi-mortarboard-fill"></i></span>
+                @endif
                 <p class="tk-auth__brand-name">
                     {{ $schoolName }}
                     <span>{{ config('school.fallback.subtitle') }}</span>
@@ -24,7 +32,7 @@
             <div class="d-none d-lg-block">
                 <hr class="tk-auth__rule">
                 <p class="tk-auth__brand-text">
-                    Panel pengelolaan konten website sekolah: profil, program, fasilitas, galeri, berita, dan informasi PPDB.
+                    Panel pengelolaan konten website sekolah: profil, program, fasilitas, galeri, berita, dan informasi SPMB.
                 </p>
             </div>
 
@@ -36,7 +44,7 @@
                     @endif
                 </ul>
 
-                <a class="d-inline-block mt-3 small" href="{{ route('home') }}">
+                <a class="d-inline-block mt-3 small" href="{{ route('beranda') }}">
                     <i class="bi bi-arrow-left me-1" aria-hidden="true"></i>Kembali ke situs
                 </a>
             </div>
@@ -86,9 +94,10 @@
                 </p>
 
                 <p class="mt-3 mb-0 d-lg-none">
-                    <a href="{{ route('home') }}"><i class="bi bi-arrow-left me-1" aria-hidden="true"></i>Kembali ke situs</a>
+                    <a href="{{ route('beranda') }}"><i class="bi bi-arrow-left me-1" aria-hidden="true"></i>Kembali ke situs</a>
                 </p>
             </div>
         </main>
     </div>
 @endsection
+

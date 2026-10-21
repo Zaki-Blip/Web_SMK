@@ -14,6 +14,8 @@ use Illuminate\Notifications\Notifiable;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
+    protected $table = 'users';
+
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
@@ -33,7 +35,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Hanya pengguna ber-role admin yang boleh membuka dashboard.
+     * Hanya pengguna ber-role admin yang boleh membuka dasbor.
      */
     public function isAdmin(): bool
     {

@@ -5,7 +5,7 @@ namespace App\Models\Concerns;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * Dipakai model yang punya kolom image_path (program, fasilitas, galeri, berita).
+ * Dipakai model yang punya kolom image_path (fasilitas, galeri, berita).
  */
 trait HasImagePath
 {
