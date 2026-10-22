@@ -21,16 +21,11 @@ class PublicRoutesTest extends TestCase
             'jurusan' => ['/jurusan'],
             'guru' => ['/guru'],
             'fasilitas' => ['/fasilitas'],
-            'industri' => ['/industri'],
             'prestasi' => ['/prestasi'],
             'ekstrakurikuler' => ['/ekstrakurikuler'],
-            'bkk' => ['/bkk'],
             'berita' => ['/berita'],
             'galeri' => ['/galeri'],
             'struktur organisasi' => ['/struktur-organisasi'],
-            'alur pkl' => ['/alur-pkl'],
-            'agenda' => ['/agenda'],
-            'unduhan' => ['/unduhan'],
             'spmb' => ['/spmb'],
             'kontak' => ['/kontak'],
         ];
@@ -83,6 +78,13 @@ class PublicRoutesTest extends TestCase
         $this->get('/')
             ->assertOk()
             ->assertDontSee('Versi demo', false);
+    }
+
+    public function test_halaman_fitur_yang_dihapus_tidak_tersedia(): void
+    {
+        foreach (['/industri', '/bkk', '/alur-pkl', '/agenda', '/unduhan'] as $url) {
+            $this->get($url)->assertNotFound();
+        }
     }
 
     public function test_redirect_legacy_ke_spmb(): void
@@ -172,12 +174,16 @@ class PublicRoutesTest extends TestCase
 
     public function test_nama_tabel_lama_sudah_diganti_dengan_nama_indonesia(): void
     {
-        foreach (['jurusan', 'guru', 'ekstrakurikuler', 'prestasi', 'mitra_industri', 'lowongan_bkk', 'testimoni', 'faq', 'fasilitas', 'galeri', 'berita', 'struktur_organisasi', 'alur_pkl', 'agenda', 'unduhan'] as $table) {
+        foreach (['jurusan', 'guru', 'ekstrakurikuler', 'prestasi', 'testimoni', 'faq', 'fasilitas', 'galeri', 'berita', 'struktur_organisasi'] as $table) {
             $this->assertTrue(Schema::hasTable($table), 'Tabel baru tidak ditemukan: '.$table);
         }
 
-        foreach (['jurusans', 'gurus', 'ekstrakurikulers', 'prestasis', 'mitra_industris', 'lowongan_bkks', 'testimonis', 'faqs', 'facilities', 'gallery_items', 'news', 'admission_settings'] as $table) {
+        foreach (['jurusans', 'gurus', 'ekstrakurikulers', 'prestasis', 'testimonis', 'faqs', 'facilities', 'gallery_items', 'news', 'admission_settings'] as $table) {
             $this->assertFalse(Schema::hasTable($table), 'Tabel lama masih ada: '.$table);
+        }
+
+        foreach (['mitra_industri', 'lowongan_bkk', 'alur_pkl', 'agenda', 'unduhan'] as $table) {
+            $this->assertFalse(Schema::hasTable($table), 'Tabel fitur yang dihapus masih ada: '.$table);
         }
 
         $this->assertTrue(Schema::hasColumn('berita', 'kategori'));

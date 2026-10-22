@@ -15,12 +15,4 @@
             <priority>0.6</priority>
         </url>
     @endforeach
-    @foreach ($agendas as $item)
-        <url>
-            <loc>{{ route('agenda.show', $item->slug) }}</loc>
-            <lastmod>{{ $item->updated_at?->toAtomString() }}</lastmod>
-            <changefreq>weekly</changefreq>
-            <priority>0.6</priority>
-        </url>
-    @endforeach
 </urlset>

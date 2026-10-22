@@ -16,29 +16,20 @@ bentuk tunggal. URL lama hanya dipertahankan sebagai redirect permanen.
 | GET | `/jurusan/{slug}` | `jurusan.show` | Detail jurusan |
 | GET | `/guru` | `guru.index` | Guru dan staf |
 | GET | `/fasilitas` | `fasilitas.index` | Fasilitas sekolah |
-| GET | `/industri` | `industri.index` | Mitra industri |
 | GET | `/prestasi` | `prestasi.index` | Prestasi |
 | GET | `/ekstrakurikuler` | `ekstrakurikuler.index` | Daftar ekstrakurikuler |
 | GET | `/ekstrakurikuler/{slug}` | `ekstrakurikuler.show` | Detail ekstrakurikuler |
-| GET | `/bkk` | `bkk.index` | Lowongan BKK |
-| GET | `/bkk/{id}` | `bkk.show` | Detail lowongan BKK |
 | GET | `/berita` | `berita.index` | Daftar berita; filter opsional `?kategori=...` |
 | GET | `/berita/{slug}` | `berita.show` | Detail berita |
 | GET | `/galeri` | `galeri.index` | Galeri |
 | GET | `/struktur-organisasi` | `struktur.index` | Struktur organisasi |
-| GET | `/alur-pkl` | `alur-pkl.index` | Alur PKL |
-| GET | `/agenda` | `agenda.index` | Daftar agenda |
-| GET | `/agenda/{slug}` | `agenda.show` | Detail agenda |
-| GET | `/unduhan` | `unduhan.index` | Daftar berkas unduhan |
-| GET | `/unduhan/{id}/unduh` | `unduhan.download` | Unduh berkas yang sudah terbit |
 | GET | `/spmb` | `spmb.index` | Informasi SPMB |
 | GET | `/kontak` | `kontak.index` | Kontak dan lokasi |
 | GET | `/sitemap.xml` | `sitemap` | Sitemap dinamis |
 | GET | `/robots.txt` | `robots` | Robots dinamis (`Disallow: /admin`) |
 
 Halaman publik hanya menampilkan data yang dipublikasikan. Berita draf atau
-terjadwal menghasilkan **404**; agenda draf juga menghasilkan **404**, dan berkas
-unduhan draf tidak dapat diunduh. Jurusan, fasilitas, galeri, dan konten lain yang
+terjadwal menghasilkan **404**. Jurusan, fasilitas, galeri, dan konten lain yang
 belum dipublikasikan tidak muncul di daftar maupun beranda.
 
 ## Redirect URL lama
@@ -101,23 +92,16 @@ Modul yang tersedia:
 |---|---|---|
 | Jurusan | `/admin/jurusan` | `admin.jurusan.*` |
 | Guru dan staf | `/admin/guru` | `admin.guru.*` |
-| Mitra industri | `/admin/mitra-industri` | `admin.mitra-industri.*` |
 | Prestasi | `/admin/prestasi` | `admin.prestasi.*` |
 | Ekstrakurikuler | `/admin/ekstrakurikuler` | `admin.ekstrakurikuler.*` |
-| Lowongan BKK | `/admin/lowongan-bkk` | `admin.lowongan-bkk.*` |
 | Testimoni | `/admin/testimoni` | `admin.testimoni.*` |
 | FAQ | `/admin/faq` | `admin.faq.*` |
 | Struktur organisasi | `/admin/struktur-organisasi` | `admin.struktur-organisasi.*` |
-| Alur PKL | `/admin/alur-pkl` | `admin.alur-pkl.*` |
-| Agenda | `/admin/agenda` | `admin.agenda.*` |
-| Unduhan | `/admin/unduhan` | `admin.unduhan.*` |
 | Fasilitas | `/admin/fasilitas` | `admin.fasilitas.*` |
 | Galeri | `/admin/galeri` | `admin.galeri.*` |
 | Berita | `/admin/berita` | `admin.berita.*` |
 
-> Route admin agenda memakai `{agenda}` yang di-resolve berdasarkan `slug`.
-> Route admin struktur organisasi memakai parameter `{struktur}`, dan alur PKL
-> memakai `{alur}`. Route unduh publik memakai `{unduhan}` berdasarkan `id`.
+> Route admin struktur organisasi memakai parameter `{struktur}`.
 
 ## Konvensi
 

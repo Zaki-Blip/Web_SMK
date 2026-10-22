@@ -2,16 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Models\Agenda;
-use App\Models\AlurPkl;
 use App\Models\Faq;
 use App\Models\SiteSetting;
 use App\Models\StrukturOrganisasi;
 use App\Models\Testimoni;
-use App\Models\Unduhan;
 use Database\Seeders\DemoSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class PhaseTwoContentTest extends TestCase
@@ -81,95 +77,12 @@ class PhaseTwoContentTest extends TestCase
             ->assertDontSee('Struktur Nonaktif');
     }
 
-    public function test_alur_pkl_hanya_menampilkan_langkah_aktif(): void
-    {
-        AlurPkl::factory()->create(['judul' => 'Langkah Aktif', 'is_active' => true]);
-        AlurPkl::factory()->inactive()->create(['judul' => 'Langkah Nonaktif']);
-
-        $this->get('/alur-pkl')
-            ->assertOk()
-            ->assertSee('Langkah Aktif')
-            ->assertDontSee('Langkah Nonaktif');
-    }
-
-    public function test_agenda_hanya_menampilkan_yang_terbit_dan_detail_dapat_dibuka(): void
-    {
-        $agenda = Agenda::factory()->create([
-            'judul' => 'Agenda Terbit',
-            'slug' => 'agenda-terbit',
-            'is_published' => true,
-        ]);
-        Agenda::factory()->draft()->create([
-            'judul' => 'Agenda Draf',
-            'slug' => 'agenda-draf',
-        ]);
-
-        $this->get('/agenda')
-            ->assertOk()
-            ->assertSee('Agenda Terbit')
-            ->assertDontSee('Agenda Draf');
-
-        $this->get(route('agenda.show', $agenda))
-            ->assertOk()
-            ->assertSee('Agenda Terbit');
-    }
-
-    public function test_detail_agenda_draf_menghasilkan_404(): void
-    {
-        $agenda = Agenda::factory()->draft()->create(['slug' => 'agenda-draf-404']);
-
-        $this->get(route('agenda.show', $agenda))->assertNotFound();
-    }
-
-    public function test_unduhan_hanya_menampilkan_yang_terbit_dan_dapat_diunduh(): void
-    {
-        Storage::fake('public');
-        Storage::disk('public')->put('unduhan/panduan-pkl.pdf', '%PDF-1.4 contoh');
-
-        $unduhan = Unduhan::factory()->create([
-            'judul' => 'Panduan PKL',
-            'berkas' => 'unduhan/panduan-pkl.pdf',
-            'ukuran' => 15,
-            'is_published' => true,
-        ]);
-        Unduhan::factory()->draft()->create([
-            'judul' => 'Unduhan Draf',
-            'berkas' => 'unduhan/draf.pdf',
-        ]);
-
-        $this->get('/unduhan')
-            ->assertOk()
-            ->assertSee('Panduan PKL')
-            ->assertDontSee('Unduhan Draf');
-
-        $this->get(route('unduhan.download', $unduhan))
-            ->assertOk()
-            ->assertDownload('panduan-pkl.pdf');
-    }
-
-    public function test_unduhan_draf_tidak_dapat_diunduh(): void
-    {
-        Storage::fake('public');
-        Storage::disk('public')->put('unduhan/draf.pdf', '%PDF-1.4 contoh');
-
-        $unduhan = Unduhan::factory()->draft()->create([
-            'berkas' => 'unduhan/draf.pdf',
-        ]);
-
-        $this->get(route('unduhan.download', $unduhan))->assertNotFound();
-    }
-
     public function test_halaman_fase_dua_dapat_dirender_dengan_data_demo(): void
     {
-        Storage::fake('public');
         $this->seed(DemoSeeder::class);
 
-        foreach (['/', '/struktur-organisasi', '/alur-pkl', '/agenda', '/unduhan', '/spmb', '/kontak'] as $url) {
+        foreach (['/', '/struktur-organisasi', '/spmb', '/kontak'] as $url) {
             $this->get($url)->assertOk();
         }
-
-        $agenda = Agenda::query()->published()->firstOrFail();
-
-        $this->get(route('agenda.show', $agenda))->assertOk();
     }
 }

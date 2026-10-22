@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Models\Agenda;
-use App\Models\AlurPkl;
 use App\Models\Berita;
 use App\Models\Ekstrakurikuler;
 use App\Models\Faq;
@@ -11,12 +9,9 @@ use App\Models\Fasilitas;
 use App\Models\Galeri;
 use App\Models\Guru;
 use App\Models\Jurusan;
-use App\Models\LowonganBkk;
-use App\Models\MitraIndustri;
 use App\Models\Prestasi;
 use App\Models\StrukturOrganisasi;
 use App\Models\Testimoni;
-use App\Models\Unduhan;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -34,19 +29,14 @@ class AdminResourceSmokeTest extends TestCase
         return [
             'jurusan' => ['admin.jurusan', Jurusan::class],
             'guru' => ['admin.guru', Guru::class],
-            'mitra industri' => ['admin.mitra-industri', MitraIndustri::class],
             'prestasi' => ['admin.prestasi', Prestasi::class],
             'ekstrakurikuler' => ['admin.ekstrakurikuler', Ekstrakurikuler::class],
-            'lowongan bkk' => ['admin.lowongan-bkk', LowonganBkk::class],
             'testimoni' => ['admin.testimoni', Testimoni::class],
             'faq' => ['admin.faq', Faq::class],
             'fasilitas' => ['admin.fasilitas', Fasilitas::class],
             'galeri' => ['admin.galeri', Galeri::class],
             'berita' => ['admin.berita', Berita::class],
             'struktur organisasi' => ['admin.struktur-organisasi', StrukturOrganisasi::class],
-            'alur pkl' => ['admin.alur-pkl', AlurPkl::class],
-            'agenda' => ['admin.agenda', Agenda::class],
-            'unduhan' => ['admin.unduhan', Unduhan::class],
         ];
     }
 

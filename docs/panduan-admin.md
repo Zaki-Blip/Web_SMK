@@ -15,8 +15,8 @@ Panduan ini ditulis untuk pengelola sekolah (bukan programmer).
 
 ## Mengenal halaman dashboard
 
-- **Dashboard** — jumlah jurusan, fasilitas, galeri, berita, agenda, dan
-  unduhan; daftar berita terbaru; tombol akses cepat untuk menambah konten.
+- **Dashboard** — jumlah jurusan, guru, prestasi, dan berita; status SPMB;
+  daftar berita terbaru; tombol akses cepat untuk menambah konten.
 - **Sidebar kiri** — menu semua modul. Di layar HP, menu ini berupa deretan
   tombol yang bisa digeser ke samping.
 - **Status publikasi** — setiap konten punya pilihan **Draf/Nonaktif** (belum
@@ -71,18 +71,6 @@ publik menampilkan daftar dan detail ekstrakurikuler yang aktif.
 Isi judul, tingkat, tahun, peraih, dan deskripsi. Prestasi aktif tampil di halaman
 Prestasi dan beranda.
 
-## Mitra Industri
-
-Isi nama, bidang, logo, dan website mitra. Mitra aktif tampil di halaman Industri.
-Data ini juga dipakai sebagai informasi kerja sama sekolah.
-
-## Lowongan BKK
-
-Isi judul, perusahaan, lokasi, tipe pekerjaan, deskripsi, persyaratan, tautan
-pendaftaran, dan batas waktu. Pilih **Terbit** agar lowongan tampil di halaman BKK.
-Lowongan yang batas waktunya sudah lewat tetap tersimpan, tetapi sebaiknya
-dinonaktifkan.
-
 ## Testimoni
 
 Isi nama, angkatan, jurusan, pekerjaan saat ini, isi testimoni, dan foto. Testimoni
@@ -102,28 +90,6 @@ FAQ aktif tampil di beranda. FAQ kategori `spmb` juga tampil di halaman SPMB.
 
 Hindari memilih atasan yang berada di bawah jabatan yang sedang diubah agar
 susunan tetap logis.
-
-## Alur PKL
-
-Isi judul langkah, deskripsi, urutan, dan status aktif. Langkah aktif tampil
-berurutan di halaman **Alur PKL**. Gunakan deskripsi singkat dan konkret agar
-siswa memahami tahapan yang harus dilalui.
-
-## Agenda
-
-1. Menu **Agenda** -> **Tambah**.
-2. Isi judul, deskripsi, waktu mulai, waktu selesai (opsional), dan lokasi.
-3. Slug dibuat otomatis dari judul; biarkan kosong bila tidak perlu diubah.
-4. Pilih **Terbit** agar agenda tampil di halaman publik. Agenda draf tidak dapat
-   dibuka oleh pengunjung.
-
-## Unduhan
-
-1. Menu **Unduhan** -> **Tambah**.
-2. Isi judul, deskripsi, urutan, dan pilih berkas.
-3. Format yang didukung: PDF, DOC/DOCX, XLS/XLSX, PPT/PPTX, ZIP, atau TXT.
-4. Ukuran maksimal **10 MB**. Berkas disimpan dengan nama acak.
-5. Pilih **Terbit** agar tombol unduh aktif. Unduhan draf tidak dapat diakses.
 
 ## Berita
 
@@ -174,15 +140,6 @@ lama lalu kata sandi baru (minimal 8 karakter).
 - Gambar otomatis diperkecil (maksimal 1600 px) dan dioptimalkan.
 - Gunakan foto asli sekolah. **Jangan memakai foto anak dari internet.**
 - Unggah foto anak hanya setelah ada izin orang tua/wali.
-
-## Aturan unggah berkas unduhan
-
-- Format: **PDF, DOC/DOCX, XLS/XLSX, PPT/PPTX, ZIP, atau TXT**.
-- Ukuran maksimal **10 MB**.
-- Nama berkas asli tidak dipakai; sistem menyimpan nama acak.
-- Periksa kembali isi dokumen sebelum memilih **Terbit**. Dokumen draf tidak dapat
-  diunduh pengunjung.
-- Jangan mengunggah dokumen berisi data pribadi siswa tanpa izin.
 
 ## Pertanyaan yang sering muncul
 

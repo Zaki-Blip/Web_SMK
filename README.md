@@ -51,7 +51,6 @@ mengarah ke tautan tersebut.
 
 - Calon peserta didik dan orang tua yang mencari informasi sekolah, jurusan, dan SPMB.
 - Masyarakat umum yang ingin melihat profil, prestasi, dan kegiatan sekolah.
-- Alumni, industri, dan pencari kerja yang mengakses informasi BKK/mitra industri.
 - Admin sekolah yang mengelola konten melalui dashboard.
 
 **Tujuan:**
@@ -77,11 +76,9 @@ mengarah ke tautan tersebut.
 - Beranda dengan hero, profil singkat, jurusan, fasilitas, galeri, berita,
   testimoni, FAQ, ajakan SPMB, dan kontak.
 - Profil sekolah: sejarah, visi, misi, sambutan kepala sekolah, dan identitas
-  (NPSN, akreditasi, tahun berdiri, jumlah siswa/guru/mitra).
+  (NPSN, akreditasi, tahun berdiri, jumlah siswa/guru).
 - Jurusan (kompetensi keahlian) beserta detail kompetensi dan prospek karier.
-- Guru & staf, struktur organisasi, ekstrakurikuler, prestasi, mitra industri,
-  dan lowongan BKK.
-- Alur PKL, agenda kegiatan, serta daftar berkas unduhan.
+- Guru & staf, struktur organisasi, ekstrakurikuler, dan prestasi.
 - Fasilitas dan galeri dengan lightbox.
 - Berita dengan halaman detail, dukungan status draf dan jadwal terbit.
 - Halaman SPMB: tahun ajaran, jalur & kuota, persyaratan, alur, jadwal,
@@ -96,8 +93,7 @@ mengarah ke tautan tersebut.
 - Login aman dengan pembatasan percobaan dan sesi yang diregenerasi.
 - Dashboard ringkasan jumlah konten dan status SPMB.
 - CRUD untuk jurusan, guru, struktur organisasi, ekstrakurikuler, prestasi,
-  fasilitas, galeri, berita, mitra industri, lowongan BKK, testimoni, FAQ, alur
-  PKL, agenda, dan unduhan.
+  fasilitas, galeri, berita, testimoni, dan FAQ.
 - Pengaturan profil sekolah, identitas situs, logo, kontak, media sosial, dan
   metadata SEO.
 - Pengaturan informasi SPMB.
@@ -110,9 +106,7 @@ mengarah ke tautan tersebut.
 - Validasi server-side melalui Form Request.
 - Upload gambar JPG/PNG/WebP maksimal 2 MB, diperkecil otomatis dengan GD,
   nama file diacak, dan metadata EXIF dihapus saat proses encode ulang.
-- Upload dokumen unduhan PDF/DOC/DOCX/XLS/XLSX/PPT/PPTX/ZIP/TXT maksimal 10 MB,
-  nama file diacak, dan tautan unduh divalidasi status terbitnya.
-- Penyimpanan gambar dan dokumen lokal (`storage/app/public`) atau S3/Cloudflare R2.
+- Penyimpanan gambar lokal (`storage/app/public`) atau S3/Cloudflare R2.
 - CSRF pada seluruh form, middleware admin, dan `noindex` untuk halaman admin.
 - Tanpa dependensi frontend: tidak ada `package.json`, `node_modules`, atau Vite.
 
@@ -128,20 +122,13 @@ mengarah ke tautan tersebut.
 | Detail jurusan | `/jurusan/{slug}` | Deskripsi, kompetensi, prospek karier, guru terkait |
 | Guru & staf | `/guru` | Daftar tenaga pendidik dan kependidikan |
 | Fasilitas | `/fasilitas` | Daftar fasilitas sekolah |
-| Mitra industri | `/industri` | Daftar mitra PKL/prakerin |
 | Prestasi | `/prestasi` | Prestasi akademik dan nonakademik |
 | Ekstrakurikuler | `/ekstrakurikuler` | Daftar kegiatan ekstrakurikuler |
 | Detail ekstrakurikuler | `/ekstrakurikuler/{slug}` | Deskripsi, pembina, jadwal |
-| Lowongan BKK | `/bkk` | Daftar lowongan kerja |
-| Detail lowongan | `/bkk/{id}` | Deskripsi, persyaratan, batas lamaran, tautan daftar |
 | Berita | `/berita` | Daftar berita yang sudah terbit |
 | Detail berita | `/berita/{slug}` | Isi berita dan tanggal publikasi |
 | Galeri | `/galeri` | Foto kegiatan dengan lightbox |
 | Struktur organisasi | `/struktur-organisasi` | Susunan jabatan dan unit kerja |
-| Alur PKL | `/alur-pkl` | Tahapan pelaksanaan Praktik Kerja Lapangan |
-| Agenda | `/agenda` | Daftar kegiatan dan acara sekolah |
-| Detail agenda | `/agenda/{slug}` | Informasi lengkap satu kegiatan |
-| Unduhan | `/unduhan` | Daftar dokumen yang dapat diunduh |
 | SPMB | `/spmb` | Informasi penerimaan murid baru |
 | Kontak | `/kontak` | Alamat, telepon, email, WhatsApp, jam operasional, peta |
 | Sitemap | `/sitemap.xml` | Sitemap dinamis |
@@ -162,9 +149,9 @@ dengan akun berperan `admin`.
 
 | Modul | URL | Yang dapat dikelola |
 |---|---|---|
-| Dashboard | `/admin` | Ringkasan jurusan, guru, mitra, prestasi, lowongan, berita, status SPMB |
+| Dashboard | `/admin` | Ringkasan jurusan, guru, prestasi, berita, status SPMB |
 | Akun | `/admin/akun` | Nama, email, dan kata sandi sendiri |
-| Profil Sekolah | `/admin/profil` | Sejarah, visi, misi, deskripsi, sambutan & foto kepala sekolah, NPSN, akreditasi, tahun berdiri, jumlah siswa/guru/mitra |
+| Profil Sekolah | `/admin/profil` | Sejarah, visi, misi, deskripsi, sambutan & foto kepala sekolah, NPSN, akreditasi, tahun berdiri, jumlah siswa/guru |
 | Jurusan | `/admin/jurusan` | Nama, singkatan, slug, ringkasan, deskripsi, daftar kompetensi, prospek karier, lama belajar, gambar, urutan, status aktif |
 | Guru & Staf | `/admin/guru` | Nama, jabatan, tipe, mata pelajaran, jurusan terkait, foto, urutan, status aktif |
 | Ekstrakurikuler | `/admin/ekstrakurikuler` | Nama, slug, deskripsi, pembina, jadwal, gambar, urutan, status aktif |
@@ -172,26 +159,21 @@ dengan akun berperan `admin`.
 | Fasilitas | `/admin/fasilitas` | Nama, slug, deskripsi, kategori, gambar, urutan, status publikasi |
 | Galeri | `/admin/galeri` | Judul, keterangan, kategori, gambar, urutan, status publikasi |
 | Berita | `/admin/berita` | Judul, slug, ringkasan, kategori, isi, gambar, jadwal terbit, status draf/terbit |
-| Mitra Industri | `/admin/mitra-industri` | Nama, bidang, logo, website, urutan, status aktif |
-| Lowongan BKK | `/admin/lowongan-bkk` | Judul, perusahaan, lokasi, tipe, deskripsi, persyaratan, tautan daftar, batas waktu, status publikasi |
 | Testimoni | `/admin/testimoni` | Nama, angkatan, jurusan, pekerjaan saat ini, isi testimoni, foto, status aktif |
 | FAQ | `/admin/faq` | Pertanyaan, jawaban, kategori, urutan, status aktif |
 | Struktur Organisasi | `/admin/struktur-organisasi` | Nama, jabatan, atasan langsung, urutan, status aktif |
-| Alur PKL | `/admin/alur-pkl` | Judul langkah, deskripsi, urutan, status aktif |
-| Agenda | `/admin/agenda` | Judul, slug, deskripsi, waktu mulai/selesai, lokasi, status terbit |
-| Unduhan | `/admin/unduhan` | Judul, deskripsi, berkas, ukuran, urutan, status terbit |
 | SPMB | `/admin/spmb` | Tahun ajaran, jalur & kuota, syarat, alur, jadwal, tautan pendaftaran, kontak panitia, status buka/tutup |
 | Pengaturan Situs | `/admin/pengaturan` | Nama tampilan, logo, alamat, telepon, email, jam operasional, WhatsApp, Google Maps, media sosial, meta title/description |
 
 > Testimoni aktif tampil di beranda. FAQ aktif tampil di beranda; FAQ dengan
-> kategori `spmb` juga tampil di halaman SPMB. Struktur organisasi, alur PKL,
-> agenda, dan unduhan masing-masing memiliki halaman publik sendiri.
+> kategori `spmb` juga tampil di halaman SPMB. Struktur organisasi memiliki
+> halaman publik sendiri.
 
 **Status publikasi:**
 
-- Jurusan, guru, struktur organisasi, ekstrakurikuler, prestasi, mitra,
-  testimoni, FAQ, dan alur PKL memakai `is_active`.
-- Fasilitas, galeri, lowongan BKK, agenda, dan unduhan memakai `is_published`.
+- Jurusan, guru, struktur organisasi, ekstrakurikuler, prestasi, testimoni,
+  dan FAQ memakai `is_active`.
+- Fasilitas dan galeri memakai `is_published`.
 - Berita memakai `status` (`draft`/`published`) **dan** `published_at`.
   Berita hanya tampil bila berstatus `published`, tanggal terbit tidak kosong,
   dan tanggal terbit sudah lewat/sama dengan waktu sekarang.
@@ -298,16 +280,11 @@ Semua tabel dibuat melalui migrasi di `database/migrations/`.
 | Akademik | `struktur_organisasi` | Nama, jabatan, atasan langsung, urutan, status aktif |
 | Akademik | `ekstrakurikuler` | Kegiatan ekstrakurikuler, pembina, jadwal |
 | Akademik | `prestasi` | Prestasi, tingkat, tahun, peraih |
-| Kemitraan & karier | `mitra_industri` | Mitra industri, bidang, logo, website |
-| Kemitraan & karier | `lowongan_bkk` | Lowongan kerja BKK, persyaratan, batas waktu |
-| Kemitraan & karier | `testimoni` | Testimoni alumni, angkatan, jurusan, pekerjaan |
-| Kemitraan & karier | `alur_pkl` | Tahapan pelaksanaan PKL |
+| Konten | `testimoni` | Testimoni alumni, angkatan, jurusan, pekerjaan |
 | Konten | `fasilitas` | Fasilitas sekolah |
 | Konten | `galeri` | Foto galeri dan kategori |
 | Konten | `berita` | Berita, kategori, status, jadwal terbit |
 | Konten | `faq` | Pertanyaan umum dan jawaban |
-| Konten | `agenda` | Agenda kegiatan, waktu, lokasi, status terbit |
-| Konten | `unduhan` | Dokumen unduhan, path berkas, ukuran, status terbit |
 | Akun | `users` | Akun admin (satu peran: `admin`) |
 | Infrastruktur | `migrations`, `sessions`, `cache`, `cache_locks`, `jobs`, `job_batches`, `failed_jobs`, `password_reset_tokens` | Bawaan Laravel; tabel job tidak dipakai karena queue `sync` |
 
@@ -328,14 +305,12 @@ satu baris untuk tabel-tabel tersebut.
 **Gambar dan dokumen:**
 
 - Disimpan di disk sesuai `UPLOADS_DISK`.
-- Lokal: `storage/app/public/{logo|profil|jurusan|guru|ekstrakurikuler|prestasi|mitra|fasilitas|galeri|berita|testimoni}/...`.
+- Lokal: `storage/app/public/{logo|profil|jurusan|guru|ekstrakurikuler|prestasi|fasilitas|galeri|berita|testimoni}/...`.
 - Diakses lewat `public/storage` hasil `php artisan storage:link`, atau URL publik
   bucket untuk S3/R2.
 - Nama file acak; nama asli unggahan tidak dipakai.
 - Gambar maksimal 2 MB; lebar maksimal 400/800/1600 px sesuai konteks.
-- Dokumen unduhan maksimal 10 MB dan disimpan di folder `unduhan/`; tautan
-  unduh hanya tersedia untuk data berstatus terbit.
-- File lama dihapus saat gambar/berkas diganti atau data dihapus.
+- File lama dihapus saat gambar diganti atau data dihapus.
 
 ---
 
@@ -415,7 +390,7 @@ berdasarkan `published_at <= sekarang`.
 - Sitemap XML dinamis (`/sitemap.xml`) dan robots.txt (`/robots.txt`).
 - Halaman admin `noindex, nofollow`.
 - Halaman 404 yang ramah dan tetap memakai layout publik.
-- URL bersih dengan slug untuk jurusan, ekstrakurikuler, berita, dan agenda.
+- URL bersih dengan slug untuk jurusan, ekstrakurikuler, dan berita.
 
 **Aksesibilitas:**
 
@@ -443,7 +418,7 @@ Saat aktif, halaman publik menampilkan banner merah
 Data demo disediakan oleh `DemoSeeder` dan bersifat **idempoten** (aman dijalankan
 berulang karena memakai `updateOrCreate`). Isinya mencakup identitas sekolah,
 logo resmi, dua jurusan, guru, fasilitas, galeri, berita, prestasi,
-ekstrakurikuler, mitra industri, lowongan BKK, testimoni, FAQ, dan SPMB.
+ekstrakurikuler, testimoni, FAQ, struktur organisasi, dan SPMB.
 
 **Identitas yang dipakai pada data demo:**
 
@@ -462,9 +437,8 @@ ekstrakurikuler, mitra industri, lowongan BKK, testimoni, FAQ, dan SPMB.
   sebelum dipakai sebagai akun resmi)
 
 **Jumlah data demo saat ini:** 2 jurusan, 14 guru, 6 struktur organisasi,
-8 fasilitas, 6 galeri, 9 berita, 8 prestasi, 6 ekstrakurikuler, 8 mitra industri,
-5 lowongan BKK, 4 testimoni, 8 FAQ, 5 langkah alur PKL, 4 agenda, dan
-2 berkas unduhan. Tautan media sosial demo juga diisi agar tampilan footer dan
+8 fasilitas, 6 galeri, 9 berita, 8 prestasi, 6 ekstrakurikuler, 4 testimoni,
+dan 8 FAQ. Tautan media sosial demo juga diisi agar tampilan footer dan
 halaman kontak dapat diuji.
 
 **Cara memakai:**
@@ -654,9 +628,9 @@ vendor\bin\pint --test
 
 - Test memakai **SQLite in-memory** (lihat `phpunit.xml`), sehingga tidak
   menyentuh database `smkn64_db`.
-- Cakupan saat ini: **149 test, 596 assertion**, mencakup route publik, visibilitas
-  konten, SEO, mode demo, autentikasi admin, CRUD admin, validasi upload gambar
-  dan dokumen, pengaturan situs, media sosial, agenda, serta unduhan.
+- Cakupan saat ini: **133 test, 537 assertion**, mencakup route publik, visibilitas
+  konten, SEO, mode demo, autentikasi admin, CRUD admin, validasi upload gambar,
+  pengaturan situs, media sosial, serta struktur organisasi.
 - `vendor\bin\pint --test` memastikan format kode sesuai standar Laravel Pint.
 
 ---
@@ -672,7 +646,6 @@ app/
   Http/Requests/Admin/         validasi form admin
   Models/                      model Eloquent
   Support/ImageUploader.php    resize + simpan + hapus gambar (GD)
-  Support/DocumentUploader.php simpan + hapus dokumen unduhan
   Support/WhatsappNumber.php   normalisasi nomor WhatsApp
   Support/IndonesianDate.php   format tanggal Indonesia
 database/
@@ -687,17 +660,12 @@ public/
   storage/                     symlink hasil storage:link
 resources/views/
   public/                      halaman publik
-    bkk/                       daftar + detail lowongan
     ekstrakurikuler/           daftar + detail ekstrakurikuler
     guru/                      daftar guru
-    industri/                  daftar mitra industri
     jurusan/                   daftar + detail jurusan
     berita/                    daftar + detail berita
     prestasi/                  daftar prestasi
     struktur/                  struktur organisasi
-    alur-pkl/                  alur PKL
-    agenda/                    daftar + detail agenda
-    unduhan/                   daftar berkas unduhan
   admin/                       halaman dashboard
   components/                  komponen Blade publik dan admin
   layouts/                     layout publik, admin, dan login admin
@@ -743,9 +711,8 @@ Panduan lengkap tersedia di:
 - Tidak ada komentar, newsletter, pencarian publik, atau multi-bahasa.
 - Tidak ada peran editor/kontributor, 2FA, log aktivitas, atau reset kata sandi
   lewat email.
-- Testimoni, FAQ, struktur organisasi, alur PKL, agenda, dan unduhan dikelola di
-  dasbor. Testimoni dan FAQ aktif tampil di beranda; FAQ kategori `spmb` juga
-  tampil di halaman SPMB.
+- Testimoni, FAQ, dan struktur organisasi dikelola di dasbor. Testimoni dan FAQ
+  aktif tampil di beranda; FAQ kategori `spmb` juga tampil di halaman SPMB.
 - Tidak ada tempat sampah/restore; data yang dihapus hilang permanen.
 - Mengubah slug jurusan/berita membuat URL lama 404 (belum ada redirect otomatis).
 - Gambar disimpan satu versi (bukan `srcset`/beberapa ukuran).

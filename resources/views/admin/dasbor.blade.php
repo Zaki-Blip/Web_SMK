@@ -21,22 +21,10 @@
             <x-admin.stat-card label="Guru & Staf" :value="$guruCount" icon="bi-people" :route="route('admin.guru.index')" />
         </div>
         <div class="col-sm-6 col-xl-3">
-            <x-admin.stat-card label="Mitra" :value="$mitraCount" icon="bi-building" :route="route('admin.mitra-industri.index')" />
-        </div>
-        <div class="col-sm-6 col-xl-3">
             <x-admin.stat-card label="Prestasi" :value="$prestasiCount" icon="bi-trophy" :route="route('admin.prestasi.index')" />
         </div>
         <div class="col-sm-6 col-xl-3">
-            <x-admin.stat-card label="Lowongan aktif" :value="$lowonganAktifCount" icon="bi-briefcase" :route="route('admin.lowongan-bkk.index')" />
-        </div>
-        <div class="col-sm-6 col-xl-3">
             <x-admin.stat-card label="Berita" :value="$beritaCount" icon="bi-newspaper" :route="route('admin.berita.index')" />
-        </div>
-        <div class="col-sm-6 col-xl-3">
-            <x-admin.stat-card label="Agenda terbit" :value="$agendaCount" icon="bi-calendar-event" :route="route('admin.agenda.index')" />
-        </div>
-        <div class="col-sm-6 col-xl-3">
-            <x-admin.stat-card label="Unduhan" :value="$unduhanCount" icon="bi-download" :route="route('admin.unduhan.index')" />
         </div>
         <div class="col-sm-6 col-xl-3">
             <x-admin.stat-card label="Status SPMB" :value="$spmbOpen ? 'Buka' : 'Tutup'" icon="bi-clipboard-check" :route="route('admin.spmb.edit')" />

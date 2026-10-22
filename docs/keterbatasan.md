@@ -7,7 +7,7 @@ kesalahpahaman saat serah terima.
 
 - Satu sekolah, satu bahasa (Indonesia). Tidak ada multi-bahasa atau multi-sekolah.
 - Fokus pada profil, jurusan, struktur organisasi, fasilitas, galeri, berita,
-  alur PKL, agenda, unduhan, SPMB, dan kontak.
+  SPMB, dan kontak.
 - Tidak ada sistem akademik, absensi, nilai, atau pembayaran online.
 
 ## Akun dan pengguna
@@ -32,10 +32,6 @@ kesalahpahaman saat serah terima.
 - Mengubah slug jurusan/berita membuat URL lama menjadi 404 (tidak ada redirect).
 - Galeri tidak memiliki album; kategori hanya berupa teks bebas.
 - Tidak ada pengurutan ulang dengan drag-and-drop; urutan diatur lewat angka.
-- Agenda tidak memiliki pengulangan otomatis, pendaftaran peserta, atau integrasi
-  kalender. Setiap kegiatan dicatat sebagai satu baris.
-- Unduhan tidak memiliki versi berkas, penghitung unduhan, atau pemindaian virus.
-  Berkas maksimal 10 MB dan hanya dapat diunduh setelah berstatus terbit.
 - Struktur organisasi berupa hierarki sederhana; belum ada bagan grafis interaktif.
 - Tidak ada penjadwalan otomatis berbasis cron untuk berita: status "terjadwal"
   dihitung saat halaman dibuka (`published_at <= sekarang`), jadi tidak perlu
@@ -45,8 +41,6 @@ kesalahpahaman saat serah terima.
 
 - Hanya satu berkas per gambar (diperkecil ke maks. 1600 px); belum ada
   `srcset`/varian responsif atau konversi otomatis ke WebP.
-- Dokumen unduhan disimpan sebagai satu berkas tanpa versi; belum ada pemindaian
-  virus atau pembatasan unduhan per pengguna.
 - Tidak ada pemotongan (crop) di dashboard; rasio tampilan diatur CSS.
 - `storage:link` harus dijalankan manual di server (lihat README).
 - Izin publikasi foto anak sepenuhnya tanggung jawab sekolah.

@@ -802,44 +802,6 @@ a:focus {
     font-weight: 700;
 }
 
-.tk-agenda-date {
-    width: 4.5rem;
-    flex: 0 0 auto;
-    padding: .5rem;
-    text-align: center;
-    border-radius: var(--tk-radius);
-    background-color: var(--tk-sky);
-}
-
-.tk-agenda-date-day {
-    display: block;
-    font-size: 1.5rem;
-    font-weight: 800;
-    line-height: 1;
-    color: var(--tk-primary-dark);
-}
-
-.tk-agenda-date-month {
-    display: block;
-    margin-top: .2rem;
-    font-size: .75rem;
-    text-transform: uppercase;
-    color: var(--tk-text-muted);
-}
-
-.tk-download-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    flex: 0 0 auto;
-    border-radius: var(--tk-radius);
-    background-color: var(--tk-sky);
-    color: var(--tk-primary-dark);
-    font-size: 1.4rem;
-}
-
 /* --------------------------------------------------------------------------
    Responsif
    -------------------------------------------------------------------------- */

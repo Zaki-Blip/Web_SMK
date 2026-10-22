@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Agenda;
-use App\Models\AlurPkl;
 use App\Models\Berita;
 use App\Models\Ekstrakurikuler;
 use App\Models\Faq;
@@ -11,18 +9,14 @@ use App\Models\Fasilitas;
 use App\Models\Galeri;
 use App\Models\Guru;
 use App\Models\Jurusan;
-use App\Models\LowonganBkk;
-use App\Models\MitraIndustri;
 use App\Models\Prestasi;
 use App\Models\SchoolProfile;
 use App\Models\SiteSetting;
 use App\Models\Spmb;
 use App\Models\StrukturOrganisasi;
 use App\Models\Testimoni;
-use App\Models\Unduhan;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class DemoSeeder extends Seeder
@@ -32,19 +26,14 @@ class DemoSeeder extends Seeder
         $this->seedProfilDanPengaturan();
         $this->seedJurusan();
         $this->seedGuru();
-        $this->seedMitra();
         $this->seedPrestasi();
         $this->seedEkstrakurikuler();
-        $this->seedLowongan();
         $this->seedFasilitas();
         $this->seedGaleri();
         $this->seedBerita();
         $this->seedTestimoni();
         $this->seedFaq();
         $this->seedStrukturOrganisasi();
-        $this->seedAlurPkl();
-        $this->seedAgenda();
-        $this->seedUnduhan();
         $this->seedSpmb();
     }
 
@@ -66,7 +55,6 @@ class DemoSeeder extends Seeder
             'tahun_berdiri' => 2019,
             'jumlah_siswa' => 600,
             'jumlah_guru' => 40,
-            'jumlah_mitra' => 12,
         ]);
 
         SiteSetting::current()->update([
@@ -144,22 +132,6 @@ class DemoSeeder extends Seeder
         }
     }
 
-    private function seedMitra(): void
-    {
-        $mitras = ['PT Teknologi Nusantara', 'CV Media Kreatif', 'PT Keuangan Sejahtera', 'PT Solusi Kantor', 'PT Jaringan Cepat', 'PT Desain Visual', 'PT Aplikasi Muda', 'PT Karya Industri'];
-        foreach ($mitras as $i => $name) {
-            MitraIndustri::updateOrCreate(
-                ['nama' => $name],
-                [
-                    'bidang' => 'Teknologi',
-                    'website' => 'https://example.com',
-                    'urutan' => $i + 1,
-                    'is_active' => true,
-                ],
-            );
-        }
-    }
-
     private function seedPrestasi(): void
     {
         for ($i = 1; $i <= 8; $i++) {
@@ -189,25 +161,6 @@ class DemoSeeder extends Seeder
                     'jadwal' => 'Sabtu, 08.00-10.00 WIB',
                     'urutan' => $i + 1,
                     'is_active' => true,
-                ],
-            );
-        }
-    }
-
-    private function seedLowongan(): void
-    {
-        for ($i = 1; $i <= 5; $i++) {
-            LowonganBkk::updateOrCreate(
-                ['judul' => 'Lowongan '.$i],
-                [
-                    'perusahaan' => 'PT Contoh Industri '.$i,
-                    'lokasi' => 'Jakarta',
-                    'tipe' => $i === 5 ? 'magang' : 'penuh_waktu',
-                    'deskripsi' => 'Lowongan pekerjaan untuk lulusan SMK.',
-                    'persyaratan' => 'Lulusan SMK, mampu bekerja tim.',
-                    'tautan_daftar' => 'https://example.com/daftar',
-                    'batas_waktu' => $i === 4 ? Carbon::now()->subDays(5)->toDateString() : Carbon::now()->addMonth()->toDateString(),
-                    'is_published' => true,
                 ],
             );
         }
@@ -367,111 +320,6 @@ class DemoSeeder extends Seeder
                 ['parent_id' => $parentId, 'urutan' => $urutan, 'is_active' => true],
             );
         }
-    }
-
-    private function seedAlurPkl(): void
-    {
-        $items = [
-            ['Pendaftaran dan verifikasi tempat PKL', 'Siswa mendaftar ke sekolah dan memverifikasi perusahaan atau instansi yang akan menjadi tempat PKL.'],
-            ['Pembekalan dan administrasi', 'Siswa mengikuti pembekalan, melengkapi surat pengantar, dan menandatangani perjanjian kerja sama.'],
-            ['Pelaksanaan PKL', 'Siswa melaksanakan PKL sesuai jadwal, mengisi jurnal harian, dan mematuhi aturan tempat PKL.'],
-            ['Monitoring dan pembimbingan', 'Guru pembimbing melakukan monitoring serta berkoordinasi dengan pembimbing industri.'],
-            ['Penilaian dan laporan akhir', 'Siswa menyusun laporan akhir, mengikuti penilaian, dan menyerahkan dokumentasi PKL.'],
-        ];
-
-        foreach ($items as $i => [$judul, $deskripsi]) {
-            AlurPkl::updateOrCreate(
-                ['judul' => $judul],
-                ['deskripsi' => $deskripsi, 'urutan' => $i + 1, 'is_active' => true],
-            );
-        }
-    }
-
-    private function seedAgenda(): void
-    {
-        $items = [
-            ['rapat-orang-tua-siswa', 'Rapat Orang Tua Siswa', 'Koordinasi program sekolah dan informasi SPMB.', 7, 'Aula Sekolah'],
-            ['workshop-karier-alumni', 'Workshop Karier Alumni', 'Berbagi pengalaman dunia kerja bersama alumni.', 14, 'Ruang Multimedia'],
-            ['pekan-kreativitas-siswa', 'Pekan Kreativitas Siswa', 'Pameran karya dan kompetisi antar kelas.', 30, 'Lapangan Sekolah'],
-            ['kunjungan-industri', 'Kunjungan Industri', 'Kunjungan belajar ke mitra industri sekolah.', 45, 'Mitra Industri'],
-        ];
-
-        foreach ($items as [$slug, $judul, $deskripsi, $days, $lokasi]) {
-            $mulai = Carbon::now()->addDays($days)->setTime(9, 0);
-
-            Agenda::updateOrCreate(
-                ['slug' => $slug],
-                [
-                    'judul' => $judul,
-                    'deskripsi' => $deskripsi,
-                    'mulai' => $mulai,
-                    'selesai' => $mulai->copy()->addHours(2),
-                    'lokasi' => $lokasi,
-                    'is_published' => true,
-                ],
-            );
-        }
-    }
-
-    private function seedUnduhan(): void
-    {
-        $pdf = $this->samplePdf();
-        $disk = Storage::disk(config('filesystems.uploads_disk', 'public'));
-        $disk->put('unduhan/panduan-pkl.pdf', $pdf);
-        $disk->put('unduhan/formulir-pkl.pdf', $pdf);
-
-        $items = [
-            ['Panduan PKL', 'Panduan pelaksanaan Praktik Kerja Lapangan bagi siswa.', 'unduhan/panduan-pkl.pdf'],
-            ['Formulir Pendaftaran PKL', 'Formulir pendaftaran tempat Praktik Kerja Lapangan.', 'unduhan/formulir-pkl.pdf'],
-        ];
-
-        foreach ($items as $i => [$judul, $deskripsi, $berkas]) {
-            Unduhan::updateOrCreate(
-                ['judul' => $judul],
-                [
-                    'deskripsi' => $deskripsi,
-                    'berkas' => $berkas,
-                    'ukuran' => strlen($pdf),
-                    'is_published' => true,
-                    'urutan' => $i + 1,
-                ],
-            );
-        }
-    }
-
-    /**
-     * PDF contoh sederhana untuk data demo unduhan.
-     */
-    private function samplePdf(): string
-    {
-        $stream = "BT /F1 18 Tf 72 720 Td (Panduan PKL SMKN 64 Jakarta) Tj ET\n";
-        $objects = [
-            '<< /Type /Catalog /Pages 2 0 R >>',
-            '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
-            '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>',
-            '<< /Length '.strlen($stream)." >>\nstream\n".$stream.'endstream',
-            '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
-        ];
-
-        $pdf = "%PDF-1.4\n";
-        $offsets = [];
-
-        foreach ($objects as $index => $object) {
-            $offsets[] = strlen($pdf);
-            $pdf .= ($index + 1)." 0 obj\n".$object."\nendobj\n";
-        }
-
-        $xref = strlen($pdf);
-        $pdf .= 'xref'."\n".'0 '.(count($objects) + 1)."\n".'0000000000 65535 f '."\n";
-
-        foreach ($offsets as $offset) {
-            $pdf .= sprintf('%010d 00000 n ', $offset)."\n";
-        }
-
-        $pdf .= 'trailer'."\n".'<< /Size '.(count($objects) + 1).' /Root 1 0 R >>'."\n";
-        $pdf .= 'startxref'."\n".$xref."\n".'%%EOF'."\n";
-
-        return $pdf;
     }
 
     private function seedSpmb(): void

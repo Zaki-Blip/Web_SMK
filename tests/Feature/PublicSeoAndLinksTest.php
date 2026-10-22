@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Agenda;
 use App\Models\Berita;
 use App\Models\Jurusan;
 use App\Models\SiteSetting;
@@ -18,8 +17,6 @@ class PublicSeoAndLinksTest extends TestCase
     {
         $news = Berita::factory()->create(['slug' => 'berita-sitemap']);
         Berita::factory()->draft()->create(['slug' => 'berita-draf-sitemap']);
-        $agenda = Agenda::factory()->create(['slug' => 'agenda-sitemap']);
-        Agenda::factory()->draft()->create(['slug' => 'agenda-draf-sitemap']);
 
         $response = $this->get('/sitemap.xml');
 
@@ -28,13 +25,8 @@ class PublicSeoAndLinksTest extends TestCase
             ->assertSee(route('beranda'), false)
             ->assertSee(route('spmb.index'), false)
             ->assertSee(route('struktur.index'), false)
-            ->assertSee(route('alur-pkl.index'), false)
-            ->assertSee(route('agenda.index'), false)
-            ->assertSee(route('unduhan.index'), false)
             ->assertSee(route('berita.show', $news->slug), false)
-            ->assertSee(route('agenda.show', $agenda->slug), false)
-            ->assertDontSee('berita-draf-sitemap')
-            ->assertDontSee('agenda-draf-sitemap');
+            ->assertDontSee('berita-draf-sitemap');
     }
 
     public function test_robots_txt_melarang_area_admin(): void

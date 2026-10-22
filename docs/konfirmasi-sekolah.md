@@ -63,37 +63,29 @@ penanda `[BELUM DIKONFIRMASI]` untuk data yang belum ada.
 | 25 | Biaya | Belum ada | Informasi biaya resmi atau "tidak dipungut biaya" |
 | 26 | Kontak SPMB | Belum ada | Nomor WhatsApp petugas SPMB |
 
-## 7. Alur PKL, agenda, dan unduhan
+## 7. Kontak dan lokasi
 
 | No | Data | Kondisi saat ini | Perlu dikonfirmasi |
 |---|---|---|---|
-| 27a | Alur PKL | 5 langkah demo tersedia | Tahapan resmi, penanggung jawab, dan dokumen pendukung |
-| 27b | Agenda kegiatan | 4 agenda demo tersedia | Jadwal resmi dan lokasi kegiatan |
-| 27c | Berkas unduhan | 2 PDF contoh tersedia | Dokumen resmi yang boleh dipublikasikan |
+| 27 | Alamat lengkap | Alamat awal dari data proyek | Alamat resmi + kode pos |
+| 28 | Telepon | `[BELUM DIKONFIRMASI]` | Nomor telepon sekolah |
+| 29 | Email resmi | `[BELUM DIKONFIRMASI]` | Email yang benar-benar dipantau |
+| 30 | Jam operasional | `[BELUM DIKONFIRMASI]` | Hari dan jam layanan |
+| 31 | Nomor WhatsApp | Belum ada | Nomor resmi format `62...` |
+| 32 | Tautan Google Maps | Belum ada | URL lokasi resmi |
+| 33 | Media sosial | Tautan demo sudah tampil di footer dan halaman kontak | Akun resmi yang boleh ditautkan |
 
-## 8. Kontak dan lokasi
-
-| No | Data | Kondisi saat ini | Perlu dikonfirmasi |
-|---|---|---|---|
-| 28 | Alamat lengkap | Alamat awal dari data proyek | Alamat resmi + kode pos |
-| 29 | Telepon | `[BELUM DIKONFIRMASI]` | Nomor telepon sekolah |
-| 30 | Email resmi | `[BELUM DIKONFIRMASI]` | Email yang benar-benar dipantau |
-| 31 | Jam operasional | `[BELUM DIKONFIRMASI]` | Hari dan jam layanan |
-| 32 | Nomor WhatsApp | Belum ada | Nomor resmi format `62...` |
-| 33 | Tautan Google Maps | Belum ada | URL lokasi resmi |
-| 34 | Media sosial | Tautan demo sudah tampil di footer dan halaman kontak | Akun resmi yang boleh ditautkan |
-
-## 9. SEO, domain, dan operasional
+## 8. SEO, domain, dan operasional
 
 | No | Data | Kondisi saat ini | Perlu dikonfirmasi |
 |---|---|---|---|
-| 35 | Judul meta | Belum ada (memakai nama sekolah) | Judul singkat untuk Google |
-| 36 | Deskripsi meta | Belum ada | Ringkasan ±160 karakter |
-| 37 | Nama domain | Belum ada | Domain resmi + kepemilikan akun |
-| 38 | Email pengelola | Belum ada | Untuk notifikasi dan pemulihan akun |
-| 39 | Hosting/server | Belum ada | Penyedia, masa aktif, dan penanggung jawab |
-| 40 | Akun admin resmi | Akun percobaan | Nama, email, dan kata sandi resmi |
-| 41 | Kebijakan privasi | Belum ada | Apakah perlu halaman khusus? |
+| 34 | Judul meta | Belum ada (memakai nama sekolah) | Judul singkat untuk Google |
+| 35 | Deskripsi meta | Belum ada | Ringkasan ±160 karakter |
+| 36 | Nama domain | Belum ada | Domain resmi + kepemilikan akun |
+| 37 | Email pengelola | Belum ada | Untuk notifikasi dan pemulihan akun |
+| 38 | Hosting/server | Belum ada | Penyedia, masa aktif, dan penanggung jawab |
+| 39 | Akun admin resmi | Akun percobaan | Nama, email, dan kata sandi resmi |
+| 40 | Kebijakan privasi | Belum ada | Apakah perlu halaman khusus? |
 
 ## Format konfirmasi yang disarankan
 

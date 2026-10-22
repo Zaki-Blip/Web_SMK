@@ -43,19 +43,9 @@
                             <li><a class="dropdown-item" href="{{ route('prestasi.index') }}">Prestasi</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Industri & Karier</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('industri.index') }}">Mitra Industri</a></li>
-                            <li><a class="dropdown-item" href="{{ route('alur-pkl.index') }}">Alur PKL</a></li>
-                            <li><a class="dropdown-item" href="{{ route('bkk.index') }}">Lowongan BKK</a></li>
-                        </ul>
-                    </li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('fasilitas.index') }}">Fasilitas</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('galeri.index') }}">Galeri</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('berita.index') }}">Berita</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('agenda.index') }}">Agenda</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('unduhan.index') }}">Unduhan</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('spmb.index') }}">SPMB</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('kontak.index') }}">Kontak</a></li>
                     <li class="nav-item ms-lg-2">

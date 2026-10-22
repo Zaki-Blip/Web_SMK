@@ -12,8 +12,7 @@ banner “Versi demo — bukan website resmi”.
 Sasaran utama:
 
 1. Menyajikan profil, jurusan, guru, struktur organisasi, fasilitas, prestasi,
-   ekstrakurikuler, mitra industri, lowongan BKK, alur PKL, agenda, unduhan,
-   berita, galeri, SPMB, dan kontak.
+   ekstrakurikuler, berita, galeri, SPMB, dan kontak.
 2. Memudahkan pengelola sekolah memperbarui konten tanpa mengubah kode.
 3. Menjadi contoh aplikasi Laravel yang aman, responsif, dan mudah dipasang.
 
@@ -38,12 +37,10 @@ Sasaran utama:
 - Tabel, model, controller, route, folder view, dan komponen konten memakai
   bahasa Indonesia bentuk tunggal.
 - Contoh tabel: `jurusan`, `guru`, `struktur_organisasi`, `ekstrakurikuler`,
-  `prestasi`, `mitra_industri`, `lowongan_bkk`, `testimoni`, `faq`, `fasilitas`,
-  `galeri`, `berita`, `alur_pkl`, `agenda`, `unduhan`.
+  `prestasi`, `testimoni`, `faq`, `fasilitas`, `galeri`, `berita`.
 - Contoh route publik: `beranda`, `profil.index`, `jurusan.index`,
   `jurusan.show`, `guru.index`, `struktur.index`, `fasilitas.index`,
-  `galeri.index`, `alur-pkl.index`, `agenda.index`, `agenda.show`,
-  `unduhan.index`, `berita.index`, `berita.show`, `spmb.index`, `kontak.index`.
+  `galeri.index`, `berita.index`, `berita.show`, `spmb.index`, `kontak.index`.
 - Route admin memakai prefix `admin.` dan nama modul Indonesia, misalnya
   `admin.jurusan.index`, `admin.berita.index`, `admin.fasilitas.index`.
 - Nama route dan URL lama tidak dipertahankan sebagai alias. Hanya URL
@@ -60,31 +57,23 @@ Sasaran utama:
 | Detail jurusan | `/jurusan/{slug}` | Deskripsi, kompetensi, prospek karier, guru terkait |
 | Guru dan staf | `/guru` | Daftar guru/staf dan filter jurusan |
 | Fasilitas | `/fasilitas` | Daftar fasilitas yang terbit |
-| Industri | `/industri` | Mitra industri |
 | Prestasi | `/prestasi` | Prestasi dan peraih |
 | Ekstrakurikuler | `/ekstrakurikuler` | Daftar kegiatan |
 | Detail ekstrakurikuler | `/ekstrakurikuler/{slug}` | Deskripsi, pembina, jadwal |
-| BKK | `/bkk` | Lowongan kerja yang terbit |
-| Detail BKK | `/bkk/{id}` | Deskripsi, persyaratan, batas waktu, tautan daftar |
 | Berita | `/berita` | Daftar berita terbit |
 | Detail berita | `/berita/{slug}` | Isi berita; draf/terjadwal menghasilkan 404 |
 | Galeri | `/galeri` | Grid foto dengan lightbox |
 | Struktur organisasi | `/struktur-organisasi` | Hierarki jabatan dan unit kerja |
-| Alur PKL | `/alur-pkl` | Tahapan pelaksanaan PKL |
-| Agenda | `/agenda` | Daftar kegiatan sekolah |
-| Detail agenda | `/agenda/{slug}` | Informasi lengkap kegiatan |
-| Unduhan | `/unduhan` | Daftar berkas yang dapat diunduh |
 | SPMB | `/spmb` | Informasi penerimaan murid baru |
 | Kontak | `/kontak` | Alamat, telepon, email, WhatsApp, jam operasional, peta |
 | Sitemap/robots | `/sitemap.xml`, `/robots.txt` | SEO dinamis |
 
 Aturan tampil:
 
-- Jurusan, guru, struktur organisasi, ekstrakurikuler, prestasi, mitra,
-  testimoni, FAQ, dan alur PKL memakai `is_active`.
-- Fasilitas, galeri, lowongan BKK, agenda, dan unduhan memakai `is_published`.
+- Jurusan, guru, struktur organisasi, ekstrakurikuler, prestasi, testimoni,
+  dan FAQ memakai `is_active`.
+- Fasilitas dan galeri memakai `is_published`.
 - Berita harus berstatus `published` dan `published_at` sudah lewat.
-- Agenda draf dan berkas unduhan draf tidak dapat diakses publik.
 - Halaman harus tetap tampil dengan empty state saat database kosong.
 
 ## 5. Dasbor admin
@@ -102,16 +91,11 @@ Modul:
 | Profil sekolah | `/admin/profil` | Sejarah, visi, misi, sambutan, identitas |
 | Jurusan | `/admin/jurusan` | CRUD, pencarian, urutan, status aktif |
 | Guru/staf | `/admin/guru` | CRUD, foto, jurusan terkait, status aktif |
-| Mitra industri | `/admin/mitra-industri` | CRUD, logo, website, status aktif |
 | Prestasi | `/admin/prestasi` | CRUD, tingkat, tahun, status aktif |
 | Ekstrakurikuler | `/admin/ekstrakurikuler` | CRUD, gambar, status aktif |
-| Lowongan BKK | `/admin/lowongan-bkk` | CRUD, batas waktu, status publikasi |
 | Testimoni | `/admin/testimoni` | CRUD, foto, status aktif |
 | FAQ | `/admin/faq` | CRUD, kategori, urutan, status aktif |
 | Struktur organisasi | `/admin/struktur-organisasi` | CRUD, atasan langsung, urutan, status aktif |
-| Alur PKL | `/admin/alur-pkl` | CRUD, urutan, status aktif |
-| Agenda | `/admin/agenda` | CRUD, slug, jadwal, lokasi, status publikasi |
-| Unduhan | `/admin/unduhan` | CRUD, unggah berkas, status publikasi |
 | Fasilitas | `/admin/fasilitas` | CRUD, gambar, status publikasi |
 | Galeri | `/admin/galeri` | CRUD, gambar, status publikasi |
 | Berita | `/admin/berita` | CRUD, slug unik, jadwal, draf/terbit |
@@ -132,16 +116,9 @@ Tabel utama:
 - `ekstrakurikuler`: nama, slug unik, deskripsi, pembina, jadwal, gambar,
   urutan, status aktif.
 - `prestasi`: judul, tingkat, tahun, peraih, deskripsi, gambar, status aktif.
-- `mitra_industri`: nama, bidang, logo, website, urutan, status aktif.
-- `lowongan_bkk`: judul, perusahaan, lokasi, tipe, deskripsi, persyaratan,
-  tautan daftar, batas waktu, status publikasi.
 - `testimoni`: nama, angkatan, `jurusan_id`, pekerjaan, isi, foto, status aktif.
 - `faq`: pertanyaan, jawaban, kategori, urutan, status aktif.
 - `struktur_organisasi`: nama, jabatan, `parent_id`, urutan, status aktif.
-- `alur_pkl`: judul, deskripsi, urutan, status aktif.
-- `agenda`: judul, slug unik, deskripsi, waktu mulai/selesai, lokasi, status
-  publikasi.
-- `unduhan`: judul, deskripsi, path berkas, ukuran, urutan, status publikasi.
 - `fasilitas`: nama, slug unik, deskripsi, gambar, kategori, urutan, status
   publikasi.
 - `galeri`: judul, keterangan, gambar, kategori, urutan, status publikasi.
@@ -168,13 +145,11 @@ Foreign key hanya untuk relasi nyata.
 - Disimpan di disk `public` (`storage/app/public/{modul}`) atau S3/R2.
 - File lama dihapus saat gambar diganti atau record dihapus.
 - `alt`, `width`, `height`, dan `loading="lazy"` dipakai pada gambar konten.
-- Dokumen unduhan: PDF/DOC/DOCX/XLS/XLSX/PPT/PPTX/ZIP/TXT, maksimal 10 MB,
-  disimpan di folder `unduhan/`, dan hanya dapat diunduh setelah terbit.
 
 ## 8. SEO, keamanan, dan aksesibilitas
 
 - Title unik, meta description, canonical, Open Graph, Twitter Card, dan JSON-LD.
-- Sitemap mencakup halaman publik, berita terbit, dan agenda terbit.
+- Sitemap mencakup halaman publik dan berita terbit.
 - `robots.txt` mengizinkan publik dan melarang `/admin`; halaman admin `noindex`.
 - CSRF pada semua form, validasi server-side, `$fillable`, password hashing,
   escape Blade, dan tanpa `{!! !!}` untuk input pengguna.
@@ -217,8 +192,8 @@ Test minimal mencakup:
 
 1. **Fase 1** — hapus kode mati, seragamkan nama Indonesia, migrasi tabel aman,
    konfigurasi runtime, redirect lama, dan test nama lama.
-2. **Fase 2 (selesai)** — publikasikan testimoni/FAQ, tautan sosial, SEO lengkap, kategori
-   berita, struktur organisasi, alur PKL, agenda, dan unduhan.
+2. **Fase 2 (selesai)** — publikasikan testimoni/FAQ, tautan sosial, SEO lengkap,
+   kategori berita, dan struktur organisasi.
 3. **Fase 3** — upload 8 MB dengan varian WebP/srcset, slug terkunci + riwayat
    301, soft delete/tempat sampah, security header/CSP/SRI, throttle tulis admin,
    CI MySQL, dan optimasi query/index/cache.

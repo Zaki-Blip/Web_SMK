@@ -48,7 +48,6 @@
                     <li class="mb-2"><a href="{{ route('struktur.index') }}">Struktur Organisasi</a></li>
                     <li class="mb-2"><a href="{{ route('fasilitas.index') }}">Fasilitas</a></li>
                     <li class="mb-2"><a href="{{ route('galeri.index') }}">Galeri</a></li>
-                    <li class="mb-2"><a href="{{ route('agenda.index') }}">Agenda</a></li>
                 </ul>
             </div>
 
@@ -56,8 +55,6 @@
                 <h2 class="h6 mb-3">Layanan</h2>
                 <ul class="list-unstyled mb-0">
                     <li class="mb-2"><a href="{{ route('berita.index') }}">Berita</a></li>
-                    <li class="mb-2"><a href="{{ route('alur-pkl.index') }}">Alur PKL</a></li>
-                    <li class="mb-2"><a href="{{ route('unduhan.index') }}">Unduhan</a></li>
                     <li class="mb-2"><a href="{{ route('spmb.index') }}">SPMB</a></li>
                     <li class="mb-2"><a href="{{ route('kontak.index') }}">Kontak</a></li>
                     @if ($mapsUrl)

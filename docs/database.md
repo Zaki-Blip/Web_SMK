@@ -13,8 +13,11 @@ lama dengan `RENAME TABLE`, sehingga data yang sudah ada tidak hilang.
 > diterapkan di server produksi.
 
 Migrasi `2026_10_21_000003_add_phase_two_content.php` menambahkan tabel
-`struktur_organisasi`, `alur_pkl`, `agenda`, dan `unduhan`, serta kolom media
-sosial pada `site_settings`.
+`struktur_organisasi` serta kolom media sosial pada `site_settings`.
+
+Migrasi `2026_10_22_000001_drop_removed_content_tables.php` menghapus tabel
+fitur yang sudah tidak dipakai: `mitra_industri`, `lowongan_bkk`, `alur_pkl`,
+`agenda`, dan `unduhan`.
 
 ## Ringkasan tabel
 
@@ -25,16 +28,11 @@ sosial pada `site_settings`.
 | Akademik | `struktur_organisasi` | Struktur organisasi dan jabatan |
 | Akademik | `ekstrakurikuler` | Kegiatan ekstrakurikuler |
 | Akademik | `prestasi` | Prestasi sekolah/siswa |
-| Kemitraan dan karier | `mitra_industri` | Mitra industri |
-| Kemitraan dan karier | `lowongan_bkk` | Lowongan kerja BKK |
-| Kemitraan dan karier | `testimoni` | Testimoni alumni |
-| Kemitraan dan karier | `alur_pkl` | Tahapan pelaksanaan PKL |
+| Konten | `testimoni` | Testimoni alumni |
 | Konten | `fasilitas` | Fasilitas sekolah |
 | Konten | `galeri` | Foto galeri |
 | Konten | `berita` | Berita dan pengumuman |
 | Konten | `faq` | Pertanyaan umum |
-| Konten | `agenda` | Agenda kegiatan |
-| Konten | `unduhan` | Berkas dan dokumen unduhan |
 | Pengaturan | `school_profiles` | Profil sekolah (satu baris) |
 | Pengaturan | `site_settings` | Identitas, kontak, media sosial, dan SEO situs (satu baris) |
 | Pengaturan | `spmb` | Informasi SPMB (satu baris) |
@@ -90,16 +88,6 @@ sosial pada `site_settings`.
 `internasional`), `tahun`, `peraih`, `deskripsi`, `gambar`, `is_active`,
 timestamps.
 
-### `mitra_industri`
-
-`id`, `nama`, `bidang`, `logo`, `website`, `urutan`, `is_active`, timestamps.
-
-### `lowongan_bkk`
-
-`id`, `judul`, `perusahaan`, `lokasi`, `tipe` (`penuh_waktu`, `kontrak`,
-`magang`), `deskripsi`, `persyaratan`, `tautan_daftar`, `batas_waktu`,
-`is_published`, timestamps.
-
 ### `testimoni`
 
 `id`, `nama`, `angkatan`, `jurusan_id` (FK ke `jurusan`, `nullOnDelete`),
@@ -127,44 +115,6 @@ SPMB.
 
 Relasi `parent_id` membentuk hierarki. Halaman publik hanya menampilkan data
 aktif dan menyusunnya dari jabatan puncak (`parent_id = null`).
-
-### `alur_pkl`
-
-`id`, `judul`, `deskripsi`, `urutan`, `is_active`, timestamps.
-
-Hanya langkah aktif yang tampil di `/alur-pkl`, diurutkan berdasarkan `urutan`.
-
-### `agenda`
-
-| Kolom | Tipe | Keterangan |
-|---|---|---|
-| `id` | bigint unsigned, PK | |
-| `judul` | varchar(255), wajib | |
-| `slug` | varchar(255), unik, wajib | Dipakai di URL `/agenda/{slug}` |
-| `deskripsi` | text, opsional | Teks biasa |
-| `mulai` | datetime, wajib | Waktu mulai |
-| `selesai` | datetime, opsional | Tidak boleh sebelum `mulai` |
-| `lokasi` | varchar(255), opsional | |
-| `is_published` | tinyint(1), default 0 | 1 = tampil di website |
-| `created_at`, `updated_at` | timestamp | |
-
-Agenda draf tidak muncul di daftar dan detailnya menghasilkan **404**.
-
-### `unduhan`
-
-| Kolom | Tipe | Keterangan |
-|---|---|---|
-| `id` | bigint unsigned, PK | |
-| `judul` | varchar(255), wajib | |
-| `deskripsi` | text, opsional | |
-| `berkas` | varchar(255), wajib | Path relatif pada disk unggahan |
-| `ukuran` | bigint unsigned, default 0 | Ukuran berkas dalam byte |
-| `is_published` | tinyint(1), default 0 | 1 = tampil dan dapat diunduh |
-| `urutan` | int unsigned, default 0 | Urutan tampil |
-| `created_at`, `updated_at` | timestamp | |
-
-Unduhan draf tidak tampil di daftar; route unduh memeriksa status terbit dan
-keberadaan berkas, lalu mengembalikan **404** bila tidak memenuhi syarat.
 
 ### `fasilitas`
 
@@ -279,14 +229,12 @@ Akun dibuat hanya lewat `php artisan app:create-admin`; tidak ada pendaftaran pu
 ## Berkas unggahan
 
 - Disimpan di disk unggahan sesuai `UPLOADS_DISK`:
-  `public` → `storage/app/public/{logo|profil|jurusan|guru|ekstrakurikuler|prestasi|mitra|fasilitas|galeri|berita|testimoni|unduhan}/...`;
+  `public` → `storage/app/public/{logo|profil|jurusan|guru|ekstrakurikuler|prestasi|fasilitas|galeri|berita|testimoni}/...`;
   `s3` → bucket S3/Cloudflare R2 untuk deployment tanpa disk permanen.
 - Diakses lewat `public/storage` (hasil `php artisan storage:link`) untuk disk
   lokal, atau lewat URL publik bucket untuk disk `s3`.
 - Nama berkas acak, bukan nama asli unggahan.
 - Gambar mengikuti `App\Support\ImageUploader` (maksimal 2 MB).
-- Dokumen unduhan disimpan di folder `unduhan/` dan mengikuti
-  `App\Support\DocumentUploader` (maksimal 10 MB, ekstensi dibatasi).
 
 ## Seeder
 

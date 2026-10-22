@@ -2,14 +2,10 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Models\Agenda;
 use App\Models\SiteSetting;
 use App\Models\StrukturOrganisasi;
-use App\Models\Unduhan;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class PhaseTwoManagementTest extends TestCase
@@ -21,7 +17,7 @@ class PhaseTwoManagementTest extends TestCase
         return User::factory()->admin()->create();
     }
 
-    public function test_admin_dapat_menambah_struktur_organisasi_dan_alur_pkl(): void
+    public function test_admin_dapat_menambah_struktur_organisasi(): void
     {
         $admin = $this->admin();
 
@@ -51,73 +47,6 @@ class PhaseTwoManagementTest extends TestCase
             'nama' => 'Wakil Uji',
             'parent_id' => $kepala->id,
         ]);
-
-        $this->actingAs($admin)
-            ->post(route('admin.alur-pkl.store'), [
-                'judul' => 'Langkah Uji',
-                'deskripsi' => 'Deskripsi langkah uji.',
-                'urutan' => 1,
-                'is_active' => '1',
-            ])
-            ->assertRedirect(route('admin.alur-pkl.index'));
-
-        $this->assertDatabaseHas('alur_pkl', ['judul' => 'Langkah Uji']);
-    }
-
-    public function test_admin_dapat_menambah_agenda_dengan_slug_otomatis(): void
-    {
-        $this->actingAs($this->admin())
-            ->post(route('admin.agenda.store'), [
-                'judul' => 'Agenda Uji Sekolah',
-                'slug' => '',
-                'deskripsi' => 'Deskripsi agenda uji.',
-                'mulai' => '2026-11-01T09:00',
-                'selesai' => '2026-11-01T11:00',
-                'lokasi' => 'Aula Sekolah',
-                'is_published' => '1',
-            ])
-            ->assertRedirect(route('admin.agenda.index'));
-
-        $agenda = Agenda::query()->firstOrFail();
-
-        $this->assertSame('agenda-uji-sekolah', $agenda->slug);
-        $this->assertTrue($agenda->is_published);
-
-        $this->get(route('agenda.show', $agenda))
-            ->assertOk()
-            ->assertSee('Agenda Uji Sekolah');
-    }
-
-    public function test_admin_dapat_mengunggah_dan_menghapus_berkas_unduhan(): void
-    {
-        Storage::fake('public');
-        $admin = $this->admin();
-
-        $this->actingAs($admin)
-            ->post(route('admin.unduhan.store'), [
-                'judul' => 'Panduan Uji',
-                'deskripsi' => 'Berkas panduan uji.',
-                'berkas' => UploadedFile::fake()->create('panduan.pdf', 100, 'application/pdf'),
-                'urutan' => 1,
-                'is_published' => '1',
-            ])
-            ->assertRedirect(route('admin.unduhan.index'));
-
-        $unduhan = Unduhan::query()->firstOrFail();
-        $path = $unduhan->berkas;
-
-        Storage::disk('public')->assertExists($path);
-
-        $this->get(route('unduhan.download', $unduhan))
-            ->assertOk()
-            ->assertDownload('panduan-uji.pdf');
-
-        $this->actingAs($admin)
-            ->delete(route('admin.unduhan.destroy', $unduhan))
-            ->assertRedirect(route('admin.unduhan.index'));
-
-        Storage::disk('public')->assertMissing($path);
-        $this->assertDatabaseMissing('unduhan', ['id' => $unduhan->id]);
     }
 
     public function test_tautan_media_sosial_dapat_disimpan_dari_pengaturan(): void
